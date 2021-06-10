@@ -1,0 +1,12 @@
+{
+  "name": "microsoft-teams-clone",
+  "version": "1.0.0",
+  "description": "Microsoft Teams Clone",
+  "main": "index.js",
+  "scripts": {
+    "server" : "cd backend && nodemon index.js" ,
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Pranjal Jain",
+  "license": "ISC"
+}
