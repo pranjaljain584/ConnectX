@@ -10,14 +10,16 @@ const User = require('../../models/User');
 
 // GET, api/auth // type of req, url
 // Public route
-router.get('/', async (req, res) => {
-    console.log("user") ;
-//   try {
-//     const user = await User.findById(req.user.id).select('-password');
-//     res.json(user);
-//   } catch (err) {
-//     res.status(500).send('Server errror');
-//   }
+
+router.get('/',
+ auth , // middleware that makes this route a protected route
+ async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('-password');
+    res.json(user); // return user data in json
+  } catch (err) {
+    res.status(500).send('Server errror');
+  }
 });
 
 module.exports = router;

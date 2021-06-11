@@ -4,7 +4,6 @@ const path = require('path');
 // require connectDB function exported in db.js file
 const connectDB = require('./config/db');
 
-
 const app = express() ;
 
 // Init middleware

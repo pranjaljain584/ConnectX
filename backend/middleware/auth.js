@@ -1,3 +1,4 @@
+// middleware to create a protected route
 const jwt = require('jsonwebtoken');
 const config = require('config');
 
@@ -6,14 +7,19 @@ module.exports = function (req, res, next) {
   const token = req.header('x-auth-token');
 
   if (!token) {
+    // 401- unauthorized
     return res.status(401).json({ msg: 'no token,authorization denied' });
   }
 
+  // verify token
   try {
+    // decode token
     const decoded = jwt.verify(token, config.get('jwtSecret'));
 
+    // set req user = decoded user 
     req.user = decoded.user;
-    next();
+    next(); // callback, important , o.w. we'll get stuck here only
+
   } catch (err) {
     res.status(401).json({ msg: 'token not valid' });
   }
