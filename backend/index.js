@@ -1,5 +1,4 @@
 const express = require('express') ;
-const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
 // require connectDB function exported in db.js file
@@ -9,9 +8,9 @@ const connectDB = require('./config/db');
 const app = express() ;
 
 // Init middleware
-app.use(bodyParser.json({ extended: false }));
+// parses data in req body
+app.use(express.json({ extended: false })); 
 app.use(cors());
-app.use(express.json());
 
 // connect database
 connectDB();

@@ -1,4 +1,5 @@
 const express = require('express');
+// to validate data sent in post request below
 const { check, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -10,63 +11,80 @@ const User = require('../../models/User');
 // POST api/users
 // Register User route
 // Public
-// create a user
+// this will create an user
 router.post(
   '/',
   [
+    // middleware that checks if the data in req is valid 
+    // acc to our set terms or not  
     check('name', 'Name is required').not().isEmpty(),
     check('email', 'please include a valid email').isEmail(),
-    check(
-      'password',
-      'Please enter password with more than 6 characters'
-    ),
   ],
   async (req, res) => {
-    const errors = validationResult(req);
+    const errors = validationResult(req); // errors if found
+
     if (!errors.isEmpty()) {
+      // bad request and return json response containing errors array  
       return res.status(400).json({ errors: errors.array() });
     }
 
+    // destructure request body
     const { email, name, password } = req.body;
 
     try {
+      // find user in user model  
       let user = await User.findOne({ email });
 
       if (user) {
-        // See if user exists
+        // if user already exist return bad request with below mentioned msg
         return res
           .status(400)
           .json({ errors: [{ msg: 'user already exists' }] });
       }
 
+      // user does not already exist , so create one
       user = new User({
         name,
         email,
         password
       });
 
+      // encrypt user password
+      // create salt to do hashing
+      // await since promise
       const salt = await bcrypt.genSalt(10);
-
+      // hash the password
       user.password = await bcrypt.hash(password, salt);
 
+      // wait till user gets saved
       await user.save();
 
+      // payload is data that you want to send in token
+      // here we send user's id to identify which user is logged in
       const payload = {
         user: {
           id: user.id,
         },
       };
 
+
       jwt.sign(
         payload,
+        // get our jwtSecret from default.json
         config.get('jwtSecret'),
+        // token expiration time in ms
         { expiresIn: 360000 },
-        (err, token) => {
+        (err, token) => { // callback
           if (err) throw err;
+          // return json web token
           res.json({ token });
         }
       );
+
     } catch (err) {
+
+      // if there is any error at any point in try block we reach here
+      // return server error  
       console.error(err.message);
       res.status(500).send('Server error');
     }
