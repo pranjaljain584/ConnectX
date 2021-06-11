@@ -6,11 +6,10 @@ const jwt = require('jsonwebtoken');
 const config = require('config');
 const bcrypt = require('bcryptjs');
 
-// const User = require('../../models/User');
+const User = require('../../models/User');
 
-// GET api/auth
-// test route
-// Public
+// GET, api/auth // type of req, url
+// Public route
 router.get('/', async (req, res) => {
     console.log("user") ;
 //   try {

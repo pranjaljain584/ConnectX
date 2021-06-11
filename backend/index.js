@@ -17,6 +17,7 @@ app.use(express.json());
 connectDB();
 
 // define routes
+app.use('/api/users', require('./routes/api/user'));
 app.use('/api/auth', require('./routes/api/auth'));
 
 const port = process.env.PORT || 5000 ;
