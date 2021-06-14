@@ -1,8 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import "../../assets/css/loading.css" ;
+import uuid from 'react-uuid' ;
 
 function Loading(props) {
+
+    const[roomId,setRoomId] = useState("") ;
+
+    useEffect(()=>{
+        setRoomId(uuid()) ;
+    },[]) ;
+
+    if(roomId !== "") props.history.push(`/room/${roomId}`);
 
     return (
       <div id='loading-bg'>

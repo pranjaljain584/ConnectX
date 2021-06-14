@@ -66,7 +66,7 @@ function App(props) {
             />
           )}
           <Route path="/loading" component={Loading} />
-          <Route path="/room/" component={Room} />
+          <Route path="/room/:roomId" component={Room} />
           <Route component={Page404} />
         </Switch>
       </div>
