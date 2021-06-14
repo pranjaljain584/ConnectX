@@ -1,0 +1,35 @@
+
+.main-div {
+    background-image: url("../../assets/images/3054191.jpg") ;
+    background-color: white;
+    background-position:right ;
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 83vh;
+    width: 100vw;
+    margin-top: -0.5%;
+}
+
+.main-div h1 {
+    padding-left: 5%;
+    padding-top: 7%;
+    font-size: 3.7rem;
+    line-height: 1.4;
+    color:#ca3640 ;
+    margin-bottom: 0%;
+}
+
+.main-div p {
+    font-weight: 400;
+    font-size: 2rem;
+    padding-left: 5%;
+    padding-top: -5%;
+    margin-top: 0%;
+    line-height: 1.4;
+}
+
+.btn{
+    margin-left: 5%;
+    width: 11rem;
+    margin-right: -3%;
+}
