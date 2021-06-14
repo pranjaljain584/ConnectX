@@ -5,11 +5,17 @@ import {
   Switch,
   Redirect,
 } from 'react-router-dom';
-import Home from './Home';
+import Home from './HomePage/Home.js';
 import setAuthToken from '../utils/setAuthToken';
 import { loadUser } from '../actions/auth';
 import { connect } from 'react-redux';
-import '../css/App.css';
+import '../assets/css/App.css';
+import Login from './Auth/Login.js';
+import Register from './Auth/Register.js';
+import Page404 from './Page404.js';
+import Dashboard from './Dashboard/Dashboard.js';
+import Room from './Room/Room.js';
+import Loading from './Room/Loading.js';
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -35,7 +41,6 @@ const PrivateRoute = (privateRouteProps) => {
   );
 };
 
-
 function App(props) {
   useEffect(() => {
     //console.log(props.auth.isAuthenticated);
@@ -51,11 +56,18 @@ function App(props) {
         {/* {isAuthenticated ? <TopBarAndDrawer /> : <Navigationbar />} */}
         <Switch>
           <Route exact path='/' component={Home} />
-          {/* <Route path='/login' component={Login} />
-          <Route path='/register' component={Register} /> */}
-
-          
-          {/* <Route component={Page404} /> */}
+          <Route path='/login' component={Login} />
+          <Route path='/register' component={Register} />
+          {props.auth.isAuthenticated === null ? null : (
+            <PrivateRoute
+              path='/dashboard'
+              component={Dashboard}
+              isAuthenticated={props.auth.isAuthenticated}
+            />
+          )}
+          <Route path="/loading" component={Loading} />
+          <Route path="/room/" component={Room} />
+          <Route component={Page404} />
         </Switch>
       </div>
     </Router>

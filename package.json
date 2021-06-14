@@ -4,9 +4,11 @@
   "description": "Microsoft Teams Clone",
   "main": "index.js",
   "scripts": {
-    "server" : "cd backend && nodemon index.js" ,
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "server": "cd backend && nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "cd frontend && npm run start"
   },
   "author": "Pranjal Jain",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {}
 }

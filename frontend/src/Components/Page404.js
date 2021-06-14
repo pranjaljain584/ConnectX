@@ -1,5 +1,5 @@
 import React from 'react';
-import Background from '../images/2634442.jpg';
+import Background from '../assets/images/2634442.jpg';
 
 function Page404() {
   return <div style={styles}></div>;

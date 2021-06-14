@@ -3,8 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import {Button} from 'reactstrap';
 import IconButton from '@material-ui/core/IconButton';
+import { Link } from 'react-router-dom';
 // import MenuIcon from '@material-ui/icons/Menu';
 
 const useStyles = makeStyles((theme) => ({
@@ -19,10 +20,10 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
-  btn: {
-    marginRight : theme.spacing(5) ,
-    backgroundColor: '#FFFFFF',
-  },
+  button:{
+    backgroundColor:'white',
+    width:'5rem'
+  }
 }));
 
 export default function ButtonAppBar() {
@@ -42,12 +43,16 @@ export default function ButtonAppBar() {
             color='inherit'
             aria-label='menu'
           >
-          icon
+            icon
           </IconButton>
           <Typography variant='h5' className={classes.title}>
             Microsoft Teams
           </Typography>
-          <Button className={classes.btn} onClick={handleClick} color='black'>Login</Button>
+          <Link to='/login'>
+            <Button className={classes.button} outline color='white'>
+              Login
+            </Button>
+          </Link>
         </Toolbar>
       </AppBar>
     </div>

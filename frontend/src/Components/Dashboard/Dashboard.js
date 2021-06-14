@@ -1,7 +1,7 @@
 import React from 'react';
 import Display from './Display';
 import Sidebar from './Sidebar';
-import "../../css/dashboard.css" ;
+import "../../assets/css/dashboard.css" ;
 
 function Dashboard(props) {
     return (

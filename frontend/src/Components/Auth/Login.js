@@ -3,7 +3,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -12,28 +12,45 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { connect } from 'react-redux';
 import { login } from '../../actions/auth';
+import { GoogleLogin } from 'react-google-login';
+import GoogleButton from 'react-google-button' ;
 
 const initialState = {
-    email:"" ,
-    password:"" ,
+  email: '',
+  password: '',
 };
 
 function Login(props) {
   const classes = useStyles();
 
-   const [formData, setFormData] = useState(initialState);
+  const [formData, setFormData] = useState(initialState);
 
-   const handleChange = (e) => {
-     setFormData({ ...formData, [e.target.name]: e.target.value });
-   };
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
-   const handleSubmit = async (e) => {
-     e.preventDefault();
-     const {email, password} = formData ;
-     console.log('*****', formData);
-     await props.dispatch(login(email, password)); 
-     
-   };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { email, password } = formData;
+    console.log('*****', formData);
+    await props.dispatch(login(email, password));
+  };
+
+  const googleSuccess = () => {
+
+  };
+
+  const googleFailure = () => {
+
+  };
+
+  const { isAuthenticated } = props.auth;
+
+  // Redirect if logged in
+
+  if (isAuthenticated) {
+    return <Redirect to='/dashboard' />;
+  }
 
   return (
     <Container component='main' maxWidth='xs'>
@@ -88,6 +105,15 @@ function Login(props) {
             </Grid>
           </Grid>
         </form>
+        <p className={classes.para}>or</p>
+        <GoogleLogin
+          clientId='323320658112-29fp0eku8ngohvu2ojn2bacv1lims8c0.apps.googleusercontent.com'
+          render={(renderProps) => (
+            <GoogleButton onClick={renderProps.onClick} disabled={false} />
+          )}
+          onSuccess={googleSuccess}
+          onFailure={googleFailure}
+        />
       </div>
       <Box mt={8}></Box>
     </Container>
@@ -97,7 +123,7 @@ function Login(props) {
 function mapStateToProps(state) {
   return {
     auth: state.auth,
-  }; 
+  };
 }
 
 export default connect(mapStateToProps)(Login);
@@ -116,8 +142,12 @@ const useStyles = makeStyles((theme) => ({
   form: {
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
+    marginBottom : theme.spacing(3) ,
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  para: {
+
+  }
 }));

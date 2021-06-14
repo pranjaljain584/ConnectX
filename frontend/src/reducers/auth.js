@@ -6,6 +6,7 @@ import {
   REGISTER_SUCCESS,
   USER_LOADED,
   LOGOUT,
+  GOOGLEAUTH,
 } from '../actions/actionTypes';
 
 const initialAuthState = {
@@ -27,6 +28,9 @@ export default function (state = initialAuthState, action) {
         isAuthenticated: true,
         loading: false,
       };
+    case GOOGLEAUTH : 
+      console.log("GOOGLE--->>>>",action?.data)
+      return state ;
 
     case REGISTER_FAIL:
     case AUTH_ERROR:

@@ -1,8 +1,0 @@
-#main-area {
-    display: flex;
-    vertical-align: top;
-}
-
-.sidebar , .display {
-    display: inline-block;
-}
