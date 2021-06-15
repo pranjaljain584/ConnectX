@@ -1,0 +1,98 @@
+.footer-item {
+	 position: absolute;
+	 bottom: 0;
+	 left: 0;
+	 width: 100%;
+	 display: flex;
+	 align-items: center;
+	 justify-content: center;
+	 height: 90px;
+	 background: #fff;
+	 z-index: 1;
+}
+ .footer-item .left-item {
+	 display: flex;
+	 align-items: center;
+	 height: 100%;
+	 width: 350px;
+}
+ .footer-item .left-item .icon-block {
+	 display: flex;
+	 align-items: center;
+	 justify-content: center;
+	 height: 100%;
+	 padding: 0 20px;
+}
+ .footer-item .left-item .icon-block .icon {
+	 margin-left: 10px;
+	 font-size: 20px;
+}
+ .footer-item .left-item .icon-block:hover {
+	 cursor: pointer;
+	 background: #eee;
+}
+ .footer-item .center-item {
+	 width: 100%;
+	 display: flex;
+	 align-items: center;
+	 justify-content: center;
+	 flex: 1;
+}
+ .footer-item .center-item .icon-block {
+	 background: #fff;
+	 border: 1px solid #dfdfdf;
+	 width: 50px;
+	 height: 50px;
+	 border-radius: 50%;
+	 display: flex;
+	 align-items: center;
+	 justify-content: center;
+	 margin: 0 10px;
+}
+ .footer-item .center-item .icon-block .icon {
+	 color: #555;
+	 font-size: 20px;
+}
+ .footer-item .center-item .icon-block .icon.red {
+	 color: #d93025;
+}
+ .footer-item .center-item .icon-block:hover {
+	 cursor: pointer;
+	 box-shadow: 0 0 10px #ddd;
+}
+ .footer-item .center-item .icon-block.red-bg {
+	 background: #d93025;
+}
+ .footer-item .center-item .icon-block.red-bg .icon {
+	 color: #fff;
+}
+ .footer-item .right-item {
+	 display: flex;
+	 align-items: center;
+	 justify-content: flex-end;
+	 height: 100%;
+	 width: 350px;
+}
+ .footer-item .right-item .icon-block {
+	 display: flex;
+	 align-items: center;
+	 justify-content: center;
+	 flex-direction: column;
+	 height: 100%;
+	 width: 146px;
+	 color: #555;
+}
+ .footer-item .right-item .icon-block .icon {
+	 font-size: 20px;
+	 margin-bottom: 10px;
+}
+ .footer-item .right-item .icon-block .title {
+	 margin: 0;
+	 font-size: 14px;
+	 font-weight: 500;
+}
+ .footer-item .right-item .icon-block:hover {
+	 cursor: pointer;
+	 background: #eee;
+}
+ 

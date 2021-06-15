@@ -48,7 +48,7 @@ function App(props) {
   }, []);
 
   const { isAuthenticated } = props.auth;
-  console.log(isAuthenticated);
+  // console.log(isAuthenticated);
 
   return (
     <Router>

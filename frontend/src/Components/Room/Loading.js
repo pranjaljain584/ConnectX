@@ -11,7 +11,7 @@ function Loading(props) {
         setRoomId(uuid()) ;
     },[]) ;
 
-    if(roomId !== "") props.history.push(`/room/${roomId}`);
+    if(roomId !== "") props.history.push(`/room/${roomId}#init`);
 
     return (
       <div id='loading-bg'>
