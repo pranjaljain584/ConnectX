@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 // creating user schema
 const UserSchema = new Schema(
   {
-    // all below fields are required   
+    // all below fields are required
     name: {
       type: String,
       required: true,
@@ -18,7 +18,13 @@ const UserSchema = new Schema(
     password: {
       type: String,
       required: true,
-    }
+    },
+    joinedRooms: [
+      {
+        type: mongoose.Schema.Types.ObjectID,
+        ref: 'ChatRoom',
+      },
+    ],
   },
   {
     timestamps: true, //so that we have createdAt and updatedAt fields

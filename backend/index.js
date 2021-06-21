@@ -38,7 +38,8 @@ app.use('/api/room', require('./routes/api/room'));
 
 
 io.on('connection', require('./socketManager'));
-// io.on('connected', socketManager);
+
+
 
 const port = process.env.PORT || 5000;
 
