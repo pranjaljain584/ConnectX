@@ -4,6 +4,7 @@ var localVideoref = React.createRef();
 
 const Media = (props) => {
 
+  const {isVideo} = props ;
     useEffect(() => {
       var constraints = {
         video: true,
@@ -25,13 +26,13 @@ const Media = (props) => {
 
       getMedia(constraints);
 
-    }, []);
+    }, [isVideo]);
 
   return (
-    <div>
-      peer component
-      <video className="video-grid" ref={localVideoref} autoPlay></video>
-    </div>
+    <video className='video-container' ref={localVideoref} autoPlay></video>
+    // <div className="video-container">
+    //   {isVideo ? (<video ref={localVideoref} autoPlay></video>):(<div>Off</div>)}
+    // </div>
   );
 };
 

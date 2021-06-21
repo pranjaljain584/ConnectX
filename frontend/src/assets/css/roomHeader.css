@@ -1,0 +1,53 @@
+.room-header {
+  position: absolute;
+  top: 3%;
+  right: 8%;
+  height: auto;
+  width: auto;
+  /* background-color: tomato; */
+}
+
+.toggle-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+}
+
+.chat-head {
+  background-color: #10b664;
+  width: 140px;
+  height: 50px;
+  border-radius: 0.5rem;
+  font-size: 15px;
+  color: white;
+}
+
+.participants-head {
+  /* border-radius: 0.5rem; */
+  background-color: #1a1b20;
+  height: 50px;
+  width: 150px;
+  color: #616065;
+  font-size: 16px;
+  border-top-right-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+}
+
+.participants-head .icon-block {
+  padding: 12px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chat-head .icon {
+  color: white;
+}
+
+.chat-head .icon-block {
+  padding: 14px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,0 +1,27 @@
+.room{
+    background-color: rgb(33,36,43);
+    padding: 1%;
+    margin:0 ;
+}
+.video-grid{
+    height: 70vh;
+    width: 60vw;
+    background-color: #1A1B20;
+    border-radius: 2rem; 
+    /* display: flex ; */
+    margin-top: 3%;
+    margin-left: 3%;
+    padding: 2% 0%;
+}
+
+.video-container{
+    height: 50% ;
+    object-fit: cover;
+    width: 40%;
+    margin-right: 5%;
+    margin-left: 5%;
+    border-radius: 2rem;
+    border : 5px solid #5F5E64 ;
+    padding: 0;
+    background-color: rgb(58, 58, 58) ;
+}

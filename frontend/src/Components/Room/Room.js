@@ -8,19 +8,19 @@ import RoomHeader from './RoomHeader';
 import RoomFooter from './RoomFooter';
 import MeetingInfo from './MeetingInfo';
 import Messenger from './Messenger';
+import '../../assets/css/room.css';
 import MessageListReducer from '../../reducers/MessageListReducer';
 import Peer from 'simple-peer';
+import { faVideoSlash } from '@fortawesome/free-solid-svg-icons';
 
 const socket = io.connect('http://localhost:5000', {
   transports: ['websocket'],
 });
-socket.on('connect_error', (err) => {
-  console.log(`connect_error due to ${err.message}`);
-});
+// socket.on('connect_error', (err) => {
+//   console.log(`connect_error due to ${err.message}`);
+// });
 const initialState = [];
 let peer = null;
-// var localVideoref = React.createRef();
-// var userVideoRef = React.createRef() ;
 
 function Room(props) {
   const { roomId } = useParams();
@@ -39,6 +39,7 @@ function Room(props) {
   const [isMessenger, setIsMessenger] = useState(false);
   const [messageAlert, setMessageAlert] = useState({});
   const [isAudio, setIsAudio] = useState(true);
+  const [isVideo, setIsVideo] = useState(true);
 
   useEffect(() => {
     initWebRTC();
@@ -63,7 +64,6 @@ function Room(props) {
         audio: true,
       })
       .then((stream) => {
-        //   localVideoref.current.srcObject=stream ;
         setStreamObj(stream);
         peer = new Peer({
           initiator: isAdmin,
@@ -96,23 +96,14 @@ function Room(props) {
         peer.on('stream', async (stream) => {
           let video = document.getElementById('video');
 
-          //   userVideoRef.current.srcObject=stream ;
-
           if ('srcObject' in video) {
             const mediaStream = await navigator.mediaDevices.getUserMedia({
               video: true,
             });
             video.srcObject = stream;
-            // video.src = '';
-
             video.load();
-
-            console.log('**', video.srcObject);
-            console.log('src--->>>', video.src);
-            console.log('video ele--->>>', video);
           } else {
             video.src = window.URL.createObjectURL(stream);
-            console.log('&&&&&', video.src);
           }
 
           video.play();
@@ -161,6 +152,11 @@ function Room(props) {
     setIsAudio(value);
   };
 
+  const toggleVideo = (value) => {
+    streamObj.getVideoTracks()[0].enabled = value;
+    setIsVideo(value);
+  };
+
   const disconnectCall = () => {
     peer.destroy();
     props.history.push('/');
@@ -170,15 +166,10 @@ function Room(props) {
   console.log('IS ADMIN', isAdmin);
 
   return (
-    <div>
-      <div className='room-container'>
-        <video
-          className='video-container'
-          id='video'
-          src=''
-          autoPlay
-          controls
-        ></video>
+    <div className='room'>
+      <div className='video-grid'>
+        <Media isVideo={isVideo} />
+        <video className='video-container' id='video' src='' autoPlay></video>
       </div>
       <RoomHeader />
       <RoomFooter
@@ -187,12 +178,14 @@ function Room(props) {
         screenShare={screenShare}
         isAudio={isAudio}
         toggleAudio={toggleAudio}
+        isVideo={isVideo}
+        toggleVideo={toggleVideo}
         disconnectCall={disconnectCall}
       />
-      {isAdmin && <MeetingInfo url={url} />}
-      <Messenger />
-      this is meet room with room id {roomId} and {url}
-      {/* <Media /> */}
+      {/* {isAdmin && <MeetingInfo url={url} />} */}
+      {/* <Messenger /> */}
+      {/* this is meet room with room id {roomId} and {url} */}
+      {/* <Media isVideo={isVideo} /> */}
     </div>
   );
 }

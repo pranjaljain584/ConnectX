@@ -2,14 +2,13 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faVideo,
+  faInfo,
   faMicrophone,
-  faPhone,
-  faAngleUp,
-  faClosedCaptioning,
   faDesktop,
   faMicrophoneSlash,
+  faVideoSlash
 } from '@fortawesome/free-solid-svg-icons';
-import "../../assets/css/pageFooter.css" ;
+import '../../assets/css/pageFooter.css';
 
 const RoomFooter = ({
   isPresenting,
@@ -17,18 +16,16 @@ const RoomFooter = ({
   screenShare,
   isAudio,
   toggleAudio,
+  isVideo,
+  toggleVideo,
   disconnectCall,
 }) => {
-
   return (
     <div className='footer-item'>
-      <div className='left-item'>
-        <div className='icon-block'>
-          Meeting details
-          <FontAwesomeIcon className='icon' icon={faAngleUp} />
-        </div>
-      </div>
       <div className='center-item'>
+        <div className='icon-block'>
+          <FontAwesomeIcon className='icon' icon={faInfo} />
+        </div>
         <div
           className={`icon-block ${!isAudio ? 'red-bg' : null}`}
           onClick={() => toggleAudio(!isAudio)}
@@ -38,33 +35,30 @@ const RoomFooter = ({
             icon={isAudio ? faMicrophone : faMicrophoneSlash}
           />
         </div>
-        <div className='icon-block' onClick={disconnectCall}>
-          <FontAwesomeIcon className='icon red' icon={faPhone} />
+        <div onClick={disconnectCall}>
+          <div className='end-call'>End Call</div>
         </div>
-        <div className='icon-block'>
-          <FontAwesomeIcon className='icon' icon={faVideo} />
+        <div
+          className={`icon-block ${!isVideo ? 'red-bg' : null}`}
+          onClick={() => toggleVideo(!isVideo)}
+        >
+          <FontAwesomeIcon
+            className='icon'
+            icon={isVideo ? faVideo : faVideoSlash}
+          />
         </div>
-      </div>
-      <div className='right-item'>
-        <div className='icon-block'>
-          <FontAwesomeIcon className='icon red' icon={faClosedCaptioning} />
-          <p className='title'>Turn on captions</p>
-        </div>
-
         {isPresenting ? (
           <div className='icon-block' onClick={stopScreenShare}>
-            <FontAwesomeIcon className='icon red' icon={faDesktop} />
-            <p className='title'>Stop presenting</p>
+            <FontAwesomeIcon className='icon blue' icon={faDesktop} />
           </div>
         ) : (
           <div className='icon-block' onClick={screenShare}>
-            <FontAwesomeIcon className='icon red' icon={faDesktop} />
-            <p className='title'>Present now</p>
+            <FontAwesomeIcon className='icon' icon={faDesktop} />
           </div>
         )}
       </div>
     </div>
   );
-}
+};
 
 export default RoomFooter;

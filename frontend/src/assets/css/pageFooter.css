@@ -1,4 +1,75 @@
 .footer-item {
+  /* position: absolute; */
+  padding: 0;
+  margin-top: 2%;
+  margin-bottom: 0.3%;
+  background-color: #1a1b20;
+  width: 61.5%;
+  height: 106px;
+  border-radius: 2rem;
+  /* margin-bottom: 0; */
+  display: flex;
+  margin-left: 3%;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.footer-item .center-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+}
+
+.footer-item .center-item .icon-block {
+  background: rgb(33, 36, 43);
+  border: 3px solid #3a3d43;
+  width: 65px;
+  height: 65px;
+  border-radius: 15%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 12px;
+}
+.footer-item .center-item .icon-block .icon {
+  color: white;
+  font-size: 20px;
+}
+.footer-item .center-item .icon-block .icon.red {
+  color: #d93025;
+}
+
+.footer-item .center-item .icon-block .icon.blue {
+  color: #3088FB;
+}
+.footer-item .center-item .icon-block:hover {
+  cursor: pointer;
+  /* box-shadow: 0 0 10px #ddd; */
+}
+
+.end-call {
+  width: 120px;
+  height: 60px;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ef5a5c;
+  color: white;
+  font-size: 1rem;
+  margin: 0 12px ;
+}
+
+.end-call:hover {
+	cursor: pointer;
+}
+
+/* .footer-item {
 	 position: absolute;
 	 bottom: 0;
 	 left: 0;
@@ -10,6 +81,8 @@
 	 background: #fff;
 	 z-index: 1;
 }
+
+
  .footer-item .left-item {
 	 display: flex;
 	 align-items: center;
@@ -31,41 +104,8 @@
 	 cursor: pointer;
 	 background: #eee;
 }
- .footer-item .center-item {
-	 width: 100%;
-	 display: flex;
-	 align-items: center;
-	 justify-content: center;
-	 flex: 1;
-}
- .footer-item .center-item .icon-block {
-	 background: #fff;
-	 border: 1px solid #dfdfdf;
-	 width: 50px;
-	 height: 50px;
-	 border-radius: 50%;
-	 display: flex;
-	 align-items: center;
-	 justify-content: center;
-	 margin: 0 10px;
-}
- .footer-item .center-item .icon-block .icon {
-	 color: #555;
-	 font-size: 20px;
-}
- .footer-item .center-item .icon-block .icon.red {
-	 color: #d93025;
-}
- .footer-item .center-item .icon-block:hover {
-	 cursor: pointer;
-	 box-shadow: 0 0 10px #ddd;
-}
- .footer-item .center-item .icon-block.red-bg {
-	 background: #d93025;
-}
- .footer-item .center-item .icon-block.red-bg .icon {
-	 color: #fff;
-}
+
+ 
  .footer-item .right-item {
 	 display: flex;
 	 align-items: center;
@@ -95,4 +135,4 @@
 	 cursor: pointer;
 	 background: #eee;
 }
- 
+  */

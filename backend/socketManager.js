@@ -1,7 +1,4 @@
-console.log("hi")
 module.exports = (socket) => {
-
- console.log("hello") ;
   try {
     console.log('*****Connected');
     socket.on('code', (data, callback) => {

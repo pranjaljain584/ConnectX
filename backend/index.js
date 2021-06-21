@@ -2,7 +2,6 @@ const express = require('express');
 const http = require('http');
 const cors = require('cors');
 const path = require('path');
-const bodyParser = require('body-parser');
 // require connectDB function exported in db.js file
 const connectDB = require('./config/db');
 
@@ -43,4 +42,4 @@ io.on('connection', require('./socketManager'));
 
 const port = process.env.PORT || 5000;
 
-app.listen(port, () => console.log(`Server is running at ${port}`));
+server.listen(port, () => console.log(`Server is running at ${port}`));
