@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const ChatRoom = require('../models/ChatRoom') ;
 
 module.exports.getChatList = async (req, res) => {
   try {
@@ -17,6 +18,11 @@ module.exports.getChatList = async (req, res) => {
 
 module.exports.getChatRoom = async (req, res) => {
   try {
+    const roomId = req.params.roomid ;
+    const room = await ChatRoom.findById(roomId) ;
+
+    return res.status(200).json({room}) ;
+
   } catch (error) {
     console.error(err.message);
     res.status(500).send('Server error');

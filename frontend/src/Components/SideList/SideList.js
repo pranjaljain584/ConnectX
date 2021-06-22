@@ -9,10 +9,8 @@ const socket = io.connect('http://localhost:5000', {
   transports: ['websocket'],
 });
 
-function SideList({ sidebarSelectedItem }) {
+function SideList({ sidebarSelectedItem, setRoomIdSelected }) {
   const [chatList, setChatList] = useState([]);
-
-  
 
   useEffect(() => {
     const config = {
@@ -36,8 +34,8 @@ function SideList({ sidebarSelectedItem }) {
 
   useEffect(() => {
     socket.on('create-room-client', function (data) {
-      setChatList((prevState)=>{
-          return [...prevState , data.room]
+      setChatList((prevState) => {
+        return [...prevState, data.room];
       });
     });
   }, []);
@@ -53,6 +51,7 @@ function SideList({ sidebarSelectedItem }) {
               title={chat.title}
               id={chat._id}
               msgArray={chat.msgArray}
+              setRoomIdSelected={setRoomIdSelected}
             />
           );
         })

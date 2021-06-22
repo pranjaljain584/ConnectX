@@ -37,29 +37,28 @@ function Register(props) {
     props.dispatch(register({ name, email, password }));
   };
   const googleSuccess = async (res) => {
-    console.log(res) ;
-    const result = res?.profileObj ;
-    const token = res?.tokenId ;
+    console.log(res);
+    const result = res?.profileObj;
+    const token = res?.tokenId;
 
     try {
       props.dispatch({ type: 'GOOGLEAUTH', data: { result, token } });
     } catch (error) {
-      console.log(error) ;
+      console.log(error);
     }
-
-
   };
 
   const googleFailure = (error) => {
-    console.log(error) ;
+    console.log(error);
   };
 
   const { isAuthenticated } = props.auth;
+  const { from } = props.location.state || { from: { pathname: '/dashboard' } };
 
   // Redirect if logged in
 
   if (isAuthenticated) {
-    return <Redirect to='/login' />;
+    return <Redirect to={from} />;
   }
 
   return (

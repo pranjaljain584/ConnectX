@@ -13,7 +13,7 @@ import Container from '@material-ui/core/Container';
 import { connect } from 'react-redux';
 import { login } from '../../actions/auth';
 import { GoogleLogin } from 'react-google-login';
-import GoogleButton from 'react-google-button' ;
+import GoogleButton from 'react-google-button';
 
 const initialState = {
   email: '',
@@ -36,20 +36,17 @@ function Login(props) {
     await props.dispatch(login(email, password));
   };
 
-  const googleSuccess = () => {
+  const googleSuccess = () => {};
 
-  };
-
-  const googleFailure = () => {
-
-  };
+  const googleFailure = () => {};
 
   const { isAuthenticated } = props.auth;
+  const { from } = props.location.state || { from: { pathname: '/dashboard' } };
 
   // Redirect if logged in
 
   if (isAuthenticated) {
-    return <Redirect to='/dashboard' />;
+    return <Redirect to={from} />;
   }
 
   return (
@@ -142,12 +139,10 @@ const useStyles = makeStyles((theme) => ({
   form: {
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
-    marginBottom : theme.spacing(3) ,
+    marginBottom: theme.spacing(3),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-  para: {
-
-  }
+  para: {},
 }));
