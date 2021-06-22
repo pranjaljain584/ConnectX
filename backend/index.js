@@ -35,11 +35,9 @@ connectDB();
 app.use('/api/users', require('./routes/api/user'));
 app.use('/api/auth', require('./routes/api/auth'));
 app.use('/api/room', require('./routes/api/room'));
-
+app.use('/api/chat', require('./routes/api/chat'));
 
 io.on('connection', require('./socketManager'));
-
-
 
 const port = process.env.PORT || 5000;
 
