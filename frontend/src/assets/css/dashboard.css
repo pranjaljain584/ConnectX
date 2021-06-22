@@ -3,6 +3,6 @@
     vertical-align: top;
 }
 
-.sidebar , .display {
+.sidebar , .display , .sidelist {
     display: inline-block;
 }

@@ -1,19 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Display from './Display';
 import Sidebar from './Sidebar';
-import "../../assets/css/dashboard.css" ;
+import TopBar from './TopBar';
+import SideList from '../SideList/SideList';
+import '../../assets/css/dashboard.css';
 
 function Dashboard(props) {
-    return (
-      <div>
-        {/* top bar */}
-        dashboard
-        <div id="main-area">
-          <Sidebar className='sidebar' />
-          <Display className='display' />
-        </div>
+  const [sidebarSelectedItem, setSidebarSelectedItem] = useState('');
+
+  console.log("**",sidebarSelectedItem);
+
+  return (
+    <div>
+      <TopBar />
+      <div id='main-area'>
+        <Sidebar
+          className='sidebar'
+          setSidebarSelectedItem={setSidebarSelectedItem}
+        />
+        <SideList
+          className='sidelist'
+          sidebarSelectedItem={sidebarSelectedItem}
+        />
+        <Display className='display' />
       </div>
-    );
+    </div>
+  );
 }
 
 export default Dashboard;

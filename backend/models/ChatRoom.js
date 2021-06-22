@@ -26,6 +26,9 @@ const ChatRoomSchema = new Schema(
         ref: 'User',
       },
     ],
+    lastmsg : {
+      type:String
+    }
   },
   {
     timestamps: true, //so that we have createdAt and updatedAt fields

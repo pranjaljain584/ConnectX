@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-import chatController from '../../controllers/chat_controller' ;
+const auth = require('../../middleware/auth');
+const chatController = require('../../controllers/chat_controller') ;
 
 router.get('/chat-list',auth,chatController.getChatList) ;
 
