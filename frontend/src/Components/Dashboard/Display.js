@@ -6,7 +6,6 @@ function Display(props) {
     const {roomIdSelected} = props ;
     return (
       <div className='display-div'>
-        display
         {roomIdSelected !== '' && <ChatRoom roomIdSelected={roomIdSelected} />}
       </div>
     );

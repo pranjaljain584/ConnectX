@@ -1,10 +1,12 @@
 import React from 'react';
+import '../../assets/css/chatroom.css';
 
 function ChatHeader(props) {
     const {roomName} = props ;
     return (
-        <div>
-            Room Name -- {roomName}
+        <div className="chat-header" >
+            {roomName}
+            {/* <hr /> */}
         </div>
     );
 }

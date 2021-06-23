@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import ChatHeader from './ChatHeader';
 import ChatFooter from './ChatFooter';
 import { io } from 'socket.io-client';
+import '../../assets/css/chatroom.css';
+import Message from './Message';
 
 const socket = io.connect('http://localhost:5000', {
   transports: ['websocket'],
@@ -51,12 +53,14 @@ function ChatRoom(props) {
   }, [roomIdSelected]);
 
   return (
-    <div>
+    <div className='chat-room'>
       <ChatHeader roomIdSelected={roomIdSelected} roomName={roomName} />
-      {msgArray.length > 0 &&
-        msgArray.map((msg, key) => {
-          return <p key={key}>msg-- {msg.chatMessage}</p>;
-        })}
+      <div className='list' id='style'>
+        {msgArray.length > 0 &&
+          msgArray.map((msg, key) => {
+            return <Message key={key} msg={msg} />;
+          })}
+      </div>
       <ChatFooter roomIdSelected={roomIdSelected} />
     </div>
   );

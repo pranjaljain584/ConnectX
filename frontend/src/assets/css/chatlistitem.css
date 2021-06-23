@@ -24,6 +24,10 @@
     flex-grow: 4;
 }
 
+.mid-item p {
+    height: 30px;
+}
+
 .mid-item span {
     color: black;
     font-weight: 600;

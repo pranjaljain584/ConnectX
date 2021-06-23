@@ -7,7 +7,7 @@ function SideListHeader(props) {
   const { sidebarSelectedItem } = props;
   const userId = props.auth.user?._id ;
 
-  console.log('USER___>>', props);
+  // console.log('USER___>>', props);
 
   return (
     <div>
