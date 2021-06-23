@@ -44,25 +44,32 @@ function SideList({ sidebarSelectedItem, setRoomIdSelected }) {
   return (
     <div className='sidelist-div'>
       <SideListHeader sidebarSelectedItem={sidebarSelectedItem} />
-      {chatList.length > 0 ? (
-        chatList.map((chat, key) => {
-          return (
-            <ChatListItem
-              key={key}
-              title={chat.title}
-              id={chat._id}
-              lastMsg={
-                chat.msgArray.length > 0
-                  ? chat.msgArray[chat.msgArray.length - 1].chatMessage
-                  : null
-              }
-              setRoomIdSelected={setRoomIdSelected}
-            />
-          );
-        })
-      ) : (
-        <p>Empty chat list</p>
-      )}
+      <div className="list" id="style">
+        {chatList.length > 0 ? (
+          chatList.map((chat, key) => {
+            return (
+              <ChatListItem
+                key={key}
+                title={chat.title}
+                id={chat._id}
+                lastMsg={
+                  chat.msgArray.length > 0
+                    ? chat.msgArray[chat.msgArray.length - 1].chatMessage
+                    : null
+                }
+                time={
+                  chat.msgArray.length > 0
+                    ? chat.msgArray[chat.msgArray.length - 1].chatTime
+                    : null
+                }
+                setRoomIdSelected={setRoomIdSelected}
+              />
+            );
+          })
+        ) : (
+          <p>Empty chat list</p>
+        )}
+      </div>
     </div>
   );
 }

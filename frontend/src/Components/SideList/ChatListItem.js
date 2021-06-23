@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
+import '../../assets/css/chatlistitem.css';
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const socket = io.connect('http://localhost:5000', {
   transports: ['websocket'],
 });
 
 function ChatListItem(props) {
-  const { title, id, lastMsg, setRoomIdSelected } = props;
+  const { title, id,time, lastMsg, setRoomIdSelected } = props;
   const [lastMessage, setLastMessage] = useState(lastMsg);
   useEffect(() => {
     // console.log('Room Socket listening on: ', id);
@@ -21,8 +24,16 @@ function ChatListItem(props) {
       onClick={() => {
         setRoomIdSelected(id);
       }}
+      className='chat-list-item'
     >
-      {title} {id} {lastMessage ? <p>{lastMessage}</p> : <p>Empty</p>}
+      <div className='left-item'>
+        <FontAwesomeIcon icon={faUserCircle} />
+      </div>
+      <div className='mid-item'>
+        <span>{title}</span> <br />{' '}
+        {lastMessage ? <p>{lastMessage}</p> : <p></p>}
+      </div>
+      <div className='right-item'>{time}</div>
     </div>
   );
 }

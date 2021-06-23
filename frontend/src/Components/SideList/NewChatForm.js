@@ -6,6 +6,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import '../../assets/css/sidelistheader.css';
 import { io } from 'socket.io-client';
 
 const socket = io.connect('http://localhost:5000', {
@@ -39,9 +40,9 @@ export default function NewChatForm(props) {
 
   return (
     <div>
-      <Button variant='outlined' color='primary' onClick={handleClickOpen}>
+      <button className="new-chat-btn" onClick={handleClickOpen}>
         New Chat
-      </Button>
+      </button>
       <Dialog
         open={open}
         onClose={handleClose}

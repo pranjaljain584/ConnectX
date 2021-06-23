@@ -1,33 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../../assets/css/sidebar.css';
-import { Button } from '@material-ui/core';
+import { faComment, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function Sidebar({ setSidebarSelectedItem }) {
-  const handleClick = (e) => {
-    // e.preventDefault();
-    // console.log(e.target.value) ;
-    setSidebarSelectedItem(e);
-  };
+  const [selectedChat, setSelectedChat] = useState(false);
+  const [selectedCal, setSelectedCal] = useState(false);
 
   return (
     <div className='sidebar-div'>
-      sidebar
-      <Button
+      <div
         value='Chat'
         onClick={() => {
           setSidebarSelectedItem('Chat');
+          setSelectedCal(false) ;
+          setSelectedChat(true);
         }}
       >
-        Chat
-      </Button>
-      <Button
+        <FontAwesomeIcon
+          className={`icon ${selectedChat ? ' white' : ''}`}
+          icon={faComment}
+        />
+      </div>
+      <div
         value='Calendar'
         onClick={() => {
           setSidebarSelectedItem('Calendar');
+          setSelectedChat(false) ;
+          setSelectedCal(true);
         }}
       >
-        Calendar
-      </Button>
+        <FontAwesomeIcon
+          className={`icon ${selectedCal ? ' white' : ''}`}
+          icon={faCalendarAlt}
+        />
+      </div>
     </div>
   );
 }

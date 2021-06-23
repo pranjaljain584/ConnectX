@@ -1,6 +1,7 @@
 #main-area {
     display: flex;
     vertical-align: top;
+    background-color: #EFF5F5;
 }
 
 .sidebar , .display , .sidelist {

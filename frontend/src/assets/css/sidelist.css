@@ -1,5 +1,30 @@
 .sidelist-div{
-    background-color: yellowgreen;
+    background-color: #EFF5F5;
     height: 92vh; 
     width: 25vw;
+    margin-left: 1.5%;
+}
+
+.list{
+    overflow-y: scroll;
+    height: 78vh;
+}
+
+
+#style::-webkit-scrollbar-track
+{
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+#style::-webkit-scrollbar
+{
+	width: 6px;
+	background-color: #F5F5F5;
+}
+
+#style::-webkit-scrollbar-thumb
+{
+	border-radius: 8px;
+	background-color: rgb(202, 202, 202);
 }
