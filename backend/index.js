@@ -5,7 +5,6 @@ const path = require('path');
 const User = require('./models/User');
 const ChatRoom = require('./models/ChatRoom');
 
-
 // require connectDB function exported in db.js file
 const connectDB = require('./config/db');
 
@@ -86,12 +85,34 @@ io.on('connection', (socket) => {
       }
     });
 
-    // socket.on('send message', function (data) {
-    //   console.log('sending room post', data.room);
-    //   socket.broadcast.to(data.room).emit('conversation private post', {
-    //     message: data.message,
-    //   });
-    // });
+    socket.on('send-msg', async function (data) {
+      // console.log('sending room post', data);
+      const { userId, msgTime, msg, userName, roomIdSelected } = data;
+
+      const finalMsg = {
+        userId,
+        userName,
+        chatMessage: msg,
+        chatTime: msgTime,
+      };
+
+      ChatRoom.findOneAndUpdate(
+        { _id: roomIdSelected },
+        { $push: { msgArray: finalMsg } },
+        (err, doc) => {
+          if (err) {
+            console.log('error in sending msg: ', err);
+          }
+
+          io.emit(`${roomIdSelected}`, { finalMsg });
+          io.emit(`${roomIdSelected}-lastMessage`, { finalMsg });
+        }
+      );
+
+      // socket.broadcast.to(data.room).emit('conversation private post', {
+      //   message: data.message,
+      // });
+    });
   } catch (error) {
     console.log('Error socket', error.message);
   }

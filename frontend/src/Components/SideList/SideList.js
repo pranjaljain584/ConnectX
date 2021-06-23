@@ -25,8 +25,9 @@ function SideList({ sidebarSelectedItem, setRoomIdSelected }) {
       axios
         .get(`http://localhost:5000/api/chat/chat-list`, config)
         .then((response) => {
+          // console.log('Chat List---', response.data);
+
           setChatList(response.data.roomsArray);
-          console.log(chatList);
         })
         .catch((err) => console.log(err));
     }
@@ -50,7 +51,11 @@ function SideList({ sidebarSelectedItem, setRoomIdSelected }) {
               key={key}
               title={chat.title}
               id={chat._id}
-              msgArray={chat.msgArray}
+              lastMsg={
+                chat.msgArray.length > 0
+                  ? chat.msgArray[chat.msgArray.length - 1].chatMessage
+                  : null
+              }
               setRoomIdSelected={setRoomIdSelected}
             />
           );
