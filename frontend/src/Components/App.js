@@ -16,6 +16,8 @@ import Page404 from './Page404.js';
 import Dashboard from './Dashboard/Dashboard.js';
 import Room from './Room/Room.js';
 import Loading from './Room/Loading.js';
+import ChatRoomJoining from './Channel/ChatRoomJoining.js';
+import ErrorPage from './ErrorPage.js';
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -72,8 +74,16 @@ function App(props) {
               isAuthenticated={props.auth.isAuthenticated}
             />
           )}
-          <Route path="/loading" component={Loading} />
-          <Route path="/room/:roomId" component={Room} />
+          {props.auth.isAuthenticated === null ? null : (
+            <PrivateRoute
+              path='/invite/:chatRoomId'
+              component={ChatRoomJoining}
+              isAuthenticated={props.auth.isAuthenticated}
+            />
+          )}
+          <Route path='/loading' component={Loading} />
+          <Route path='/room/:roomId' component={Room} />
+          <Route path="/error" component={ErrorPage} />
           <Route component={Page404} />
         </Switch>
       </div>

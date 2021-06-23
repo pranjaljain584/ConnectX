@@ -42,10 +42,12 @@ app.use('/api/chat', require('./routes/api/chat'));
 
 io.on('connection', (socket) => {
   try {
+    // code
     socket.on('code', (data, callback) => {
       socket.broadcast.emit('code', data);
     });
 
+    // create room
     socket.on('create-room', async function (room) {
       console.log('Socket create-room called!');
       try {
@@ -83,11 +85,6 @@ io.on('connection', (socket) => {
         res.status(401).send('socket callback error');
       }
     });
-
-    // socket.on('join-room', function (room) {
-    //   console.log('joining room', room);
-    //   socket.join(room);
-    // });
 
     // socket.on('send message', function (data) {
     //   console.log('sending room post', data.room);
