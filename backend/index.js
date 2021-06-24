@@ -4,6 +4,7 @@ const cors = require('cors');
 const path = require('path');
 const User = require('./models/User');
 const ChatRoom = require('./models/ChatRoom');
+const File = require('./models/File') ;
 
 // require connectDB function exported in db.js file
 const connectDB = require('./config/db');
@@ -87,13 +88,41 @@ io.on('connection', (socket) => {
 
     socket.on('send-msg', async function (data) {
       // console.log('sending room post', data);
-      const { userId, msgTime, msg, userName, roomIdSelected } = data;
+      const { userId, msgTime, msg, userName, roomIdSelected ,file} = data;
+
+      let fileId=null ;
+      if (file !== '') {
+        let newfile = new File({
+          name: file.name,
+          base64String: file.base64,
+          roomId: roomIdSelected,
+        });
+
+        newfile.save(async function (err , result) {
+          if (err) {
+            console.log('File save error: **', err);
+            return;
+          }
+
+          try {
+
+            fileId = result._id ;
+            
+          } catch (error) {
+            console.log('File save error:', error);
+          }
+
+        });
+      }
 
       const finalMsg = {
         userId,
         userName,
         chatMessage: msg,
         chatTime: msgTime,
+        fileId,
+        fileName:file.name,
+        base64String:file.base64
       };
 
       ChatRoom.findOneAndUpdate(

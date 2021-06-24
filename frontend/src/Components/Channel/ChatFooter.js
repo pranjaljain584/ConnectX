@@ -38,7 +38,7 @@ class ChatFooter extends Component {
     this.setState({ msg: e.target.value });
   };
 
-  handleSubmit = (e, roomIdSelected, userName, userId) => {
+  handleSubmit = (e, roomIdSelected, userName, userId,file) => {
     e.preventDefault();
     var currentdate = new Date();
     var time = currentdate.getHours() + ':' + currentdate.getMinutes();
@@ -49,6 +49,7 @@ class ChatFooter extends Component {
       msg: this.state.msg,
       userName,
       roomIdSelected,
+      file
     });
 
     this.setState({ msg: '' });
@@ -143,7 +144,7 @@ class ChatFooter extends Component {
 
           <button
             onClick={(e) =>
-              this.handleSubmit(e, roomIdSelected, userName, userId)
+              this.handleSubmit(e, roomIdSelected, userName, userId,file)
             }
           >
             Send{' '}

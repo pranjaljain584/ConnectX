@@ -7,6 +7,9 @@ const ChatBody = {
   userName: { type: String, required: false },
   chatMessage: { type: String, required: true },
   chatTime: { type: String, required: true },
+  fileId: { type: mongoose.Schema.Types.ObjectID ,ref:'File'},
+  fileName: {type:String},
+  base64String : {type:String}
 };
 
 // creating ChatRoom schema

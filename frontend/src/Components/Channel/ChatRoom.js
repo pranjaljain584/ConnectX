@@ -14,13 +14,15 @@ function ChatRoom(props) {
   const { roomIdSelected } = props;
   const [roomName, setRoomName] = useState('');
   const [msgArray, setMsgArray] = useState([
-    {
-      chatMessage: '',
-      userName: '',
-      chatTime: '',
-      userId: '',
-    },
+    
   ]);
+  // {
+  //     chatMessage: '',
+  //     userName: '',
+  //     chatTime: '',
+  //     userId: '',
+      
+  //   },
   const [participants, setParticipants] = useState([]);
   // var objdiv = document.getElementById('style');
 
