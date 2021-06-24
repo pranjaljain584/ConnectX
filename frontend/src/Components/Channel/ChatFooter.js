@@ -1,29 +1,44 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { io } from 'socket.io-client';
-import '../../assets/css/chatfooter.css' ;
+import '../../assets/css/chatfooter.css';
+import SpeechToText from 'speech-to-text';
 import {
   faMicrophone,
   faPaperclip,
   faPaperPlane,
+  faStopCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import FileBase64 from '../File/FileBase64';
 
 const socket = io.connect('http://localhost:5000', {
   transports: ['websocket'],
 });
 
-function ChatFooter(props) {
-  const [msg, setMsg] = useState('');
-  const { roomIdSelected } = props;
-  const userId = props.auth.user?._id;
-  const userName = props.auth.user?.name;
-
-  const handleChange = (e) => {
-    setMsg(e.target.value);
+class ChatFooter extends Component {
+  state = {
+    msg: '',
+    error: '',
+    interimText: '',
+    finalisedText: [],
+    listening: false,
+    language: 'en-US',
+    file: '',
+    fileSelected:false,
   };
 
-  const handleSubmit = (e) => {
+  getFile(file) {
+    // console.log(file) ;
+    this.setState({fileSelected:true}) ;
+    this.setState({ file });
+  }
+
+  handleChange = (e) => {
+    this.setState({ msg: e.target.value });
+  };
+
+  handleSubmit = (e, roomIdSelected, userName, userId) => {
     e.preventDefault();
     var currentdate = new Date();
     var time = currentdate.getHours() + ':' + currentdate.getMinutes();
@@ -31,34 +46,113 @@ function ChatFooter(props) {
     socket.emit('send-msg', {
       userId,
       msgTime: time,
-      msg,
+      msg: this.state.msg,
       userName,
       roomIdSelected,
     });
 
-    setMsg('');
+    this.setState({ msg: '' });
   };
-  return (
-    <div className='chat-footer'>
-      <form>
-        <div className='left'>
-          <FontAwesomeIcon className='footer-icon ' icon={faPaperclip} />
-          <FontAwesomeIcon className='footer-icon ' icon={faMicrophone} />
-        </div>
 
-        <input
-          type='text'
-          placeholder='Type your message here...'
-          value={msg}
-          onChange={handleChange}
-        ></input>
-        <button onClick={handleSubmit}>
-          Send{' '}
-          <FontAwesomeIcon className='footer-icon-send' icon={faPaperPlane} />
-        </button>
-      </form>
-    </div>
-  );
+  onAnythingSaid = (text) => {
+    this.setState({ interimText: text });
+  };
+
+  onEndEvent = () => {
+    if (this.state.listening) {
+      this.startListening();
+    }
+  };
+
+  onFinalised = (text) => {
+    this.setState({
+      finalisedText: [text, ...this.state.finalisedText],
+      interimText: '',
+    });
+    var t = this.state.finalisedText[0];
+
+    this.setState({ msg: t });
+  };
+
+  startListening = () => {
+    try {
+      this.listener = new SpeechToText(
+        this.onFinalised,
+        this.onEndEvent,
+        this.onAnythingSaid,
+        this.state.language
+      );
+      this.listener.startListening();
+      this.setState({ listening: true });
+    } catch (err) {
+      console.log('yoyoy');
+      console.log(err);
+    }
+  };
+
+  stopListening = () => {
+    this.listener.stopListening();
+    this.setState({ listening: false });
+  };
+
+  render() {
+    const { msg, error, fileSelected, file, interimText, listening } = this.state;
+
+    const { roomIdSelected } = this.props;
+    const userId = this.props.auth.user?._id;
+    const userName = this.props.auth.user?.name;
+    return (
+      <div className='chat-footer'>
+        {/* {error && error} */}
+        <form>
+          <div className='left'>
+            <FileBase64 onDone={this.getFile.bind(this)} />
+            {/* {this.state.file} */}
+            {listening ? (
+              <FontAwesomeIcon
+                onClick={() => this.stopListening()}
+                className='footer-icon '
+                icon={faStopCircle}
+              />
+            ) : (
+              <FontAwesomeIcon
+                onClick={() => this.startListening()}
+                className='footer-icon '
+                icon={faMicrophone}
+              />
+            )}
+          </div>
+
+          {listening ? (
+            <input
+              type='text'
+              placeholder={listening ? 'listening...' : 'finished listening'}
+              value={interimText}
+              onChange={(e) => this.handleChange(e)}
+            ></input>
+          ) : (
+            <input
+              type='text'
+              placeholder={
+                fileSelected ? `${file.name}` : 'Type your message here...'
+              }
+              value={msg}
+              onChange={(e) => this.handleChange(e)}
+            ></input>
+          )}
+
+          <button
+            onClick={(e) =>
+              this.handleSubmit(e, roomIdSelected, userName, userId)
+            }
+          >
+            Send{' '}
+            <FontAwesomeIcon className='footer-icon-send' icon={faPaperPlane} />
+          </button>
+        </form>
+      </div>
+    );
+  }
 }
 
 function mapStateToProps(state) {
