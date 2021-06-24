@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { io } from 'socket.io-client';
+import '../../assets/css/chatfooter.css' ;
+import {
+  faMicrophone,
+  faPaperclip,
+  faPaperPlane,
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const socket = io.connect('http://localhost:5000', {
   transports: ['websocket'],
@@ -29,13 +36,26 @@ function ChatFooter(props) {
       roomIdSelected,
     });
 
-    setMsg('') ;
+    setMsg('');
   };
   return (
-    <div>
+    <div className='chat-footer'>
       <form>
-        <input type='text' value={msg} onChange={handleChange}></input>
-        <button onClick={handleSubmit}>Send</button>
+        <div className='left'>
+          <FontAwesomeIcon className='footer-icon ' icon={faPaperclip} />
+          <FontAwesomeIcon className='footer-icon ' icon={faMicrophone} />
+        </div>
+
+        <input
+          type='text'
+          placeholder='Type your message here...'
+          value={msg}
+          onChange={handleChange}
+        ></input>
+        <button onClick={handleSubmit}>
+          Send{' '}
+          <FontAwesomeIcon className='footer-icon-send' icon={faPaperPlane} />
+        </button>
       </form>
     </div>
   );

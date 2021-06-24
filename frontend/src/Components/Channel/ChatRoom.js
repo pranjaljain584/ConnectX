@@ -22,6 +22,7 @@ function ChatRoom(props) {
     },
   ]);
   const [participants, setParticipants] = useState([]);
+  var objdiv = document.getElementById('style');
 
   useEffect(() => {
     const config = {
@@ -39,6 +40,8 @@ function ChatRoom(props) {
         setMsgArray(response.data.room.msgArray);
       })
       .catch((err) => console.log(err));
+
+    objdiv.scrollTop = objdiv.scrollHeight;
   }, [roomIdSelected]);
 
   useEffect(() => {
@@ -49,6 +52,7 @@ function ChatRoom(props) {
       setMsgArray((prevState) => {
         return [...prevState, data.finalMsg];
       });
+      objdiv.scrollTop = objdiv.scrollHeight;
     });
   }, [roomIdSelected]);
 

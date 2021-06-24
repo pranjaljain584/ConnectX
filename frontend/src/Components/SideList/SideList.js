@@ -4,12 +4,14 @@ import SideListHeader from './SideListHeader';
 import axios from 'axios';
 import ChatListItem from './ChatListItem';
 import { io } from 'socket.io-client';
+import { connect } from 'react-redux';
 
 const socket = io.connect('http://localhost:5000', {
   transports: ['websocket'],
 });
 
-function SideList({ sidebarSelectedItem, setRoomIdSelected }) {
+function SideList(props) {
+  const { sidebarSelectedItem, setRoomIdSelected } = props;
   const [chatList, setChatList] = useState([]);
 
   useEffect(() => {
@@ -34,7 +36,12 @@ function SideList({ sidebarSelectedItem, setRoomIdSelected }) {
   }, [sidebarSelectedItem]);
 
   useEffect(() => {
-    socket.on('create-room-client', function (data) {
+    const userId = props.auth.user?._id;
+    socket.removeAllListeners(`create-room-${userId}`);
+
+    socket.on(`create-room-${userId}`, function (data) {
+      console.log(`create-room-${userId}`);
+      console.log('--------------', data);
       setChatList((prevState) => {
         return [...prevState, data.room];
       });
@@ -44,7 +51,7 @@ function SideList({ sidebarSelectedItem, setRoomIdSelected }) {
   return (
     <div className='sidelist-div'>
       <SideListHeader sidebarSelectedItem={sidebarSelectedItem} />
-      <div className="list" id="style">
+      <div className='list' id='style'>
         {chatList.length > 0 ? (
           chatList.map((chat, key) => {
             return (
@@ -74,4 +81,10 @@ function SideList({ sidebarSelectedItem, setRoomIdSelected }) {
   );
 }
 
-export default SideList;
+function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+  };
+}
+
+export default connect(mapStateToProps)(SideList);

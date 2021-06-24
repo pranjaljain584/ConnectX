@@ -74,7 +74,7 @@ io.on('connection', (socket) => {
               { $push: { joinedRooms: roomid } }
             );
 
-            io.emit('create-room-client', { room: result });
+            io.emit(`create-room-${userId}`, { room: result });
             console.log('Socket create room client emitted!');
           } catch (error) {
             console.log('Chat room save error:', err);

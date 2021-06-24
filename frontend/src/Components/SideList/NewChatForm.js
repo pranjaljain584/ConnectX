@@ -35,7 +35,6 @@ export default function NewChatForm(props) {
 
     setOpen(false);
 
-    // console.log(roomTitle);
   };
 
   return (
