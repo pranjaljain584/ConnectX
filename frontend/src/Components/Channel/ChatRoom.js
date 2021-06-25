@@ -13,15 +13,13 @@ const socket = io.connect('http://localhost:5000', {
 function ChatRoom(props) {
   const { roomIdSelected } = props;
   const [roomName, setRoomName] = useState('');
-  const [msgArray, setMsgArray] = useState([
-    
-  ]);
+  const [msgArray, setMsgArray] = useState([]);
   // {
   //     chatMessage: '',
   //     userName: '',
   //     chatTime: '',
   //     userId: '',
-      
+
   //   },
   const [participants, setParticipants] = useState([]);
   // var objdiv = document.getElementById('style');

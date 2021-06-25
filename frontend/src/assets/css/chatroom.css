@@ -62,6 +62,11 @@
     background-color: #EFF5F5;
 }
 
+a{
+    color: rgb(59, 59, 59) !important;
+    text-decoration: none !important;
+}
+
 #style::-webkit-scrollbar-track
 {
 	border-radius: 10px;

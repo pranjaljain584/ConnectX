@@ -24,6 +24,7 @@
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.1",
+    "react-tooltip": "^4.2.21",
     "react-uuid": "^1.0.2",
     "reactstrap": "^8.9.0",
     "redux": "^4.1.0",

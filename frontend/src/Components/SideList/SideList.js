@@ -62,6 +62,8 @@ function SideList(props) {
                 lastMsg={
                   chat.msgArray.length > 0
                     ? chat.msgArray[chat.msgArray.length - 1].chatMessage
+                      ? chat.msgArray[chat.msgArray.length - 1].chatMessage
+                      : chat.msgArray[chat.msgArray.length - 1].fileName
                     : null
                 }
                 time={

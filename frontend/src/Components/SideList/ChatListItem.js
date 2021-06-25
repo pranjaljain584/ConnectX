@@ -11,12 +11,14 @@ const socket = io.connect('http://localhost:5000', {
 function ChatListItem(props) {
   const { title, id,time, lastMsg, setRoomIdSelected } = props;
   const [lastMessage, setLastMessage] = useState(lastMsg);
+  const [lastTime,setLastTime] = useState(time) ;
   useEffect(() => {
     // console.log('Room Socket listening on: ', id);
     socket.removeAllListeners(`${id}-lastMessage`);
     socket.on(`${id}-lastMessage`, (data) => {
       // console.log(data) ;
       setLastMessage(data.finalMsg.chatMessage);
+      setLastTime(data.finalMsg.chatTime) ;
     });
   }, [id]);
   return (
@@ -33,7 +35,7 @@ function ChatListItem(props) {
         <span>{title}</span> <br />{' '}
         <p style={{overflowX:'hidden'},{overflowY:'hidden'}} >{lastMessage ? <p>{lastMessage}</p> : <p></p>}</p>
       </div>
-      <div className='right-item'>{time}</div>
+      <div className='right-item'>{lastTime}</div>
     </div>
   );
 }

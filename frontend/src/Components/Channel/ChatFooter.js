@@ -5,7 +5,6 @@ import '../../assets/css/chatfooter.css';
 import SpeechToText from 'speech-to-text';
 import {
   faMicrophone,
-  faPaperclip,
   faPaperPlane,
   faStopCircle,
 } from '@fortawesome/free-solid-svg-icons';
@@ -117,6 +116,7 @@ class ChatFooter extends Component {
               />
             ) : (
               <FontAwesomeIcon
+                
                 onClick={() => this.startListening()}
                 className='footer-icon '
                 icon={faMicrophone}
@@ -144,7 +144,7 @@ class ChatFooter extends Component {
 
           <button
             onClick={(e) =>
-              this.handleSubmit(e, roomIdSelected, userName, userId,file)
+              this.handleSubmit(e, roomIdSelected, userName, userId, file)
             }
           >
             Send{' '}

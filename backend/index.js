@@ -90,7 +90,6 @@ io.on('connection', (socket) => {
       // console.log('sending room post', data);
       const { userId, msgTime, msg, userName, roomIdSelected ,file} = data;
 
-      let fileId=null ;
       if (file !== '') {
         let newfile = new File({
           name: file.name,
@@ -104,14 +103,6 @@ io.on('connection', (socket) => {
             return;
           }
 
-          try {
-
-            fileId = result._id ;
-            
-          } catch (error) {
-            console.log('File save error:', error);
-          }
-
         });
       }
 
@@ -120,7 +111,6 @@ io.on('connection', (socket) => {
         userName,
         chatMessage: msg,
         chatTime: msgTime,
-        fileId,
         fileName:file.name,
         base64String:file.base64
       };
@@ -137,10 +127,7 @@ io.on('connection', (socket) => {
           io.emit(`${roomIdSelected}-lastMessage`, { finalMsg });
         }
       );
-
-      // socket.broadcast.to(data.room).emit('conversation private post', {
-      //   message: data.message,
-      // });
+      
     });
   } catch (error) {
     console.log('Error socket', error.message);
