@@ -39,6 +39,7 @@ app.use('/api/users', require('./routes/api/user'));
 app.use('/api/auth', require('./routes/api/auth'));
 app.use('/api/room', require('./routes/api/room'));
 app.use('/api/chat', require('./routes/api/chat'));
+app.use('/api/mail', require('./routes/api/mail'));
 
 io.on('connection', (socket) => {
   try {

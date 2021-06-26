@@ -14,15 +14,7 @@ function ChatRoom(props) {
   const { roomIdSelected } = props;
   const [roomName, setRoomName] = useState('');
   const [msgArray, setMsgArray] = useState([]);
-  // {
-  //     chatMessage: '',
-  //     userName: '',
-  //     chatTime: '',
-  //     userId: '',
-
-  //   },
   const [participants, setParticipants] = useState([]);
-  // var objdiv = document.getElementById('style');
 
   useEffect(() => {
     const config = {
@@ -41,19 +33,17 @@ function ChatRoom(props) {
       })
       .catch((err) => console.log(err));
 
-    // objdiv.scrollTop = objdiv.scrollHeight;
   }, [roomIdSelected]);
 
   useEffect(() => {
-    // console.log('Room Socket listening on: ', roomIdSelected);
+    
     socket.removeAllListeners(`${roomIdSelected}`);
     socket.on(`${roomIdSelected}`, function (data) {
-      // console.log('DATA__', data);
       setMsgArray((prevState) => {
         return [...prevState, data.finalMsg];
       });
-      // objdiv.scrollTop = objdiv.scrollHeight;
     });
+
   }, [roomIdSelected]);
 
   return (

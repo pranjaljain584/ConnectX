@@ -21,10 +21,27 @@
     justify-content: space-between;
 }
 
+.add-user{
+    color: rgb(250, 214, 12);
+    /* margin-left: 60%; */
+    font-size: 1.7rem;
+    align-self:baseline;
+    margin-top: 0.2%;
+    display: flex ;
+}
+
+.mail-input{
+    font-size: 1rem;
+    height: 50px;
+    width: 150px;
+    /* display: inline-block; */
+}
+
 .more-optns{
     align-self: flex-end;
     margin-right: 5%;
     margin-bottom: 1.5%;
+    cursor: pointer;
 }
 
 .optn-list{
