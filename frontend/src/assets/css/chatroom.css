@@ -17,6 +17,19 @@
     padding-top: 1%;
     height: 70px;
     border-bottom: 2px solid rgba(186, 190, 190, 0.8);
+    display: flex;
+    justify-content: space-between;
+}
+
+.more-optns{
+    align-self: flex-end;
+    margin-right: 5%;
+    margin-bottom: 1.5%;
+}
+
+.optn-list{
+    font-size: 1.5rem;
+    color: #55868a;
 }
 
 .msg-div{

@@ -4,7 +4,7 @@ const cors = require('cors');
 const path = require('path');
 const User = require('./models/User');
 const ChatRoom = require('./models/ChatRoom');
-const File = require('./models/File') ;
+const File = require('./models/File');
 
 // require connectDB function exported in db.js file
 const connectDB = require('./config/db');
@@ -88,7 +88,7 @@ io.on('connection', (socket) => {
 
     socket.on('send-msg', async function (data) {
       // console.log('sending room post', data);
-      const { userId, msgTime, msg, userName, roomIdSelected ,file} = data;
+      const { userId, msgTime, msg, userName, roomIdSelected, file } = data;
 
       if (file !== '') {
         let newfile = new File({
@@ -97,12 +97,11 @@ io.on('connection', (socket) => {
           roomId: roomIdSelected,
         });
 
-        newfile.save(async function (err , result) {
+        newfile.save(async function (err, result) {
           if (err) {
             console.log('File save error: **', err);
             return;
           }
-
         });
       }
 
@@ -111,8 +110,8 @@ io.on('connection', (socket) => {
         userName,
         chatMessage: msg,
         chatTime: msgTime,
-        fileName:file.name,
-        base64String:file.base64
+        fileName: file.name,
+        base64String: file.base64,
       };
 
       ChatRoom.findOneAndUpdate(
@@ -127,7 +126,32 @@ io.on('connection', (socket) => {
           io.emit(`${roomIdSelected}-lastMessage`, { finalMsg });
         }
       );
-      
+    });
+
+    socket.on('leave-room', async function (data) {
+      const { userId, roomIdSelected } = data;
+
+      ChatRoom.findOneAndUpdate(
+        { _id: roomIdSelected },
+        { $pull: { joinedUsers: userId } },
+        (err, result) => {
+          if (err) {
+            console.log('error in leaving room: ', err);
+          }
+
+          User.findOneAndUpdate(
+            { _id: userId },
+            { $pull: { joinedRooms: roomIdSelected } },
+            (err) => {
+              if (err) {
+                console.log('error in leaving room: ', err);
+              }
+            }
+          );
+
+          io.emit(`leave-room-${userId}`, { room: result });
+        }
+      );
     });
   } catch (error) {
     console.log('Error socket', error.message);

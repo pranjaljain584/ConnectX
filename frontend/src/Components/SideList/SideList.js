@@ -40,10 +40,22 @@ function SideList(props) {
     socket.removeAllListeners(`create-room-${userId}`);
 
     socket.on(`create-room-${userId}`, function (data) {
-      console.log(`create-room-${userId}`);
-      console.log('--------------', data);
+      // console.log(`create-room-${userId}`);
+      // console.log('--------------', data);
       setChatList((prevState) => {
         return [...prevState, data.room];
+      });
+    });
+
+    socket.removeAllListeners(`leave-room-${userId}`);
+
+    socket.on(`leave-room-${userId}`, function (data) {
+
+      setChatList((prevState) => {
+        return prevState.filter(function (r) {
+          return r._id !== data.room._id;
+        });
+
       });
     });
   }, []);
