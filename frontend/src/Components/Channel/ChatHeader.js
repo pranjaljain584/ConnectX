@@ -70,7 +70,11 @@ function ChatHeader(props) {
     <div className='chat-header'>
       <div>{roomName}</div>
 
-      <div className='add-user'>
+      <div
+      style={{marginLeft:'35'}}
+        // style={{ marginLeft: showInput ? '35.5%' : '63%' }}
+        className='add-user'
+      >
         {showInput && (
           <form onSubmit={handleSubmit}>
             <input
@@ -85,8 +89,11 @@ function ChatHeader(props) {
         )}
         <FontAwesomeIcon
           onClick={() => {
-            setShowInput(true);
+            setShowInput((prevState) => {
+              return !prevState;
+            });
           }}
+          className="icon"
           data-tip='Add Participant'
           icon={faUserPlus}
         />

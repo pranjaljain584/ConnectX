@@ -1,0 +1,12 @@
+.file-display{
+    height: 86vh;
+    width: 65vw;
+    margin-left: 1%;
+    background-color: white;
+}
+
+.file-display iframe {
+    width: inherit;
+    height: inherit;
+}
+

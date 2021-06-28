@@ -2,4 +2,11 @@
     background-color: #EFF5F5;
     width: 100vw;
     height: 8vh;
+    display: flex;
+    justify-content: flex-end;
 }
+
+.logout {
+    margin-right: 5% ;
+}
+

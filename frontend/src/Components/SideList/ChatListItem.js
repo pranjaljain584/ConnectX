@@ -9,7 +9,7 @@ const socket = io.connect('http://localhost:5000', {
 });
 
 function ChatListItem(props) {
-  const { title, id,time, lastMsg, setRoomIdSelected } = props;
+  const { title, id,time, lastMsg, setRoomIdSelected,setFileSelected } = props;
   const [lastMessage, setLastMessage] = useState(lastMsg);
   const [lastTime,setLastTime] = useState(time) ;
   useEffect(() => {
@@ -25,6 +25,7 @@ function ChatListItem(props) {
     <div
       onClick={() => {
         setRoomIdSelected(id);
+        setFileSelected('') ;
       }}
       className='chat-list-item'
     >

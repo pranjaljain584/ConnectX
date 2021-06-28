@@ -5,14 +5,16 @@ import axios from 'axios';
 import ChatListItem from './ChatListItem';
 import { io } from 'socket.io-client';
 import { connect } from 'react-redux';
+import FileListItem from '../File/FileListItem';
 
 const socket = io.connect('http://localhost:5000', {
   transports: ['websocket'],
 });
 
 function SideList(props) {
-  const { sidebarSelectedItem, setRoomIdSelected } = props;
+  const { sidebarSelectedItem, setRoomIdSelected, setFileSelected } = props;
   const [chatList, setChatList] = useState([]);
+  const [fileList, setFileList] = useState([]);
 
   useEffect(() => {
     const config = {
@@ -27,9 +29,17 @@ function SideList(props) {
       axios
         .get(`http://localhost:5000/api/chat/chat-list`, config)
         .then((response) => {
-          // console.log('Chat List---', response.data);
-
           setChatList(response.data.roomsArray);
+        })
+        .catch((err) => console.log(err));
+    }
+
+    if (sidebarSelectedItem === 'Files') {
+      axios
+        .get(`http://localhost:5000/api/file`, config)
+        .then((response) => {
+          console.log(response);
+          setFileList(response.data.filesArray);
         })
         .catch((err) => console.log(err));
     }
@@ -40,8 +50,6 @@ function SideList(props) {
     socket.removeAllListeners(`create-room-${userId}`);
 
     socket.on(`create-room-${userId}`, function (data) {
-      // console.log(`create-room-${userId}`);
-      // console.log('--------------', data);
       setChatList((prevState) => {
         return [...prevState, data.room];
       });
@@ -50,12 +58,10 @@ function SideList(props) {
     socket.removeAllListeners(`leave-room-${userId}`);
 
     socket.on(`leave-room-${userId}`, function (data) {
-
       setChatList((prevState) => {
         return prevState.filter(function (r) {
           return r._id !== data.room._id;
         });
-
       });
     });
   }, []);
@@ -64,7 +70,7 @@ function SideList(props) {
     <div className='sidelist-div'>
       <SideListHeader sidebarSelectedItem={sidebarSelectedItem} />
       <div className='list' id='style'>
-        {chatList.length > 0 ? (
+        {(chatList.length && sidebarSelectedItem == 'Chat') > 0 ? (
           chatList.map((chat, key) => {
             return (
               <ChatListItem
@@ -84,11 +90,29 @@ function SideList(props) {
                     : null
                 }
                 setRoomIdSelected={setRoomIdSelected}
+                setFileSelected={setFileSelected}
               />
             );
           })
         ) : (
-          <p>Empty chat list</p>
+          <div>
+            {fileList.length > 0 && sidebarSelectedItem == 'Files' ? (
+              <div>
+                {fileList.map((file, key) => {
+                  return (
+                    <FileListItem
+                      setFileSelected={setFileSelected}
+                      setRoomIdSelected={setRoomIdSelected}
+                      file={file}
+                      key={key}
+                    />
+                  );
+                })}
+              </div>
+            ) : (
+              <p>Empty</p>
+            )}
+          </div>
         )}
       </div>
     </div>

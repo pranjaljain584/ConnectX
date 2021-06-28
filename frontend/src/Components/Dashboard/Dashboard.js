@@ -8,9 +8,7 @@ import '../../assets/css/dashboard.css';
 function Dashboard(props) {
   const [sidebarSelectedItem, setSidebarSelectedItem] = useState('');
   const [roomIdSelected, setRoomIdSelected] = useState('');
-
-  // console.log('**', sidebarSelectedItem);
-  // console.log('room id: ', roomIdSelected);
+  const [fileSelected, setFileSelected] = useState('');
 
   return (
     <div>
@@ -23,9 +21,14 @@ function Dashboard(props) {
         <SideList
           className='sidelist'
           sidebarSelectedItem={sidebarSelectedItem}
+          setFileSelected={setFileSelected}
           setRoomIdSelected={setRoomIdSelected}
         />
-        <Display className='display' roomIdSelected={roomIdSelected} />
+        <Display
+          className='display'
+          fileSelected={fileSelected}
+          roomIdSelected={roomIdSelected}
+        />
       </div>
     </div>
   );

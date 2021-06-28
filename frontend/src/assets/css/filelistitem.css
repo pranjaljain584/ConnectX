@@ -1,0 +1,28 @@
+.file-list-item {
+  /* background-color: blueviolet; */
+  display: flex;
+  width: 85%;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 15px;
+  height: 9vh;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.file-list-item:hover {
+  background-color: #d6e4e5;
+}
+
+.file-icon {
+  color: teal;
+  font-size: 2.3rem;
+}
+
+.file-list-item h5 {
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin-left: 20px;
+  margin-top: 5px;
+  width: 100%;
+}

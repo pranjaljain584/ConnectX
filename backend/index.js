@@ -40,6 +40,7 @@ app.use('/api/auth', require('./routes/api/auth'));
 app.use('/api/room', require('./routes/api/room'));
 app.use('/api/chat', require('./routes/api/chat'));
 app.use('/api/mail', require('./routes/api/mail'));
+app.use('/api/file', require('./routes/api/files'));
 
 io.on('connection', (socket) => {
   try {
