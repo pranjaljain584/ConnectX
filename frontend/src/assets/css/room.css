@@ -8,10 +8,15 @@
     width: 60vw;
     background-color: #1A1B20;
     border-radius: 2rem; 
-    /* display: flex ; */
+    /* display: grid ; */
+    /* justify-content: center; */
     margin-top: 3%;
     margin-left: 3%;
     padding: 2% 0%;
+}
+
+.video-grid video {
+    display: inline-block;
 }
 
 .video-container{

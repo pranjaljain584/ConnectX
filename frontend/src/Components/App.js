@@ -5,6 +5,7 @@ import {
   Switch,
   Redirect,
 } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Home from './HomePage/Home.js';
 import setAuthToken from '../utils/setAuthToken';
 import { loadUser } from '../actions/auth';
@@ -19,9 +20,9 @@ import Loading from './Room/Loading.js';
 import ChatRoomJoining from './Channel/ChatRoomJoining.js';
 import ErrorPage from './ErrorPage.js';
 
-if (localStorage.token) {
-  setAuthToken(localStorage.token);
-}
+// if (localStorage.token) {
+//   setAuthToken(localStorage.token);
+// }
 
 const PrivateRoute = (privateRouteProps) => {
   console.log('privateRouteProps', privateRouteProps);
@@ -51,10 +52,11 @@ const PrivateRoute = (privateRouteProps) => {
 };
 
 function App(props) {
-  useEffect(() => {
-    //console.log(props.auth.isAuthenticated);
-    props.dispatch(loadUser());
-  }, []);
+  // useEffect(() => {
+  //   //console.log(props.auth.isAuthenticated);
+  //   console.log("DISPATCHED") ;
+  //   props.dispatch(loadUser());
+  // }, []);
 
   const { isAuthenticated } = props.auth;
   // console.log(isAuthenticated);
@@ -90,6 +92,11 @@ function App(props) {
     </Router>
   );
 }
+
+App.propTypes = {
+
+  auth: PropTypes.object.isRequired,
+};
 
 function mapStateToProps(state) {
   return {

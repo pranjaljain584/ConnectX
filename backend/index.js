@@ -5,6 +5,8 @@ const path = require('path');
 const User = require('./models/User');
 const ChatRoom = require('./models/ChatRoom');
 const File = require('./models/File');
+// const WebSocket = require('ws') ;
+// const WebSocketServer = WebSocket.Server ;
 
 // require connectDB function exported in db.js file
 const connectDB = require('./config/db');
@@ -24,6 +26,12 @@ app.use(
 app.use(cors());
 
 const server = http.createServer(app);
+
+// const wss = new WebSocketServer({server:server}) ;
+
+// server.on('request',app) ;
+// const sock = ;
+
 const io = require('socket.io')(server, {
   cors: {
     origin: 'http://localhost:3000',
@@ -42,11 +50,39 @@ app.use('/api/chat', require('./routes/api/chat'));
 app.use('/api/mail', require('./routes/api/mail'));
 app.use('/api/file', require('./routes/api/files'));
 
+// wss.on('connection',function(ws){
+//   ws.on('message', function (message) {
+//     // Broadcast any received message to all clients
+//     console.log('received: %s', message);
+//     wss.broadcast(message);
+//   });
+
+//   ws.on('error', (err) => {
+//     console.log(err) ;
+//     ws.terminate() ;
+//   });
+// });
+
+// wss.broadcast = function (data) {
+//   this.clients.forEach(function (client) {
+//     if (client.readyState === WebSocket.OPEN) {
+//       client.send(data);
+//     }
+//   });
+// };
+
+
 io.on('connection', (socket) => {
   try {
     // code
-    socket.on('code', (data, callback) => {
-      socket.broadcast.emit('code', data);
+    // socket.on('code', (data, callback) => {
+    //   socket.broadcast.emit('code', data);
+    // });
+
+    socket.on('message', function (message) {
+      // Broadcast any received message to all clients
+      console.log('received: %s', message);
+      io.emit('message' ,message);
     });
 
     // create room
@@ -159,6 +195,14 @@ io.on('connection', (socket) => {
     console.log('Error socket', error.message);
   }
 });
+
+// io.broadcast = function (data) {
+//   this.clients.forEach(function (client) {
+//     if (client.readyState === sock.OPEN) {
+//       client.send(data);
+//     }
+//   });
+// };
 
 const port = process.env.PORT || 5000;
 
