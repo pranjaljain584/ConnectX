@@ -110,7 +110,7 @@ function SideList(props) {
                 })}
               </div>
             ) : (
-              <p>Empty</p>
+              <p>Start a New {sidebarSelectedItem}</p>
             )}
           </div>
         )}

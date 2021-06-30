@@ -41,8 +41,6 @@ function Room(props) {
   const [isAudio, setIsAudio] = useState(true);
   const [isVideo, setIsVideo] = useState(true);
 
-  const stopScreenShare = () => {};
-
   const toggleAudio = (value) => {
     myStream.getAudioTracks()[0].enabled = value;
     setIsAudio(value);
@@ -52,8 +50,44 @@ function Room(props) {
     myStream.getVideoTracks()[0].enabled = value;
     setIsVideo(value);
   };
-  const disconnectCall = () => {};
-  const screenShare = () => {};
+  const disconnectCall = () => {
+    props.history.push('/');
+    window.location.reload();
+  };
+  const screenShare = () => {
+    navigator.mediaDevices
+      .getDisplayMedia({ cursor: true })
+      .then((stream) => {
+        console.log('Screen Share Stream', stream.getVideoTracks()[0]);
+        setScreenCastStream(stream);
+        let videoTrack = stream.getVideoTracks()[0];
+        Object.keys(peerConnections).map(function (key) {
+          var sender = peerConnections[key].pc.getSenders().find(function (s) {
+            return s.track.kind == videoTrack.kind;
+          });
+          sender.replaceTrack(videoTrack);
+        });
+
+        setIsPresenting(true);
+      })
+      .catch((err) => console.log('Screen share error', err));
+  };
+
+  const stopScreenShare = () => {
+    screenCastStream.getVideoTracks().forEach(function (track) {
+      track.stop();
+    });
+
+    Object.keys(peerConnections).map(function (key) {
+      let video = localStream.getVideoTracks()[0] ;
+      var sender = peerConnections[key].pc.getSenders().find(function (s) {
+        return s.track.kind == video.kind;
+      });
+      sender.replaceTrack(video);
+    });
+
+    setIsPresenting(false);
+  };
 
   const gotMessageFromServer = (message) => {
     // console.log('Message receive from server:', message);
@@ -158,19 +192,23 @@ function Room(props) {
     };
 
     console.log(userTracksbyId, 'STREAM ARRAY');
-    console.log(localId);
+    // console.log(localId);
 
     setGrid((prevState) => {
       return [
         ...prevState,
-        React.createElement('div', { id: 'peers' }, [
-          <Media id={`remoteVideo_${peerId}`} />,
-        ]),
+        React.createElement(
+          'div',
+          { id: 'peers', className: 'video-container' },
+          [<Media id={`remoteVideo_${peerId}`} />]
+        ),
       ];
     });
 
     document.getElementById(`remoteVideo_${peerId}`).srcObject =
       event.streams[0];
+
+    updateLayout();
   };
 
   const checkPeerDisconnect = (event, peerId) => {
@@ -181,15 +219,33 @@ function Room(props) {
       document
         .getElementById('peers')
         .removeChild(document.getElementById('remoteVideo_' + peerId));
-      // updateLayout();
+      updateLayout();
     }
+  };
+
+  const updateLayout = () => {
+    var rowHeight = '';
+    var colWidth = '';
+
+    var numVideos = Object.keys(peerConnections).length + 1;
+
+    if (numVideos > 1 && numVideos <= 4) {
+      // 2x2 grid
+      rowHeight = '200px';
+      colWidth = '200px';
+    } else if (numVideos > 4) {
+      // 3x3 grid
+      rowHeight = '100px';
+      colWidth = '100px';
+    }
+
+    document.documentElement.style.setProperty(`--rowHeight`, rowHeight);
+    document.documentElement.style.setProperty(`--colWidth`, colWidth);
   };
 
   const start = async () => {
     var constraints = {
       video: {
-        width: { max: 320 },
-        height: { max: 240 },
         frameRate: { max: 30 },
       },
       audio: true,
@@ -231,7 +287,11 @@ function Room(props) {
   return (
     <div className='room'>
       <div id='videos' className='video-grid'>
-        <video id='own-video' autoPlay></video>
+        <div className='video-container'>
+          {' '}
+          <video id='own-video' muted autoPlay></video>{' '}
+        </div>
+
         {grid.map((g, key) => {
           return g;
         })}
@@ -275,128 +335,6 @@ export default connect(mapStateToProps)(Room);
 //   const url = `${window.location.origin}${window.location.pathname}`;
 //   let alertTimeout = null;
 
-//   const [messageList, messageListReducer] = useReducer(
-//     MessageListReducer,
-//     initialState
-//   );
-
-//   const [screenCastStream, setScreenCastStream] = useState();
-//   const [isPresenting, setIsPresenting] = useState(false);
-
-//   useEffect(() => {
-//     initWebRTC();
-//     socket.on('code', (data) => {
-//       peer.signal(data);
-//       console.log('Peer Signalled data');
-//     });
-//   }, []);
-
-//   const getReceiverCode = async () => {
-//     const response = await getRequest(`${BASE_URL}${GET_CALL_ID}/${roomId}`);
-//     if (response.code) {
-//       peer.signal(response.code);
-//       console.log('Peer Signalled data');
-//     }
-//   };
-
-//   const initWebRTC = () => {
-//     navigator.mediaDevices
-//       .getUserMedia({
-//         video: true,
-//         audio: true,
-//       })
-//       .then((stream) => {
-//         setStreamObj(stream);
-//         peer = new Peer({
-//           initiator: isAdmin,
-//           trickle: false,
-//           stream: stream,
-//         });
-
-//         if (!isAdmin) {
-//           getReceiverCode();
-//         }
-
-//         peer.on('signal', async (data) => {
-//           if (isAdmin) {
-//             let payload = {
-//               roomId,
-//               signalData: data,
-//             };
-//             await postRequest(`${BASE_URL}${SAVE_CALL_ID}`, payload);
-//           } else {
-//             socket.emit('code', data, (callbackData) => {
-//               console.log('code sent');
-//             });
-//           }
-//         });
-
-//         peer.on('connect', () => {
-//           console.log('peer connected');
-//         });
-
-//         peer.on('stream', async (stream) => {
-//           let video = document.getElementById('video');
-
-//           if ('srcObject' in video) {
-//             const mediaStream = await navigator.mediaDevices.getUserMedia({
-//               video: true,
-//             });
-//             video.srcObject = stream;
-//             video.load();
-//           } else {
-//             video.src = window.URL.createObjectURL(stream);
-//           }
-
-//           video.play();
-//         });
-//       })
-//       .catch((err) => {
-//         console.log(err);
-//       });
-//   };
-
-//   const screenShare = () => {
-//     navigator.mediaDevices
-//       .getDisplayMedia({ cursor: true })
-//       .then((screenStream) => {
-//         peer.replaceTrack(
-//           streamObj.getVideoTracks()[0],
-//           screenStream.getVideoTracks()[0],
-//           streamObj
-//         );
-//         setScreenCastStream(screenStream);
-//         screenStream.getTracks()[0].onended = () => {
-//           peer.replaceTrack(
-//             screenStream.getVideoTracks()[0],
-//             streamObj.getVideoTracks()[0],
-//             streamObj
-//           );
-//         };
-//         setIsPresenting(true);
-//       });
-//   };
-
-//   const stopScreenShare = () => {
-//     screenCastStream.getVideoTracks().forEach(function (track) {
-//       track.stop();
-//     });
-//     peer.replaceTrack(
-//       screenCastStream.getVideoTracks()[0],
-//       streamObj.getVideoTracks()[0],
-//       streamObj
-//     );
-//     setIsPresenting(false);
-//   };
-
-//   const disconnectCall = () => {
-//     peer.destroy();
-//     props.history.push('/');
-//     window.location.reload();
-//   };
-
-//   console.log('IS ADMIN', isAdmin);
-
 //   return (
 //     <div className='room'>
 //       <div className='video-grid'>
@@ -410,5 +348,3 @@ export default connect(mapStateToProps)(Room);
 //     </div>
 //   );
 // }
-
-// export default Room;

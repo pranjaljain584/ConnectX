@@ -6,7 +6,7 @@ import SideList from '../SideList/SideList';
 import '../../assets/css/dashboard.css';
 
 function Dashboard(props) {
-  const [sidebarSelectedItem, setSidebarSelectedItem] = useState('');
+  const [sidebarSelectedItem, setSidebarSelectedItem] = useState('Video Call');
   const [roomIdSelected, setRoomIdSelected] = useState('');
   const [fileSelected, setFileSelected] = useState('');
 
@@ -18,16 +18,17 @@ function Dashboard(props) {
           className='sidebar'
           setSidebarSelectedItem={setSidebarSelectedItem}
         />
-        <SideList
+        { sidebarSelectedItem!='Calendar' && <SideList
           className='sidelist'
           sidebarSelectedItem={sidebarSelectedItem}
           setFileSelected={setFileSelected}
           setRoomIdSelected={setRoomIdSelected}
-        />
+        />}
         <Display
           className='display'
           fileSelected={fileSelected}
           roomIdSelected={roomIdSelected}
+          sidebarSelectedItem={sidebarSelectedItem}
         />
       </div>
     </div>

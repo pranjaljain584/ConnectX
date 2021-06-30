@@ -1,32 +1,49 @@
-.room{
-    background-color: rgb(33,36,43);
-    padding: 1%;
-    margin:0 ;
-}
-.video-grid{
-    height: 70vh;
-    width: 60vw;
-    background-color: #1A1B20;
-    border-radius: 2rem; 
-    /* display: grid ; */
-    /* justify-content: center; */
-    margin-top: 3%;
-    margin-left: 3%;
-    padding: 2% 0%;
+:root{
+    --rowHeight : 500px ;
+    --colWidth : 400px ;
 }
 
-.video-grid video {
-    display: inline-block;
+.room {
+  background-color: rgb(33, 36, 43);
+  padding: 1%;
+  margin: 0;
+}
+.video-grid {
+  height: 70vh;
+  width: 60vw;
+  background-color: #1a1b20;
+  border-radius: 2rem;
+  display: grid;
+  /* grid-gap: 5px; */
+  grid-auto-flow: row;
+  grid-template-columns: repeat(auto-fit, minmax(var(--colWidth), 1fr));
+  margin-top: 3%;
+  margin-left: 3%;
+  overflow: hidden;
+  padding: 10px;
 }
 
-.video-container{
-    height: 50% ;
-    object-fit: cover;
-    width: 40%;
-    margin-right: 5%;
-    margin-left: 5%;
-    border-radius: 2rem;
-    border : 5px solid #5F5E64 ;
-    padding: 0;
-    background-color: rgb(58, 58, 58) ;
+.video-container {
+  position: relative;
+  overflow: hidden;
+  min-height: var(--rowHeight);
+  min-width: var(--colWidth);
 }
+
+.video-container video {
+  object-fit: contain;
+  height: auto;
+  width: auto;
+}
+
+/* .video-container {
+  height: 50%;
+  object-fit: cover;
+  width: 40%;
+  margin-right: 5%;
+  margin-left: 5%;
+  border-radius: 2rem;
+  border: 5px solid #5f5e64;
+  padding: 0;
+  background-color: rgb(58, 58, 58);
+} */

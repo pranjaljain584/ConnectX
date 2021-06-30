@@ -19,6 +19,7 @@ import Room from './Room/Room.js';
 import Loading from './Room/Loading.js';
 import ChatRoomJoining from './Channel/ChatRoomJoining.js';
 import ErrorPage from './ErrorPage.js';
+import Calendar from './Calendar/Calendar.js';
 
 // if (localStorage.token) {
 //   setAuthToken(localStorage.token);
@@ -58,17 +59,14 @@ function App(props) {
   //   props.dispatch(loadUser());
   // }, []);
 
-  const { isAuthenticated } = props.auth;
-  // console.log(isAuthenticated);
-
   return (
     <Router>
       <div>
-        {/* {isAuthenticated ? <TopBarAndDrawer /> : <Navigationbar />} */}
         <Switch>
           <Route exact path='/' component={Home} />
           <Route path='/login' component={Login} />
           <Route path='/register' component={Register} />
+          <Route path='/calendar' component={Calendar} />
           {props.auth.isAuthenticated === null ? null : (
             <PrivateRoute
               path='/dashboard'

@@ -50,38 +50,12 @@ app.use('/api/chat', require('./routes/api/chat'));
 app.use('/api/mail', require('./routes/api/mail'));
 app.use('/api/file', require('./routes/api/files'));
 
-// wss.on('connection',function(ws){
-//   ws.on('message', function (message) {
-//     // Broadcast any received message to all clients
-//     console.log('received: %s', message);
-//     wss.broadcast(message);
-//   });
-
-//   ws.on('error', (err) => {
-//     console.log(err) ;
-//     ws.terminate() ;
-//   });
-// });
-
-// wss.broadcast = function (data) {
-//   this.clients.forEach(function (client) {
-//     if (client.readyState === WebSocket.OPEN) {
-//       client.send(data);
-//     }
-//   });
-// };
-
-
 io.on('connection', (socket) => {
   try {
-    // code
-    // socket.on('code', (data, callback) => {
-    //   socket.broadcast.emit('code', data);
-    // });
 
     socket.on('message', function (message) {
       // Broadcast any received message to all clients
-      console.log('received: %s', message);
+      console.log('received: ', message);
       io.emit('message' ,message);
     });
 
