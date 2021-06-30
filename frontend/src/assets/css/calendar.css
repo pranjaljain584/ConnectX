@@ -8,6 +8,9 @@ hr {
   border-top: 1px solid #eee;
 }
 /* custom code end*/
+.schedule-control-section {
+  border-radius: 1rem;
+}
 
 .e-schedule .e-schedule-toolbar .e-icon-schedule-print::before {
   content: '\e973';

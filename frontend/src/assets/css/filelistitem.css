@@ -1,11 +1,10 @@
 .file-list-item {
-  /* background-color: blueviolet; */
   display: flex;
   width: 85%;
   padding-top: 15px;
   padding-bottom: 15px;
   padding-left: 15px;
-  height: 9vh;
+  min-height: 9vh;
   overflow-x: hidden;
   overflow-y: hidden;
 }

@@ -16,14 +16,18 @@ function Dashboard(props) {
       <div id='main-area'>
         <Sidebar
           className='sidebar'
+          setRoomIdSelected={setRoomIdSelected}
+          setFileSelected={setFileSelected}
           setSidebarSelectedItem={setSidebarSelectedItem}
         />
-        { sidebarSelectedItem!='Calendar' && <SideList
-          className='sidelist'
-          sidebarSelectedItem={sidebarSelectedItem}
-          setFileSelected={setFileSelected}
-          setRoomIdSelected={setRoomIdSelected}
-        />}
+        {sidebarSelectedItem != 'Calendar' && (
+          <SideList
+            className='sidelist'
+            sidebarSelectedItem={sidebarSelectedItem}
+            setFileSelected={setFileSelected}
+            setRoomIdSelected={setRoomIdSelected}
+          />
+        )}
         <Display
           className='display'
           fileSelected={fileSelected}

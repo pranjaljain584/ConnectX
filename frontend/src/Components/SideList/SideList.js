@@ -63,6 +63,7 @@ function SideList(props) {
           return r._id !== data.room._id;
         });
       });
+      setRoomIdSelected("") ;
     });
   }, []);
 
@@ -110,7 +111,15 @@ function SideList(props) {
                 })}
               </div>
             ) : (
-              <p>Start a New {sidebarSelectedItem}</p>
+              <p>
+                {sidebarSelectedItem != 'Files' ? (
+                  <span>Start a New </span>
+                ) : (
+                  <span>No </span>
+                )}
+                {sidebarSelectedItem}
+                {sidebarSelectedItem == 'Files' && <span> to show</span>}
+              </p>
             )}
           </div>
         )}

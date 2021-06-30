@@ -1,7 +1,6 @@
 import React from 'react';
 import '../../assets/css/topbar.css';
-import { Link } from 'react-router-dom';
-import { Button } from '@material-ui/core';
+import { Button } from 'reactstrap';
 import { logout } from '../../actions/auth';
 import { connect } from 'react-redux';
 
@@ -12,15 +11,8 @@ function TopBar(props) {
 
   return (
     <div className='topbar-div'>
-      <div>
-        <Link to='/loading' target='_blank'>
-          <Button outline color='primary'>
-            Start A New Meeting
-          </Button>
-        </Link>
-      </div>
       <div className="logout">
-        <Button onClick={handleClick}>Log Out</Button>
+        <Button color="danger" onClick={handleClick}>Log Out</Button>
       </div>
     </div>
   );

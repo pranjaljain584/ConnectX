@@ -26,6 +26,7 @@
 
 .mid-item p {
     height: 30px;
+    max-width: 250px;
 }
 
 .mid-item span {

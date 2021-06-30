@@ -8,7 +8,11 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-function Sidebar({ setSidebarSelectedItem }) {
+function Sidebar({
+  setSidebarSelectedItem,
+  setRoomIdSelected,
+  setFileSelected,
+}) {
   const [selectedChat, setSelectedChat] = useState(false);
   const [selectedCal, setSelectedCal] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState(false);
@@ -20,6 +24,8 @@ function Sidebar({ setSidebarSelectedItem }) {
         value='Video Call'
         onClick={() => {
           setSidebarSelectedItem('Video Call');
+          setRoomIdSelected('');
+          setFileSelected('');
           setSelectedCal(false);
           setSelectedFiles(false);
           setSelectedChat(false);
@@ -35,6 +41,8 @@ function Sidebar({ setSidebarSelectedItem }) {
         onClick={() => {
           setSidebarSelectedItem('Chat');
           setSelectedCal(false);
+          setRoomIdSelected('');
+          setFileSelected('');
           setSelectedFiles(false);
           setSelectedCall(false);
           setSelectedChat(true);
@@ -50,6 +58,8 @@ function Sidebar({ setSidebarSelectedItem }) {
         onClick={() => {
           setSidebarSelectedItem('Calendar');
           setSelectedChat(false);
+          setRoomIdSelected('');
+          setFileSelected('');
           setSelectedFiles(false);
           setSelectedCall(false);
 
@@ -67,6 +77,8 @@ function Sidebar({ setSidebarSelectedItem }) {
         onClick={() => {
           setSidebarSelectedItem('Files');
           setSelectedChat(false);
+          setRoomIdSelected('');
+          setFileSelected('');
           setSelectedCal(false);
           setSelectedCall(false);
 

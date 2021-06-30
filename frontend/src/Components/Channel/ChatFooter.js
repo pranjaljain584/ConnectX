@@ -24,12 +24,12 @@ class ChatFooter extends Component {
     listening: false,
     language: 'en-US',
     file: '',
-    fileSelected:false,
+    fileSelected: false,
   };
 
   getFile(file) {
     // console.log(file) ;
-    this.setState({fileSelected:true}) ;
+    this.setState({ fileSelected: true });
     this.setState({ file });
   }
 
@@ -37,7 +37,7 @@ class ChatFooter extends Component {
     this.setState({ msg: e.target.value });
   };
 
-  handleSubmit = (e, roomIdSelected, userName, userId,file) => {
+  handleSubmit = (e, roomIdSelected, userName, userId, file) => {
     e.preventDefault();
     var currentdate = new Date();
     var time = currentdate.getHours() + ':' + currentdate.getMinutes();
@@ -48,10 +48,10 @@ class ChatFooter extends Component {
       msg: this.state.msg,
       userName,
       roomIdSelected,
-      file
+      file,
     });
 
-    this.setState({ msg: '' });
+    this.setState({ msg: '' , fileSelected:false,file:'' });
   };
 
   onAnythingSaid = (text) => {
@@ -71,7 +71,7 @@ class ChatFooter extends Component {
     });
     var t = this.state.finalisedText[0];
 
-    this.setState({ msg: t });
+    this.setState({ msg: '', fileSelected: false });
   };
 
   startListening = () => {
@@ -95,8 +95,11 @@ class ChatFooter extends Component {
     this.setState({ listening: false });
   };
 
+  componentDidUpdate = () => {};
+
   render() {
-    const { msg, error, fileSelected, file, interimText, listening } = this.state;
+    const { msg, error, fileSelected, file, interimText, listening } =
+      this.state;
 
     const { roomIdSelected } = this.props;
     const userId = this.props.auth.user?._id;
@@ -116,7 +119,6 @@ class ChatFooter extends Component {
               />
             ) : (
               <FontAwesomeIcon
-                
                 onClick={() => this.startListening()}
                 className='footer-icon '
                 icon={faMicrophone}
@@ -134,10 +136,8 @@ class ChatFooter extends Component {
           ) : (
             <input
               type='text'
-              placeholder={
-                fileSelected ? `${file.name}` : 'Type your message here...'
-              }
-              value={msg}
+              placeholder='Type your message here...'
+              value={this.state.fileSelected ? `${file.name}` : msg }
               onChange={(e) => this.handleChange(e)}
             ></input>
           )}

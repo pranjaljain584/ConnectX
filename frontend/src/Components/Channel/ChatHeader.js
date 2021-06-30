@@ -37,6 +37,7 @@ function ChatHeader(props) {
 
   const handleLeaveRoom = () => {
     socket.emit('leave-room',{roomIdSelected,userId}) ;
+    
   }
 
   const handleSubmit = (e) => {
@@ -68,11 +69,13 @@ function ChatHeader(props) {
 
   return (
     <div className='chat-header'>
-      <div>{roomName}</div>
+      <div
+      style={{width:'500px'}}
+      >{roomName}</div>
 
       <div
-      style={{marginLeft:'35'}}
-        // style={{ marginLeft: showInput ? '35.5%' : '63%' }}
+      // style={{marginLeft:'35'}}
+        style={{ marginLeft: showInput ? '5%' : '32%' }}
         className='add-user'
       >
         {showInput && (

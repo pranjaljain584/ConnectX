@@ -1,5 +1,30 @@
 .display-div{
     /* background-color: white; */
+    /* border-radius: 1rem; */
     height: 92vh;
     width: 70vw;
+}
+
+.meet-button {
+    background-image: url('../images/meetImage.webp');
+    background-size: contain;
+    height: 82vh;
+    width: 65vw;
+    margin-top: 20px;
+    margin-left: 50px;
+    display: flex;
+    background-repeat: no-repeat;
+    justify-content: flex-end;
+    flex-direction: column;
+    border-radius: 1rem;
+}
+
+.meet-button button {
+    background-color: teal;
+    color: white;
+    border: 0px solid transparent;
+    height: 40px;
+    width: 250px;
+    align-self: flex-end;
+    margin-left: 30%;
 }
