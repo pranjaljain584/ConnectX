@@ -1,0 +1,73 @@
+.meeting-info-block {
+	 position: absolute;
+	 top: 20px;
+	 left: 660px;
+	 background: #d9eed2 ;
+	 border-radius: 10px;
+	 padding: 25px;
+	 width: 400px;
+}
+
+.meeting-info-block input {
+    display: inline-block;
+}
+ .meeting-info-block .meeting-header {
+	 display: flex;
+	 align-items: center;
+	 justify-content: space-between;
+	 color: black ;
+}
+ .meeting-info-block .meeting-header h3 {
+	 margin: 0;
+	 font-size: 18px;
+	 font-weight: 400;
+}
+ .meeting-info-block .meeting-header .icon {
+	 cursor: pointer;
+	 font-size: 20px;
+}
+ .meeting-info-block .add-people-btn {
+	 display: inline-block;
+	 background: #10B664;
+	 color: #fff;
+	 font-size: 16px;
+	 padding: 10px;
+	 border-radius: 5px;
+	 outline: none;
+	 border: none;
+	 margin-top: 20px;
+}
+ .meeting-info-block .add-people-btn .icon {
+	 font-size: 12px;
+	 margin-right: 10px;
+}
+ .meeting-info-block .info-text {
+	 color: rgb(240, 235, 235);
+	 font-size: 14px;
+}
+ .meeting-info-block .meet-link {
+	 display: flex;
+	 align-items: center;
+	 justify-content: space-between;
+	 background: #f1f3f5;
+	 padding: 15px;
+	 border-radius: 5px;
+}
+ .meeting-info-block .meet-link span {
+	 font-size: 14px;
+	 font-weight: 600;
+	 border: none;
+	 outline: none;
+	 background: none;
+	 flex: 1;
+	 color: #555;
+}
+ .meeting-info-block .meet-link .icon {
+	 cursor: pointer;
+	 color: #555;
+}
+ .meeting-info-block .small-text {
+	 font-size: 13px;
+	 color: rgb(243, 241, 241);
+}
+ 

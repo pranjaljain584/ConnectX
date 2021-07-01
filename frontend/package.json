@@ -8,6 +8,7 @@
     "@fortawesome/react-fontawesome": "^0.1.14",
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
+    "@syncfusion/ej2-react-buttons": "^19.2.44",
     "@syncfusion/ej2-react-notifications": "^19.2.44",
     "@syncfusion/ej2-react-schedule": "^19.2.44",
     "@testing-library/jest-dom": "^5.13.0",

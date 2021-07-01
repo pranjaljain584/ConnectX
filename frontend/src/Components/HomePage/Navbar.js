@@ -6,6 +6,8 @@ import Typography from '@material-ui/core/Typography';
 import {Button} from 'reactstrap';
 import IconButton from '@material-ui/core/IconButton';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUsers } from '@fortawesome/free-solid-svg-icons';
 // import MenuIcon from '@material-ui/icons/Menu';
 
 const useStyles = makeStyles((theme) => ({
@@ -43,10 +45,10 @@ export default function ButtonAppBar() {
             color='inherit'
             aria-label='menu'
           >
-            icon
+            <FontAwesomeIcon icon={faUsers} />
           </IconButton>
           <Typography variant='h5' className={classes.title}>
-            Microsoft Teams
+            ConnectX
           </Typography>
           <Link to='/login'>
             <Button className={classes.button} outline color='white'>

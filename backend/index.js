@@ -45,7 +45,6 @@ connectDB();
 // define routes
 app.use('/api/users', require('./routes/api/user'));
 app.use('/api/auth', require('./routes/api/auth'));
-app.use('/api/room', require('./routes/api/room'));
 app.use('/api/chat', require('./routes/api/chat'));
 app.use('/api/mail', require('./routes/api/mail'));
 app.use('/api/file', require('./routes/api/files'));
@@ -55,10 +54,12 @@ io.on('connection', (socket) => {
 
     socket.on('message', function (message) {
       // Broadcast any received message to all clients
-      console.log('received: ', message);
       io.emit('message' ,message);
     });
 
+    socket.on('video-msg',function(data) {
+      io.emit(`${data.roomId}-video-msg` , {msg:data.msg,user:data.user,time:data.time}) ;
+    })
     // create room
     socket.on('create-room', async function (room) {
       console.log('Socket create-room called!');
@@ -169,14 +170,6 @@ io.on('connection', (socket) => {
     console.log('Error socket', error.message);
   }
 });
-
-// io.broadcast = function (data) {
-//   this.clients.forEach(function (client) {
-//     if (client.readyState === sock.OPEN) {
-//       client.send(data);
-//     }
-//   });
-// };
 
 const port = process.env.PORT || 5000;
 

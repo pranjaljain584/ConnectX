@@ -1,14 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faVideo,
-  faInfo,
   faMicrophone,
   faDesktop,
   faMicrophoneSlash,
-  faVideoSlash
+  faVideoSlash,
+  faPlus
 } from '@fortawesome/free-solid-svg-icons';
 import '../../assets/css/pageFooter.css';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import axios from 'axios' ;
 
 const RoomFooter = ({
   isPresenting,
@@ -19,12 +27,86 @@ const RoomFooter = ({
   isVideo,
   toggleVideo,
   disconnectCall,
+  url,
+  userName,
+  userEmail
 }) => {
+  const [clicked,setClicked] = useState(false) ; 
+  const [mail,setEmail] = useState('') ;
+  const handleClose = () => {
+    setClicked(false) ;
+  };
+  const handleChange = (e) => {
+    setEmail(e.target.value) ;
+    // setRoomTitle(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault() ;
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        'x-auth-token': localStorage.token,
+      },
+    };
+
+    const body = {
+      sendTo:mail,
+      userEmail,
+      userName,
+      inviteLink: `${url}`,
+    };
+
+    axios
+      .post(`http://localhost:5000/api/mail/meet`, body, config)
+      .then((response) => {
+        // console.log(response) ;
+      })
+      .catch((err) => console.log(err));
+    setClicked(false) ;
+    setEmail('') ;
+  }
   return (
     <div className='footer-item'>
       <div className='center-item'>
-        <div className='icon-block'>
-          <FontAwesomeIcon className='icon' icon={faInfo} />
+        {clicked ? (
+          <Dialog
+            open={clicked}
+            fullWidth
+            aria-labelledby='form-dialog-title'
+          >
+            <DialogTitle id='form-dialog-title'>Invite others</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                Enter Email id
+              </DialogContentText>
+              <TextField
+                autoFocus
+                margin='dense'
+                id='roomTitle'
+                label='Email id'
+                type='email'
+                fullWidth
+                onChange={handleChange}
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} color='primary'>
+                Cancel
+              </Button>
+              <Button onClick={handleSubmit} color='primary'>
+                Done
+              </Button>
+            </DialogActions>
+          </Dialog>
+        ) : null}
+        <div className='icon-block' onClick={() => setClicked(!clicked)}>
+          <FontAwesomeIcon
+            className='icon'
+            style={{ color: '#10B664' }}
+            icon={faPlus}
+          />
+  
         </div>
         <div
           className={`icon-block ${!isAudio ? 'red-bg' : null}`}

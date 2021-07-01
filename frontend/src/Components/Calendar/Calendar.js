@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import {ScheduleComponent , Day, Week, WorkWeek, Month, Agenda, Inject } from '@syncfusion/ej2-react-schedule' ;
+import { ButtonComponent } from '@syncfusion/ej2-react-buttons';
 import {
   ScheduleComponent,
   ViewsDirective,
@@ -46,44 +46,53 @@ class Calendar extends Component {
       </div>
     );
   }
-  // onCreated() {
-  //   window.setInterval(function () {
-  //     var scheduleObj = document.querySelector('.e-schedule').ej2_instances[0];
-  //     var eventCollection = scheduleObj.getCurrentViewEvents();
-  //     eventCollection.forEach((event, i) => {
-  //       var dateFormat = (date) =>
-  //         new Date(
-  //           date.getFullYear(),
-  //           date.getMonth(),
-  //           date.getDate(),
-  //           date.getHours(),
-  //           date.getMinutes()
-  //         );
-  //       var alertBeforeMinutes = 5;
-  //       var startTime = dateFormat(event[scheduleObj.eventFields.startTime]);
-  //       var currentTime = dateFormat(new Date());
-  //       if (
-  //         currentTime.getTime() ===
-  //         startTime.getTime() - 1000 * 60 * alertBeforeMinutes
-  //       ) {
-  //         var toastObjReminder =
-  //           document.querySelector('.e-toast').ej2_instances[0];
-  //         toastObjReminder.show();
-  //       }
-  //     });
-  //   }, 60000);
-  // }
+  onCreated() {
+    // console.log("Caleed") ;
+    window.setInterval(function () {
+      var scheduleObj = document.querySelector('.e-schedule').ej2_instances[0];
+      var eventCollection = scheduleObj.getCurrentViewEvents();
+      eventCollection.forEach((event, i) => {
+        var dateFormat = (date) =>
+          new Date(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate(),
+            date.getHours(),
+            date.getMinutes()
+          );
+        var alertBeforeMinutes = 5;
+        var startTime = dateFormat(event[scheduleObj.eventFields.startTime]);
+        var currentTime = dateFormat(new Date());
+        if (
+          currentTime.getTime() ===
+          startTime.getTime() - 1000 * 60 * alertBeforeMinutes
+        ) {
+          var toastObjReminder =
+            document.querySelector('.e-toast').ej2_instances[0];
+          toastObjReminder.show();
+        }
+      });
+    }, 60000);
+  }
   render() {
     return (
       <div className='schedule-control-section'>
         <div className='control-section'>
           <div className='control-wrapper'>
+            {/* <ButtonComponent
+              id='add'
+              title='Add'
+              ref={(t) => (this.buttonObj = t)}
+              // onClick={this.onAddClick.bind(this)}
+            >
+              Add
+            </ButtonComponent> */}
             <ScheduleComponent
               height='650px'
               id='schedule'
-              // ref={(schedule) => (this.scheduleObj = schedule)}
+              ref={(schedule) => (this.scheduleObj = schedule)}
               eventSettings={{ dataSource: this.data }}
-              // created={this.onCreated.bind(this)}
+              created={this.onCreated.bind(this)}
             >
               <ViewsDirective>
                 <ViewDirective option='Day' />

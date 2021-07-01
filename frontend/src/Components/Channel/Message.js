@@ -7,7 +7,7 @@ function Message(props) {
   const { chatMessage, chatTime, userName, userId, fileName, base64String } =
     props.msg;
   const id = props.auth?.user?._id;
-  console.log(base64String);
+  // console.log(base64String);
 
   return (
     <div className={`msg-div ${userId === id ? ' msg-self' : ''}`}>

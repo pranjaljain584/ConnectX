@@ -8,6 +8,7 @@ import Media from './Media';
 import RoomHeader from './RoomHeader';
 import RoomFooter from './RoomFooter';
 import '../../assets/css/room.css';
+import Messenger from './Messenger';
 
 const socket = io.connect('http://localhost:5000', {
   transports: ['websocket'],
@@ -27,19 +28,34 @@ var localStream;
 if (localStorage.token) {
   const token = localStorage.token;
   const decoded = jwt_decode(token);
-  console.log(decoded);
+  console.log('DECODED', decoded);
   var localId = decoded.user.id;
+  var userName = decoded.user.name;
 }
 
 function Room(props) {
   const { roomId } = useParams(); // act like my room name
   const [grid, setGrid] = useState([]);
-  const peers = Object.keys(peerConnections).length;
+  const [msg, setMsg] = useState('');
+  const url = `${window.location.origin}${window.location.pathname}`;
+  const [participants, setParticipants] = useState([]);
+  const userEmail = props.auth.user?.email;
   const [screenCastStream, setScreenCastStream] = useState();
   const [myStream, setMyStream] = useState();
   const [isPresenting, setIsPresenting] = useState(false);
   const [isAudio, setIsAudio] = useState(true);
   const [isVideo, setIsVideo] = useState(true);
+  const [incomingMsg, setIncomingMsg] = useState();
+  const [head, selectHead] = useState('Chat');
+
+  const handleSubmit = (e) => {
+    // console.log('submittt');
+    e.preventDefault();
+    var currentdate = new Date();
+    var time = currentdate.getHours() + ':' + currentdate.getMinutes();
+    socket.emit('video-msg', { msg, user: userName, roomId, time });
+    setMsg('');
+  };
 
   const toggleAudio = (value) => {
     myStream.getAudioTracks()[0].enabled = value;
@@ -79,7 +95,7 @@ function Room(props) {
     });
 
     Object.keys(peerConnections).map(function (key) {
-      let video = localStream.getVideoTracks()[0] ;
+      let video = localStream.getVideoTracks()[0];
       var sender = peerConnections[key].pc.getSenders().find(function (s) {
         return s.track.kind == video.kind;
       });
@@ -90,9 +106,7 @@ function Room(props) {
   };
 
   const gotMessageFromServer = (message) => {
-    // console.log('Message receive from server:', message);
     var signal = message;
-    // console.log('Json oarsed message:', signal);
     var peerId = signal.id;
 
     if (
@@ -104,15 +118,16 @@ function Room(props) {
 
     if (signal.initCaller && signal.dest == roomId) {
       // set up peer connection object for a newcomer peer
-      setUpPeer(peerId, signal.initCaller);
+      setUpPeer(peerId, signal.initCaller, signal.displayName);
       serverConnection.emit('message', {
         initCaller: true,
         id: localId,
+        displayName: userName,
         dest: peerId,
       });
     } else if (signal.initCaller && signal.dest == localId) {
       // initiate call if we are the newcomer peer
-      setUpPeer(peerId, signal.initCaller, true);
+      setUpPeer(peerId, signal.initCaller, signal.displayName, true);
     } else if (signal.sdp) {
       peerConnections[peerId].pc
         .setRemoteDescription(new RTCSessionDescription(signal.sdp))
@@ -133,12 +148,16 @@ function Room(props) {
     }
   };
 
-  const setUpPeer = (peerId, initCaller, initCall = false) => {
+  const setUpPeer = (peerId, initCaller, displayName, initCall = false) => {
+    console.log("Disp-----" , displayName) ;
     // console.log('HEREEEEEE');
     peerConnections[peerId] = {
       initCaller: true,
       pc: new RTCPeerConnection(peerConnectionConfig),
+      displayName:displayName,
     };
+    
+    // console.log("DDDDD",dataChannel) ;
     peerConnections[peerId].pc.onicecandidate = (event) =>
       gotIceCandidate(event, peerId);
     peerConnections[peerId].pc.ontrack = (event) =>
@@ -146,7 +165,6 @@ function Room(props) {
     peerConnections[peerId].pc.oniceconnectionstatechange = (event) =>
       checkPeerDisconnect(event, peerId);
 
-    console.log(localStream);
     peerConnections[peerId].pc.addStream(localStream);
 
     if (initCall) {
@@ -163,6 +181,7 @@ function Room(props) {
       serverConnection.send({
         ice: event.candidate,
         id: localId,
+        displayNameL: userName,
         dest: peerId,
       });
     }
@@ -227,15 +246,23 @@ function Room(props) {
     var rowHeight = '';
     var colWidth = '';
 
-    var numVideos = Object.keys(peerConnections).length + 1;
 
-    if (numVideos > 1 && numVideos <= 4) {
+    var numVideos = Object.keys(peerConnections).length + 1;
+    console.log('num-------',numVideos);
+
+
+    if (numVideos > 1 && numVideos <= 3) {
       // 2x2 grid
       rowHeight = '200px';
-      colWidth = '200px';
-    } else if (numVideos > 4) {
-      // 3x3 grid
+      colWidth = '300px';
+    }
+    else if(numVideos<=4){
       rowHeight = '100px';
+      colWidth = '300px';
+    } 
+    else if (numVideos > 4) {
+      // 3x3 grid
+      rowHeight = '80px';
       colWidth = '100px';
     }
 
@@ -265,6 +292,7 @@ function Room(props) {
         serverConnection.emit('message', {
           initCaller: true,
           id: localId,
+          displayName: userName,
           dest: roomId,
         });
       } catch (error) {
@@ -274,15 +302,22 @@ function Room(props) {
       alert('Your browser does not support getUserMedia API');
     }
 
-    console.log(localStream, 'LOCAL STREAM');
     setMyStream(localStream);
   };
 
   useEffect(() => {
     start();
+    // console.log(peerConnections, 'PEEEERRRR');
+    
   }, []);
 
-  console.log(myStream?.getAudioTracks(), 'MYYYY');
+  useEffect(() => {
+    socket.removeAllListeners(`${roomId}-video-msg`);
+    socket.on(`${roomId}-video-msg`, (data) => {
+      console.log('Data', data);
+      setIncomingMsg(data);
+    });
+  }, [msg]);
 
   return (
     <div className='room'>
@@ -297,7 +332,16 @@ function Room(props) {
         })}
       </div>
 
-      <RoomHeader />
+      <RoomHeader selectHead={selectHead} />
+      <Messenger
+        head={head}
+        msg={msg}
+        setMsg={setMsg}
+        participants={peerConnections}
+        handleSubmit={handleSubmit}
+        incomingMsg={incomingMsg}
+        roomId={roomId}
+      />
       <RoomFooter
         isPresenting={isPresenting}
         stopScreenShare={stopScreenShare}
@@ -307,9 +351,10 @@ function Room(props) {
         isVideo={isVideo}
         toggleVideo={toggleVideo}
         disconnectCall={disconnectCall}
+        url={url}
+        userName={userName}
+        userEmail={userEmail}
       />
-
-      {/* <h1>{Object.keys(peerConnections).length}</h1> */}
     </div>
   );
 }
@@ -325,26 +370,3 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(Room);
-
-// const initialState = [];
-// let peer = null;
-
-// function Room(props) {
-//   const { roomId } = useParams();
-//   const isAdmin = window.location.hash === '#init' ? true : false;
-//   const url = `${window.location.origin}${window.location.pathname}`;
-//   let alertTimeout = null;
-
-//   return (
-//     <div className='room'>
-//       <div className='video-grid'>
-//         <Media isVideo={isVideo} />
-//         <video className='video-container' id='video' src='' autoPlay></video>
-//       </div>
-//       {/* {isAdmin && <MeetingInfo url={url} />} */}
-//       {/* <Messenger /> */}
-//       {/* this is meet room with room id {roomId} and {url} */}
-//       {/* <Media isVideo={isVideo} /> */}
-//     </div>
-//   );
-// }

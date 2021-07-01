@@ -9,7 +9,6 @@ class Home extends Component {
           <div>
             <ButtonAppBar />
             <Intro/>
-            <About/>
           </div>
         );
     }

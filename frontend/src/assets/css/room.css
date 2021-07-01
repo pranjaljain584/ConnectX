@@ -5,6 +5,7 @@
 
 .room {
   background-color: rgb(33, 36, 43);
+  height: 100vh;
   padding: 1%;
   margin: 0;
 }
@@ -14,8 +15,8 @@
   background-color: #1a1b20;
   border-radius: 2rem;
   display: grid;
-  /* grid-gap: 5px; */
-  grid-auto-flow: row;
+  grid-gap: 5px;
+  grid-auto-flow: row ;
   grid-template-columns: repeat(auto-fit, minmax(var(--colWidth), 1fr));
   margin-top: 3%;
   margin-left: 3%;
@@ -23,7 +24,12 @@
   padding: 10px;
 }
 
+video{
+  object-fit: contain;
+}
+
 .video-container {
+  height: auto;
   position: relative;
   overflow: hidden;
   min-height: var(--rowHeight);
@@ -31,19 +37,7 @@
 }
 
 .video-container video {
-  object-fit: contain;
+  object-fit: cover;
   height: auto;
   width: auto;
 }
-
-/* .video-container {
-  height: 50%;
-  object-fit: cover;
-  width: 40%;
-  margin-right: 5%;
-  margin-left: 5%;
-  border-radius: 2rem;
-  border: 5px solid #5f5e64;
-  padding: 0;
-  background-color: rgb(58, 58, 58);
-} */

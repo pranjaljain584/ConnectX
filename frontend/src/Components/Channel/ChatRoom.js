@@ -27,9 +27,10 @@ function ChatRoom(props) {
     axios
       .get(`http://localhost:5000/api/chat/chat-room/${roomIdSelected}`, config)
       .then((response) => {
-        // console.log("Chat room res--->>",response.data) ;
         setRoomName(response.data.room.title);
         setMsgArray(response.data.room.msgArray);
+        setParticipants(response.data.room.joinedUsers) ;
+        // console.log("PARTICIPANTS",participants) ;
       })
       .catch((err) => console.log(err));
 
@@ -39,9 +40,11 @@ function ChatRoom(props) {
     
     socket.removeAllListeners(`${roomIdSelected}`);
     socket.on(`${roomIdSelected}`, function (data) {
+      // console.log("DATA" , data) ;
       setMsgArray((prevState) => {
         return [...prevState, data.finalMsg];
       });
+
     });
 
   }, [roomIdSelected]);
