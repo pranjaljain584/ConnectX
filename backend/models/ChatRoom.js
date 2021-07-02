@@ -8,7 +8,8 @@ const ChatBody = {
   chatMessage: { type: String, required: true },
   chatTime: { type: String, required: true },
   fileName: {type:String},
-  base64String : {type:String}
+  base64String : {type:String},
+  userMail:{type:String}
 };
 
 // creating ChatRoom schema

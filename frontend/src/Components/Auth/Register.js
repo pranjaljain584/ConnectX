@@ -129,7 +129,7 @@ function Register(props) {
             </Grid>
           </Grid>
         </form>
-        <p className={classes.para}>or</p>
+        {/* <p className={classes.para}>or</p>
         <GoogleLogin
           clientId='323320658112-29fp0eku8ngohvu2ojn2bacv1lims8c0.apps.googleusercontent.com'
           render={(renderProps) => (
@@ -137,7 +137,8 @@ function Register(props) {
           )}
           onSuccess={googleSuccess}
           onFailure={googleFailure}
-        />
+          cookiePolicy='single_host_origin'
+        /> */}
       </div>
       <Box mt={5}></Box>
     </Container>

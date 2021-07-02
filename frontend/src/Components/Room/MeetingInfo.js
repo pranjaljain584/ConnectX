@@ -1,10 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faCopy,
-  faTimes,
   faUser,
-  faShieldAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import '../../assets/css/meetinginfo.css';
 
@@ -22,12 +19,6 @@ function MeetingInfo(props) {
 
 <br/>
       <input type="email" placeholder="Email"></input>
-      {/*
-      <p className='info-text'>
-        share this meeting link with others you want in the meeting
-      </p>
-      
-      <p className='small-text'>Joined as akshay@gmail.com</p> */}
     </div>
   );
 }

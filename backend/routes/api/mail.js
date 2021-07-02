@@ -19,7 +19,7 @@ router.post('/',auth,(req,res)=>{
             <br />
             Click on the link below to join :
             <br/>
-            <a href=${data.inviteLink}> Video Meet Link </a>
+            <a href=${data.inviteLink}> Chat Room Link </a>
         `,
     };
 
@@ -52,7 +52,7 @@ router.post('/meet', auth, (req, res) => {
             <br />
             Click on the link below to join :
             <br/>
-            <a href=${data.inviteLink}> Chat Room Link </a>
+            <a href=${data.inviteLink}> Invite Meet Link </a>
         `,
   };
 

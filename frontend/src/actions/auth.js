@@ -69,6 +69,31 @@ export const register = ({ name, email, password}) => {
   };
 };
 
+// google auth
+export const googleAuth = ({ name, email }) => {
+  return async (dispatch) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const body = JSON.stringify({
+      name,
+      email,
+    });
+
+    try {
+      
+      dispatch(loadUser());
+    } catch (err) {
+      dispatch({
+        type: REGISTER_FAIL,
+      });
+    }
+  };
+};
+
 // Login User
 export const login = (email, password) => {
   return async (dispatch) => {

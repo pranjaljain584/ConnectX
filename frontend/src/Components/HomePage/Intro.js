@@ -7,7 +7,7 @@ class Intro extends Component {
   render() {
     return (
       <div className='main-div'>
-        <h1>Microsoft Teams </h1>
+        <h1>ConnectX </h1>
         <p>
           Meet, chat, call, and collaborate in <br /> just one place.
         </p>

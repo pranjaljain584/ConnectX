@@ -19,9 +19,15 @@ module.exports.getChatList = async (req, res) => {
 module.exports.getChatRoom = async (req, res) => {
   try {
     const roomId = req.params.roomid;
-    const room = await ChatRoom.findById(roomId);
+    const room = await ChatRoom.findById(roomId).populate('joinedUsers','name');
+    const participants = [];
 
-    return res.status(200).json({ room });
+    for (const ju of room.joinedUsers) {
+      participants.push(ju.name);
+    }
+
+    return res.status(200).json({ room , participants });
+    
   } catch (error) {
     console.error(err.message);
     res.status(500).send('Server error');

@@ -36,9 +36,12 @@ function Login(props) {
     await props.dispatch(login(email, password));
   };
 
-  const googleSuccess = () => {};
+  const googleSuccess = async (res) => {
+    let email = res?.profileObj.email ;
+    
+    console.log(res)};
 
-  const googleFailure = () => {};
+  const googleFailure = (err) => {console.log('Google Sign in Unsuccessful',err)};
 
   const { isAuthenticated } = props.auth;
   const { from } = props.location.state || { from: { pathname: '/dashboard' } };
@@ -103,14 +106,15 @@ function Login(props) {
           </Grid>
         </form>
         <p className={classes.para}>or</p>
-        <GoogleLogin
+        {/* <GoogleLogin
           clientId='323320658112-29fp0eku8ngohvu2ojn2bacv1lims8c0.apps.googleusercontent.com'
           render={(renderProps) => (
             <GoogleButton onClick={renderProps.onClick} disabled={false} />
           )}
           onSuccess={googleSuccess}
           onFailure={googleFailure}
-        />
+          cookiePolicy='single_host_origin'
+        /> */}
       </div>
       <Box mt={8}></Box>
     </Container>

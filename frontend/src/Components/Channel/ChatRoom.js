@@ -29,7 +29,7 @@ function ChatRoom(props) {
       .then((response) => {
         setRoomName(response.data.room.title);
         setMsgArray(response.data.room.msgArray);
-        setParticipants(response.data.room.joinedUsers) ;
+        setParticipants(response.data.participants) ;
         // console.log("PARTICIPANTS",participants) ;
       })
       .catch((err) => console.log(err));
@@ -51,7 +51,7 @@ function ChatRoom(props) {
 
   return (
     <div className='chat-room'>
-      <ChatHeader roomIdSelected={roomIdSelected} roomName={roomName} />
+      <ChatHeader participants={participants} roomIdSelected={roomIdSelected} roomName={roomName} />
       <div className='list' id='style'>
         {msgArray.length > 0 &&
           msgArray.map((msg, key) => {

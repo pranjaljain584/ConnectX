@@ -101,7 +101,7 @@ io.on('connection', (socket) => {
 
     socket.on('send-msg', async function (data) {
       // console.log('sending room post', data);
-      const { userId, msgTime, msg, userName, roomIdSelected, file } = data;
+      const { userId, msgTime, msg, userName, roomIdSelected, file,userMail } = data;
 
       if (file !== '') {
         let newfile = new File({
@@ -125,6 +125,7 @@ io.on('connection', (socket) => {
         chatTime: msgTime,
         fileName: file.name,
         base64String: file.base64,
+        userMail
       };
 
       ChatRoom.findOneAndUpdate(

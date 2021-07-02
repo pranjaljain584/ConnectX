@@ -10,5 +10,8 @@
   },
   "author": "Pranjal Jain",
   "license": "ISC",
-  "dependencies": {}
+  "dependencies": {
+    "react-bootstrap-sweetalert": "^5.2.0",
+    "sweetalert": "^2.1.2"
+  }
 }

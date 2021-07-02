@@ -37,7 +37,7 @@ class ChatFooter extends Component {
     this.setState({ msg: e.target.value });
   };
 
-  handleSubmit = (e, roomIdSelected, userName, userId, file) => {
+  handleSubmit = (e, roomIdSelected, userName, userId, file,userMail) => {
     e.preventDefault();
     var currentdate = new Date();
     var time = currentdate.getHours() + ':' + currentdate.getMinutes();
@@ -49,6 +49,7 @@ class ChatFooter extends Component {
       userName,
       roomIdSelected,
       file,
+      userMail,
     });
 
     this.setState({ msg: '' , fileSelected:false,file:'' });
@@ -71,7 +72,7 @@ class ChatFooter extends Component {
     });
     var t = this.state.finalisedText[0];
 
-    this.setState({ msg: '', fileSelected: false });
+    this.setState({ msg: t , fileSelected: false });
   };
 
   startListening = () => {
@@ -104,6 +105,7 @@ class ChatFooter extends Component {
     const { roomIdSelected } = this.props;
     const userId = this.props.auth.user?._id;
     const userName = this.props.auth.user?.name;
+    const userMail = this.props.auth.user?.email;
     return (
       <div className='chat-footer'>
         {/* {error && error} */}
@@ -144,7 +146,7 @@ class ChatFooter extends Component {
 
           <button
             onClick={(e) =>
-              this.handleSubmit(e, roomIdSelected, userName, userId, file)
+              this.handleSubmit(e, roomIdSelected, userName, userId, file,userMail)
             }
           >
             Send{' '}

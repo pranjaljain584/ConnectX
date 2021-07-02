@@ -6,9 +6,20 @@ import { withStyles } from '@material-ui/core/styles';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
+import { makeStyles } from '@material-ui/core/styles';
+import Avatar from '@material-ui/core/Avatar';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Dialog from '@material-ui/core/Dialog';
+import PersonIcon from '@material-ui/icons/Person';
+import { blue } from '@material-ui/core/colors';
+import ListIcon from '@material-ui/icons/List';
 import ListItemText from '@material-ui/core/ListItemText';
-import CreateIcon from '@material-ui/icons/Create';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+// import SweetAlert from 'react-bootstrap-sweetalert' ;
+import swal from 'sweetalert';
 import { connect } from 'react-redux';
 import ReactTooltip from 'react-tooltip';
 import { io } from 'socket.io-client';
@@ -18,14 +29,23 @@ const socket = io.connect('http://localhost:5000', {
   transports: ['websocket'],
 });
 
+const useStyles = makeStyles({
+  avatar: {
+    backgroundColor: blue[100],
+    color: blue[600],
+  },
+});
+
 function ChatHeader(props) {
-  const { roomName , roomIdSelected } = props;
-  const [showInput,setShowInput] = useState(false) ;
+  const { roomName, roomIdSelected, participants } = props;
+  const [showInput, setShowInput] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const userId = props.auth.user?._id;
-  const userEmail = props.auth.user?.email ;
-  const userName = props.auth.user?.name ;
-  const [sendTo,setSendTo] = useState('') ;
+  const userEmail = props.auth.user?.email;
+  const userName = props.auth.user?.name;
+  const [sendTo, setSendTo] = useState('');
+  const [showP, setShowP] = useState(false);
+  const classes = useStyles();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -36,12 +56,17 @@ function ChatHeader(props) {
   };
 
   const handleLeaveRoom = () => {
-    socket.emit('leave-room',{roomIdSelected,userId}) ;
-    
-  }
+    socket.emit('leave-room', { roomIdSelected, userId });
+    swal('Room Left') ;
+  };
+
+  const handleClickP = () => {
+    console.log('Clicked');
+    setShowP(true);
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault() ;
+    e.preventDefault();
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -50,31 +75,28 @@ function ChatHeader(props) {
     };
 
     const body = {
-      sendTo ,
+      sendTo,
       userEmail,
       userName,
       roomName,
-      inviteLink:`http://localhost:3000/invite/${roomIdSelected}`
-    }
+      inviteLink: `http://localhost:3000/invite/${roomIdSelected}`,
+    };
 
     axios
-      .post(`http://localhost:5000/api/mail`, body, config )
+      .post(`http://localhost:5000/api/mail`, body, config)
       .then((response) => {
-        // console.log(response) ;
+        swal("Mail Sent") ;
       })
       .catch((err) => console.log(err));
 
-      setShowInput(false) ;
-  }
+    setShowInput(false);
+  };
 
   return (
     <div className='chat-header'>
-      <div
-      style={{width:'500px'}}
-      >{roomName}</div>
+      <div style={{ width: '500px' }}>{roomName}</div>
 
       <div
-      // style={{marginLeft:'35'}}
         style={{ marginLeft: showInput ? '5%' : '32%' }}
         className='add-user'
       >
@@ -96,11 +118,31 @@ function ChatHeader(props) {
               return !prevState;
             });
           }}
-          className="icon"
+          className='icon'
           data-tip='Add Participant'
           icon={faUserPlus}
         />
       </div>
+
+      <Dialog
+        onClose={() => setShowP(false)}
+        aria-labelledby='simple-dialog-title'
+        open={showP}
+      >
+        <DialogTitle id='simple-dialog-title'>Participants List</DialogTitle>
+        <List>
+          {participants.map((p) => (
+            <ListItem button>
+              <ListItemAvatar>
+                <Avatar className={classes.avatar}>
+                  <PersonIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText primary={p} />
+            </ListItem>
+          ))}
+        </List>
+      </Dialog>
 
       <div data-tip='More Options' className='more-optns'>
         <FontAwesomeIcon
@@ -124,11 +166,11 @@ function ChatHeader(props) {
             </ListItemIcon>
             <ListItemText primary='Leave Room' />
           </StyledMenuItem>
-          <StyledMenuItem>
+          <StyledMenuItem onClick={handleClickP}>
             <ListItemIcon>
-              <CreateIcon fontSize='small' />
+              <ListIcon fontSize='small' />
             </ListItemIcon>
-            <ListItemText primary='Update' />
+            <ListItemText primary='Participants' />
           </StyledMenuItem>
         </StyledMenu>
       </div>
@@ -174,4 +216,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(ChatHeader) ;
+export default connect(mapStateToProps)(ChatHeader);

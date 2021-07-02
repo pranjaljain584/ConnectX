@@ -149,15 +149,12 @@ function Room(props) {
   };
 
   const setUpPeer = (peerId, initCaller, displayName, initCall = false) => {
-    console.log("Disp-----" , displayName) ;
-    // console.log('HEREEEEEE');
     peerConnections[peerId] = {
       initCaller: true,
       pc: new RTCPeerConnection(peerConnectionConfig),
-      displayName:displayName,
+      displayName: displayName,
     };
-    
-    // console.log("DDDDD",dataChannel) ;
+
     peerConnections[peerId].pc.onicecandidate = (event) =>
       gotIceCandidate(event, peerId);
     peerConnections[peerId].pc.ontrack = (event) =>
@@ -202,8 +199,7 @@ function Room(props) {
   }
 
   const gotRemoteStream = (event, peerId) => {
-    // console.log(event.streams[0]);
-    console.log('CALLED');
+    // let numVideos = Object.keys(peerConnections).length + 1;
 
     userTracksbyId[peerId] = {
       audio: event.streams[0].getAudioTracks(),
@@ -211,16 +207,25 @@ function Room(props) {
     };
 
     console.log(userTracksbyId, 'STREAM ARRAY');
-    // console.log(localId);
 
     setGrid((prevState) => {
       return [
-        ...prevState,
-        React.createElement(
-          'div',
-          { id: 'peers', className: 'video-container' },
-          [<Media id={`remoteVideo_${peerId}`} />]
-        ),
+        ...prevState.filter((e) => {
+          return e.id != peerId;
+        }),
+        {
+          id: peerId,
+          element: React.createElement(
+            'div',
+            { id: `peer-${peerId}`, className: 'video-container' },
+            [
+              <Media
+                vidLabel={peerConnections[peerId].displayName}
+                id={`remoteVideo_${peerId}`}
+              />,
+            ]
+          ),
+        },
       ];
     });
 
@@ -243,31 +248,30 @@ function Room(props) {
   };
 
   const updateLayout = () => {
-    var rowHeight = '';
-    var colWidth = '';
-
+    var Height = '';
+    var Width = '';
 
     var numVideos = Object.keys(peerConnections).length + 1;
-    console.log('num-------',numVideos);
 
-
-    if (numVideos > 1 && numVideos <= 3) {
-      // 2x2 grid
-      rowHeight = '200px';
-      colWidth = '300px';
+    if (numVideos == 1) {
+      Height = '100%';
+      Width = '100%';
+    } else if (numVideos == 2) {
+      Height = '100%';
+      Width = '50%';
+    } else if (numVideos > 2 && numVideos <= 4) {
+      Height = '50%';
+      Width = '50%';
+    } else if (numVideos > 4 && numVideos <= 6) {
+      Height = '33%';
+      Width = '50%';
+    } else {
+      Height = '33%';
+      Width = '33%';
     }
-    else if(numVideos<=4){
-      rowHeight = '100px';
-      colWidth = '300px';
-    } 
-    else if (numVideos > 4) {
-      // 3x3 grid
-      rowHeight = '80px';
-      colWidth = '100px';
-    }
 
-    document.documentElement.style.setProperty(`--rowHeight`, rowHeight);
-    document.documentElement.style.setProperty(`--colWidth`, colWidth);
+    document.documentElement.style.setProperty(`--Height`, Height);
+    document.documentElement.style.setProperty(`--Width`, Width);
   };
 
   const start = async () => {
@@ -308,7 +312,6 @@ function Room(props) {
   useEffect(() => {
     start();
     // console.log(peerConnections, 'PEEEERRRR');
-    
   }, []);
 
   useEffect(() => {
@@ -325,10 +328,11 @@ function Room(props) {
         <div className='video-container'>
           {' '}
           <video id='own-video' muted autoPlay></video>{' '}
+          <p className='label'>You</p>
         </div>
 
         {grid.map((g, key) => {
-          return g;
+          return g.element;
         })}
       </div>
 
