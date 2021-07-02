@@ -7,18 +7,13 @@ function SideListHeader(props) {
   const { sidebarSelectedItem } = props;
   const userId = props.auth.user?._id ;
 
-  // console.log('USER___>>', props);
-
   return (
     <div>
       <div className='sidelist-header'>
         <div className='sidelist-head'>{sidebarSelectedItem}</div>
         <div className='sidelist-btn'>
           {sidebarSelectedItem === 'Chat' && (
-            // <div >
-              // {' '}
               <NewChatForm userId={userId} />
-            // </div>
           )}
         </div>
       </div>

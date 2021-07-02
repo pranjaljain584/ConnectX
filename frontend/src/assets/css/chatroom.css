@@ -88,6 +88,8 @@
   margin-top: 2%;
   margin-right: 2%;
   color: rgb(44, 41, 41);
+  overflow: hidden;
+  height: auto;
 }
 
 .msg-bottom {

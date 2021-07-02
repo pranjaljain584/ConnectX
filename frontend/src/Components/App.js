@@ -21,12 +21,7 @@ import ChatRoomJoining from './Channel/ChatRoomJoining.js';
 import ErrorPage from './ErrorPage.js';
 import Calendar from './Calendar/Calendar.js';
 
-// if (localStorage.token) {
-//   setAuthToken(localStorage.token);
-// }
-
 const PrivateRoute = (privateRouteProps) => {
-  console.log('privateRouteProps', privateRouteProps);
   const { isAuthenticated, component: Component, path } = privateRouteProps;
 
   const [isLoggedIn, setLogIn] = useState(false);
@@ -53,11 +48,6 @@ const PrivateRoute = (privateRouteProps) => {
 };
 
 function App(props) {
-  // useEffect(() => {
-  //   //console.log(props.auth.isAuthenticated);
-  //   console.log("DISPATCHED") ;
-  //   props.dispatch(loadUser());
-  // }, []);
 
   return (
     <Router>
@@ -67,23 +57,23 @@ function App(props) {
           <Route path='/login' component={Login} />
           <Route path='/register' component={Register} />
           <Route path='/calendar' component={Calendar} />
-          {props.auth.isAuthenticated === null ? null : (
-            <PrivateRoute
-              path='/dashboard'
-              component={Dashboard}
-              isAuthenticated={props.auth.isAuthenticated}
-            />
-          )}
-          {props.auth.isAuthenticated === null ? null : (
-            <PrivateRoute
-              path='/invite/:chatRoomId'
-              component={ChatRoomJoining}
-              isAuthenticated={props.auth.isAuthenticated}
-            />
-          )}
+          <PrivateRoute
+            path='/dashboard'
+            component={Dashboard}
+            isAuthenticated={props.auth.isAuthenticated}
+          />
+          <PrivateRoute
+            path='/invite/:chatRoomId'
+            component={ChatRoomJoining}
+            isAuthenticated={props.auth.isAuthenticated}
+          />
+          <PrivateRoute
+            path='/room/:roomId'
+            component={Room}
+            isAuthenticated={props.auth.isAuthenticated}
+          />
           <Route path='/loading' component={Loading} />
-          <Route path='/room/:roomId' component={Room} />
-          <Route path="/error" component={ErrorPage} />
+          <Route path='/error' component={ErrorPage} />
           <Route component={Page404} />
         </Switch>
       </div>
@@ -92,7 +82,6 @@ function App(props) {
 }
 
 App.propTypes = {
-
   auth: PropTypes.object.isRequired,
 };
 

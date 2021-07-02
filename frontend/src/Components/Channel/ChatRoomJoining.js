@@ -2,13 +2,10 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import '../../assets/css/loading.css';
-import { io } from 'socket.io-client';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 
-// const socket = io.connect('http://localhost:5000', {
-//   transports: ['websocket'],
-// });
 
 function ChatRoomJoining(props) {
   const { chatRoomId } = useParams();

@@ -53,7 +53,7 @@ function Sidebar({
           icon={faComment}
         />
       </div>
-      <div
+      {/* <div
         value='Calendar'
         onClick={() => {
           setSidebarSelectedItem('Calendar');
@@ -70,7 +70,7 @@ function Sidebar({
           className={`icon ${selectedCal ? ' white' : ''}`}
           icon={faCalendarAlt}
         />
-      </div>
+      </div> */}
 
       <div
         value='Files'

@@ -12,7 +12,7 @@ const socket = io.connect('http://localhost:5000', {
 });
 
 function SideList(props) {
-  const { sidebarSelectedItem, setRoomIdSelected, setFileSelected } = props;
+  const { sidebarSelectedItem, setRoomIdSelected , roomIdSelected , setFileSelected } = props;
   const [chatList, setChatList] = useState([]);
   const [fileList, setFileList] = useState([]);
 
@@ -66,6 +66,8 @@ function SideList(props) {
       setRoomIdSelected("") ;
     });
   }, []);
+
+  useEffect(() => {}, [roomIdSelected]);
 
   return (
     <div className='sidelist-div'>

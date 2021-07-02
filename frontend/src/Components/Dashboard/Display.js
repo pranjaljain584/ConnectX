@@ -9,6 +9,7 @@ function Display(props) {
     const {roomIdSelected,fileSelected,sidebarSelectedItem} = props ;
 
     const myStyle = {marginLeft:'10%',width:'85vw' , height:'70vh'} ;
+    useEffect(()=>{},[roomIdSelected]) ;
     return (
       <div className='display-div'>
         {sidebarSelectedItem == 'Calendar' && (

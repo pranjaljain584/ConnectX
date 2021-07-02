@@ -26,6 +26,7 @@ function Dashboard(props) {
             sidebarSelectedItem={sidebarSelectedItem}
             setFileSelected={setFileSelected}
             setRoomIdSelected={setRoomIdSelected}
+            roomIdSelected = {roomIdSelected}
           />
         )}
         <Display

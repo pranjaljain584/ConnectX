@@ -7,6 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import '../../assets/css/sidelistheader.css';
+import swal from 'sweetalert';
 import { io } from 'socket.io-client';
 
 const socket = io.connect('http://localhost:5000', {
@@ -32,8 +33,9 @@ export default function NewChatForm(props) {
   const handleSubmit = () => {
 
     socket.emit('create-room',{userId:userId , roomTitle:roomTitle})
-
+    swal("Room Created")
     setOpen(false);
+
 
   };
 

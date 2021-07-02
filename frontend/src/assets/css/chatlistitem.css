@@ -22,11 +22,14 @@
     font-size: 1.1rem;
     color: gray;
     flex-grow: 4;
+    overflow: hidden;
+    height: auto;
 }
 
 .mid-item p {
     height: 30px;
     max-width: 250px;
+    overflow: hidden;
 }
 
 .mid-item span {
