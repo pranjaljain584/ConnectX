@@ -15,6 +15,9 @@ import { login } from '../../actions/auth';
 import { GoogleLogin } from 'react-google-login';
 import GoogleButton from 'react-google-button';
 
+const v =
+  '323320658112-29fp0eku8ngohvu2ojn2bacv1lims8c0.apps.googleusercontent.com';
+
 const initialState = {
   email: '',
   password: '',
@@ -37,9 +40,16 @@ function Login(props) {
   };
 
   const googleSuccess = async (res) => {
-    let email = res?.profileObj.email ;
-    
-    console.log(res)};
+    console.log(res);
+    let email = res?.profileObj.email;
+    let password = res?.tokenId;
+
+    try {
+      await props.dispatch(login(email, password));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const googleFailure = (err) => {console.log('Google Sign in Unsuccessful',err)};
 
@@ -106,15 +116,15 @@ function Login(props) {
           </Grid>
         </form>
         <p className={classes.para}>or</p>
-        {/* <GoogleLogin
-          clientId='323320658112-29fp0eku8ngohvu2ojn2bacv1lims8c0.apps.googleusercontent.com'
+        <GoogleLogin
+          clientId={v}
           render={(renderProps) => (
             <GoogleButton onClick={renderProps.onClick} disabled={false} />
           )}
           onSuccess={googleSuccess}
           onFailure={googleFailure}
           cookiePolicy='single_host_origin'
-        /> */}
+        />
       </div>
       <Box mt={8}></Box>
     </Container>

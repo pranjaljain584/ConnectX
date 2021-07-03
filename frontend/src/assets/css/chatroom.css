@@ -7,6 +7,7 @@
 
 .chat-room .list {
   overflow-y: scroll;
+  overflow-anchor: auto;
   height: 70vh;
 }
 

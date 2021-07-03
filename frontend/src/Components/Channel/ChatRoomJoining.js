@@ -23,14 +23,17 @@ function ChatRoomJoining(props) {
     data.append('userId', userId);
 
     axios
-      .post(`http://localhost:5000/api/chat/invite/${chatRoomId}`, data, config)
+      .post(
+        `${process.env.REACT_APP_API_URL}/api/chat/invite/${chatRoomId}`,
+        data,
+        config
+      )
       .then((response) => {
         // console.log(response.data);
         if (response.data.success) {
           props.history.push(`/dashboard`);
-        }
-        else{
-            props.history.push(`/error`);
+        } else {
+          props.history.push(`/error`);
         }
       })
       .catch((err) => console.log(err));

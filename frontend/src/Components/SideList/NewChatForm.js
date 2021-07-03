@@ -10,7 +10,7 @@ import '../../assets/css/sidelistheader.css';
 import swal from 'sweetalert';
 import { io } from 'socket.io-client';
 
-const socket = io.connect('http://localhost:5000', {
+const socket = io.connect(`${process.env.REACT_APP_API_URL}`, {
   transports: ['websocket'],
 });
 
@@ -51,10 +51,6 @@ export default function NewChatForm(props) {
       >
         <DialogTitle id='form-dialog-title'>New Chat</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            To subscribe to this website, please enter your email address here.
-            We will send updates occasionally.
-          </DialogContentText>
           <TextField
             autoFocus
             margin='dense'

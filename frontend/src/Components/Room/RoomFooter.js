@@ -58,7 +58,7 @@ const RoomFooter = ({
     };
 
     axios
-      .post(`http://localhost:5000/api/mail/meet`, body, config)
+      .post(`${process.env.REACT_APP_API_URL}/api/mail/meet`, body, config)
       .then((response) => {
         // console.log(response) ;
       })

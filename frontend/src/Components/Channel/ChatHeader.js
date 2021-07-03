@@ -24,7 +24,7 @@ import ReactTooltip from 'react-tooltip';
 import { io } from 'socket.io-client';
 import axios from 'axios';
 
-const socket = io.connect('http://localhost:5000', {
+const socket = io.connect(`${process.env.REACT_APP_API_URL}`, {
   transports: ['websocket'],
 });
 
@@ -78,13 +78,13 @@ function ChatHeader(props) {
       userEmail,
       userName,
       roomName,
-      inviteLink: `http://localhost:3000/invite/${roomIdSelected}`,
+      inviteLink: `${process.env.REACT_APP_ENV}/invite/${roomIdSelected}`,
     };
 
     axios
-      .post(`http://localhost:5000/api/mail`, body, config)
+      .post(`${process.env.REACT_APP_API_URL}/api/mail`, body, config)
       .then((response) => {
-        swal("Mail Sent") ;
+        swal('Mail Sent');
       })
       .catch((err) => console.log(err));
 

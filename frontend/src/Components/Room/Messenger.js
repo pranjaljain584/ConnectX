@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import '../../assets/css/messenger.css';
 
 function Messenger({
@@ -10,6 +10,11 @@ function Messenger({
   participants,
 }) {
   const [msgArray, setMsgArray] = useState([]);
+  const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
   useEffect(() => {
     setMsgArray((prevState) => {
       return [...prevState, incomingMsg];
@@ -17,6 +22,11 @@ function Messenger({
 
     console.log(incomingMsg);
   }, [incomingMsg]);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [msgArray]);
+
   return (
     <div className='messenger'>
       {head == 'Chat' ? (
@@ -36,6 +46,7 @@ function Messenger({
                     </div>
                   );
                 })}
+            <div ref={messagesEndRef} />
           </div>
           <div className='footer'>
             <input
@@ -63,7 +74,7 @@ function Messenger({
           {Object.keys(participants).map((key, index) => {
             let name = participants[key].displayName;
             return (
-              <div className="p" >
+              <div className='p'>
                 <p>{name}</p>
               </div>
             );

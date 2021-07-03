@@ -10,7 +10,15 @@ import RoomFooter from './RoomFooter';
 import '../../assets/css/room.css';
 import Messenger from './Messenger';
 
-const socket = io.connect('http://localhost:5000', {
+if (localStorage.token) {
+  const token = localStorage.token;
+  const decoded = jwt_decode(token);
+  console.log('DECODED', decoded);
+  var localId = decoded.user.id;
+  var userName = decoded.user.name;
+}
+
+const socket = io.connect(`${process.env.REACT_APP_API_URL}`, {
   transports: ['websocket'],
 });
 
@@ -25,13 +33,6 @@ var peerConnectionConfig = {
 var userTracksbyId = {};
 var localStream;
 
-if (localStorage.token) {
-  const token = localStorage.token;
-  const decoded = jwt_decode(token);
-  console.log('DECODED', decoded);
-  var localId = decoded.user.id;
-  var userName = decoded.user.name;
-}
 
 function Room(props) {
   const { roomId } = useParams(); // act like my room name

@@ -4,7 +4,7 @@ import '../../assets/css/chatlistitem.css';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const socket = io.connect('http://localhost:5000', {
+const socket = io.connect(`${process.env.REACT_APP_API_URL}`, {
   transports: ['websocket'],
 });
 

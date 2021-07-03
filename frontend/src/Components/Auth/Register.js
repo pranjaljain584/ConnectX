@@ -30,19 +30,21 @@ function Register(props) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const { name, email, password } = formData;
     console.log('*****', formData);
-    props.dispatch(register({ name, email, password }));
+    await props.dispatch(register({ name, email, password }));
   };
+
   const googleSuccess = async (res) => {
     console.log(res);
-    const result = res?.profileObj;
-    const token = res?.tokenId;
+    let email = res?.profileObj.email;
+    let name = res?.profileObj.name;
+    let password = res?.tokenId;
 
     try {
-      props.dispatch({ type: 'GOOGLEAUTH', data: { result, token } });
+      await props.dispatch(register({ name, email, password }));
     } catch (error) {
       console.log(error);
     }
@@ -129,7 +131,7 @@ function Register(props) {
             </Grid>
           </Grid>
         </form>
-        {/* <p className={classes.para}>or</p>
+        <p className={classes.para}>or</p>
         <GoogleLogin
           clientId='323320658112-29fp0eku8ngohvu2ojn2bacv1lims8c0.apps.googleusercontent.com'
           render={(renderProps) => (
@@ -138,7 +140,7 @@ function Register(props) {
           onSuccess={googleSuccess}
           onFailure={googleFailure}
           cookiePolicy='single_host_origin'
-        /> */}
+        />
       </div>
       <Box mt={5}></Box>
     </Container>

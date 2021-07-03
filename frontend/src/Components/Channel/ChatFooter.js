@@ -11,7 +11,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import FileBase64 from '../File/FileBase64';
 
-const socket = io.connect('http://localhost:5000', {
+const socket = io.connect(`${process.env.REACT_APP_API_URL}`, {
   transports: ['websocket'],
 });
 

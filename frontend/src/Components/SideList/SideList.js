@@ -7,7 +7,7 @@ import { io } from 'socket.io-client';
 import { connect } from 'react-redux';
 import FileListItem from '../File/FileListItem';
 
-const socket = io.connect('http://localhost:5000', {
+const socket = io.connect(`${process.env.REACT_APP_API_URL}`, {
   transports: ['websocket'],
 });
 
@@ -27,7 +27,7 @@ function SideList(props) {
     if (sidebarSelectedItem === 'Chat') {
       console.log('here');
       axios
-        .get(`http://localhost:5000/api/chat/chat-list`, config)
+        .get(`${process.env.REACT_APP_API_URL}/api/chat/chat-list`, config)
         .then((response) => {
           setChatList(response.data.roomsArray);
         })
@@ -36,7 +36,7 @@ function SideList(props) {
 
     if (sidebarSelectedItem === 'Files') {
       axios
-        .get(`http://localhost:5000/api/file`, config)
+        .get(`${process.env.REACT_APP_API_URL}/api/file`, config)
         .then((response) => {
           console.log(response);
           setFileList(response.data.filesArray);
