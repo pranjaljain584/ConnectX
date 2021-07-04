@@ -18,7 +18,7 @@ export const loadUser = () => {
     }
 
     try {
-      const res = await axios.get('/api/auth');
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/auth`);
 
       dispatch({
         type: USER_LOADED,
@@ -49,7 +49,7 @@ export const register = ({ name, email, password}) => {
     });
 
     try {
-      const res = await axios.post('/api/users', body, config);
+      const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/users`, body, config);
 
       dispatch({
         type: REGISTER_SUCCESS,
@@ -106,7 +106,7 @@ export const login = (email, password) => {
     const body = JSON.stringify({ email, password });
 
     try {
-      const res = await axios.post('/api/auth', body, config);
+      const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth`, body, config);
 
       dispatch({
         type: LOGIN_SUCCESS,
