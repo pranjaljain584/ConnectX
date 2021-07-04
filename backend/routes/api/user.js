@@ -71,7 +71,7 @@ router.post(
       jwt.sign(
         payload,
         // get our jwtSecret from default.json
-        config.get('jwtSecret'),
+        "mySecretToken",
         // token expiration time in ms
         { expiresIn: 360000 },
         (err, token) => { // callback
