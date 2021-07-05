@@ -11,9 +11,11 @@ function Message(props) {
   return (
     <>
       <div className={`msg-div ${userId === id ? ' msg-self' : ''}`}>
-        <div data-tip={userMail}  className='msg-top'>{userId !== id ? userName : 'You'}</div>
+        <div data-tip={userMail} className='msg-top'>
+          {userId !== id ? userName : 'You'}
+        </div>
         <div className='msg-mid'>
-          {chatMessage}
+          <p>{chatMessage}</p>
           {fileName ? (
             <div
               data-tip='Click Here to Download'

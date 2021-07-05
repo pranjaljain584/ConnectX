@@ -48,26 +48,28 @@ function Messenger({
                 })}
             <div ref={messagesEndRef} />
           </div>
-          <div className='footer'>
-            <input
-              type='text'
-              placeholder='type a messgae...'
-              value={msg}
-              onChange={(e) => {
-                console.log(e.target.value);
-                setMsg(e.target.value);
-              }}
-            ></input>
-            <button
-              type='submit'
-              onClick={(e) => {
-                // console.log('here');
-                handleSubmit(e);
-              }}
-            >
-              Send
-            </button>
-          </div>
+            <div className='footer'>
+              <form>
+              <input
+                type='text'
+                placeholder='type a messgae...'
+                value={msg}
+                onChange={(e) => {
+                  console.log(e.target.value);
+                  setMsg(e.target.value);
+                }}
+              ></input>
+              <button
+                type='submit'
+                onClick={(e) => {
+                  // console.log('here');
+                  handleSubmit(e);
+                }}
+              >
+                Send
+              </button>
+              </form>
+            </div>
         </>
       ) : (
         <div className='participants-list'>

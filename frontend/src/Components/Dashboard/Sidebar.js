@@ -29,6 +29,7 @@ function Sidebar({
           setSelectedCal(false);
           setSelectedFiles(false);
           setSelectedChat(false);
+          setSelectedCall(true) ;
         }}
       >
         <FontAwesomeIcon

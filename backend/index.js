@@ -27,11 +27,6 @@ app.use(cors());
 
 const server = http.createServer(app);
 
-// const wss = new WebSocketServer({server:server}) ;
-
-// server.on('request',app) ;
-// const sock = ;
-
 const io = require('socket.io')(server, {
   cors: {
     origin: 'http://18.117.248.192',
@@ -53,11 +48,6 @@ app.use('/api/file', require('./routes/api/files'));
 app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname + "/../frontend/", 'build', 'index.html'));
 });
-
-
-//app.get('/',function(req,res){
-//	res.send('Chal gya finally!!!') ;
-//});	
 
 io.on('connection', (socket) => {
   try {
