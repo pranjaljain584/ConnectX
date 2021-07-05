@@ -12,16 +12,27 @@ class Intro extends Component {
           Meet, chat, call, and collaborate in <br /> just one place.
         </p>
         <br />
-        <Link to='/login'>
-          <Button className='btn' color='danger'>
-            Sign In
-          </Button>
-        </Link>
-        <Link to='/register'>
-        <Button className='btn' outline color='danger'>
-          Sign Up
-        </Button>
-        </Link>
+        {this.props.isAuthenticated ? (
+          <Link to="/dashboard">
+            <Button className='btn' color='danger'>
+              Open ConnectX
+            </Button>
+          </Link>
+        ) : (
+          <>
+            {' '}
+            <Link to='/login'>
+              <Button className='btn' color='danger'>
+                Sign In
+              </Button>
+            </Link>
+            <Link to='/register'>
+              <Button className='btn' outline color='danger'>
+                Sign Up
+              </Button>
+            </Link>{' '}
+          </>
+        )}
       </div>
     );
   }

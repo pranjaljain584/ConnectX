@@ -1,17 +1,28 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import About from './About';
 import Intro from './Intro';
 import ButtonAppBar from './Navbar';
 
 class Home extends Component {
+
     render() {
+        const { isAuthenticated } = this.props.auth;
+
         return (
           <div>
-            <ButtonAppBar />
-            <Intro/>
+            <ButtonAppBar isAuthenticated={isAuthenticated} />
+            <Intro isAuthenticated={isAuthenticated} />
           </div>
         );
     }
 }
 
-export default Home;
+
+function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+  };
+}
+
+export default connect(mapStateToProps)(Home);

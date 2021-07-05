@@ -2,18 +2,18 @@ const express = require('express');
 const auth = require('../../middleware/auth');
 const router = express.Router();
 
-const transporter = require('../../config/nodemailer') ;
+const transporter = require('../../config/nodemailer');
 
-router.post('/',auth,(req,res)=>{
-    let data = req.body ;
+router.post('/', auth, (req, res) => {
+  let data = req.body;
 
-    let smtpTransport = transporter ;
+  let smtpTransport = transporter;
 
-    let mailOptions = {
-      from: 'microsoftteamsclonemailer@gmail.com',
-      to: data.sendTo,
-      subject: 'Invite Mail',
-      html: `
+  let mailOptions = {
+    from: 'microsoftteamsclonemailer@gmail.com',
+    to: data.sendTo,
+    subject: 'Invite Mail',
+    html: `
             <h1>${data.userName} with email : ${data.userEmail} is inviting you
             to join chat room : ${data.roomName}</h1>
             <br />
@@ -21,20 +21,19 @@ router.post('/',auth,(req,res)=>{
             <br/>
             <a href=${data.inviteLink}> Chat Room Link </a>
         `,
-    };
+  };
 
-    smtpTransport.sendMail(mailOptions,(err,response) => {
-        if(err){
-            console.log(err) ;
-            res.status(401).json({msg:err}) ;
-        }else{
-            res.status(200).json({msg:"Email Sent"}) ;
-        }
-    })
+  smtpTransport.sendMail(mailOptions, (err, response) => {
+    if (err) {
+      console.log(err);
+      res.status(200).json({ type: 'error', msg: 'Mail Not Sent' });
+    } else {
+      res.status(200).json({ type: 'success', msg: 'Email Sent' });
+    }
+  });
 
-    smtpTransport.close() ;
-
-}) ;
+  smtpTransport.close();
+});
 
 router.post('/meet', auth, (req, res) => {
   let data = req.body;
@@ -59,13 +58,13 @@ router.post('/meet', auth, (req, res) => {
   smtpTransport.sendMail(mailOptions, (err, response) => {
     if (err) {
       console.log(err);
-      res.status(401).json({ msg: err });
+      res.status(200).json({ type: 'error', msg: 'Mail Not Sent' });
     } else {
-      res.status(200).json({ msg: 'Email Sent' });
+      res.status(200).json({ type: 'success', msg: 'Email Sent' });
     }
   });
 
   smtpTransport.close();
 });
 
-module.exports = router ;
+module.exports = router;

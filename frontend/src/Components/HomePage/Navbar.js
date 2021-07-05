@@ -28,12 +28,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function ButtonAppBar() {
+export default function ButtonAppBar(props) {
   const classes = useStyles();
-
-  const handleClick = () => {
-    
-  }
 
   return (
     <div className={classes.root}>
@@ -50,11 +46,11 @@ export default function ButtonAppBar() {
           <Typography variant='h5' className={classes.title}>
             ConnectX
           </Typography>
-          <Link to='/login'>
+          {!props.isAuthenticated && <Link to='/login'>
             <Button className={classes.button} outline color='white'>
               Login
             </Button>
-          </Link>
+          </Link>}
         </Toolbar>
       </AppBar>
     </div>

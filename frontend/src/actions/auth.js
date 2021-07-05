@@ -9,6 +9,17 @@ import {
   USER_LOADED,
   LOGOUT,
 } from './actionTypes';
+import { toast } from 'react-toastify';
+
+const settings = {
+  position: 'top-right',
+  autoClose: 2000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+};
 
 // Load user
 export const loadUser = () => {
@@ -34,7 +45,7 @@ export const loadUser = () => {
 
 // add alert for each error later
 // Register User
-export const register = ({ name, email, password}) => {
+export const register = ({ name, email, password }) => {
   return async (dispatch) => {
     const config = {
       headers: {
@@ -49,19 +60,21 @@ export const register = ({ name, email, password}) => {
     });
 
     try {
-      const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/users`, body, config);
+      const res = await axios.post(
+        `${process.env.REACT_APP_API_URL}/api/users`,
+        body,
+        config
+      );
 
       dispatch({
         type: REGISTER_SUCCESS,
         payload: res.data,
       });
-
+      toast.success('Registered Successfully !', settings);
       dispatch(loadUser());
     } catch (err) {
-      // const errors = err.response.data.errors;
-      // if(errors){
-      // dispatch alert for each error
-      // }
+      toast.error('Unable to Register !', settings);
+
       dispatch({
         type: REGISTER_FAIL,
       });
@@ -84,12 +97,15 @@ export const googleAuth = ({ name, email }) => {
     });
 
     try {
-      
+      toast.success('Authenticated Successfully!', settings);
+
       dispatch(loadUser());
     } catch (err) {
       dispatch({
         type: REGISTER_FAIL,
       });
+
+      toast.error('Unable to Authenticate !', settings);
     }
   };
 };
@@ -106,7 +122,13 @@ export const login = (email, password) => {
     const body = JSON.stringify({ email, password });
 
     try {
-      const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth`, body, config);
+      const res = await axios.post(
+        `${process.env.REACT_APP_API_URL}/api/auth`,
+        body,
+        config
+      );
+
+      toast.success('Logged In Successfully !', settings);
 
       dispatch({
         type: LOGIN_SUCCESS,
@@ -115,13 +137,10 @@ export const login = (email, password) => {
 
       dispatch(loadUser());
     } catch (err) {
-      // const errors = err.response.data.errors;
-      // if(errors){
-      // dispatch alert for each error
-      // }
       dispatch({
         type: LOGIN_FAIL,
       });
+      toast.error('Invalid Credentials !', settings);
     }
   };
 };
@@ -129,4 +148,5 @@ export const login = (email, password) => {
 export const logout = () => (dispatch) => {
   setAuthToken(null);
   dispatch({ type: LOGOUT });
+  toast.success('Logged Out Successfully !', settings);
 };

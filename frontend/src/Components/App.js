@@ -20,6 +20,8 @@ import Loading from './Room/Loading.js';
 import ChatRoomJoining from './Channel/ChatRoomJoining.js';
 import ErrorPage from './ErrorPage.js';
 import Calendar from './Calendar/Calendar.js';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const PrivateRoute = (privateRouteProps) => {
   const { isAuthenticated, component: Component, path } = privateRouteProps;
@@ -77,6 +79,17 @@ function App(props) {
           <Route component={Page404} />
         </Switch>
       </div>
+      <ToastContainer
+        position='top-right'
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </Router>
   );
 }

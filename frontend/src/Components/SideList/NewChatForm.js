@@ -4,10 +4,10 @@ import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import '../../assets/css/sidelistheader.css';
-import swal from 'sweetalert';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { io } from 'socket.io-client';
 
 const socket = io.connect(`${process.env.REACT_APP_API_URL}`, {
@@ -17,7 +17,33 @@ const socket = io.connect(`${process.env.REACT_APP_API_URL}`, {
 export default function NewChatForm(props) {
   const [open, setOpen] = useState(false);
   const [roomTitle, setRoomTitle] = useState('');
-  const {userId} = props ;
+  const { userId } = props;
+
+  const toastId = React.useRef(null);
+
+  const notify = (msg) =>
+    (toastId.current = toast.warn(`${msg}`, {
+      position: 'top-right',
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      autoClose: false,
+    }));
+
+  const update = (msg, type) =>
+    toast.update(toastId.current, {
+      position: 'top-right',
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      type: `${type}`,
+      render: `${msg}`,
+      autoClose: 5000,
+    });
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -31,17 +57,15 @@ export default function NewChatForm(props) {
   };
 
   const handleSubmit = () => {
-
-    socket.emit('create-room',{userId:userId , roomTitle:roomTitle})
-    swal("Room Created")
+    notify('Entering Room');
+    socket.emit('create-room', { userId: userId, roomTitle: roomTitle });
+    update('Room Created', 'success');
     setOpen(false);
-
-
   };
 
   return (
     <div>
-      <button className="new-chat-btn" onClick={handleClickOpen}>
+      <button className='new-chat-btn' onClick={handleClickOpen}>
         New Chat
       </button>
       <Dialog
@@ -70,6 +94,16 @@ export default function NewChatForm(props) {
           </Button>
         </DialogActions>
       </Dialog>
+      <ToastContainer
+        position='top-right'
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 }

@@ -30,6 +30,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.1",
     "react-textarea-autosize": "^8.3.3",
+    "react-toastify": "^7.0.4",
     "react-tooltip": "^4.2.21",
     "react-uuid": "^1.0.2",
     "reactstrap": "^8.9.0",

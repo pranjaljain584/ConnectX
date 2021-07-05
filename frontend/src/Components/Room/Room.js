@@ -9,6 +9,8 @@ import RoomHeader from './RoomHeader';
 import RoomFooter from './RoomFooter';
 import '../../assets/css/room.css';
 import Messenger from './Messenger';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 if (localStorage.token) {
   const token = localStorage.token;
@@ -48,6 +50,17 @@ function Room(props) {
   const [isVideo, setIsVideo] = useState(true);
   const [incomingMsg, setIncomingMsg] = useState();
   const [head, selectHead] = useState('Chat');
+
+  const notify = (p) =>
+    toast.info(`${p} joined`, {
+      position: 'top-right',
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress:undefined
+    });
 
   const handleSubmit = (e) => {
     // console.log('submittt');
@@ -126,6 +139,7 @@ function Room(props) {
         displayName: userName,
         dest: peerId,
       });
+      // notify(signal.displayName) ;
     } else if (signal.initCaller && signal.dest == localId) {
       // initiate call if we are the newcomer peer
       setUpPeer(peerId, signal.initCaller, signal.displayName, true);
@@ -359,6 +373,17 @@ function Room(props) {
         url={url}
         userName={userName}
         userEmail={userEmail}
+      />
+      <ToastContainer
+        position='top-right'
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
       />
     </div>
   );

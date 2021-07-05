@@ -15,10 +15,11 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import PersonIcon from '@material-ui/icons/Person';
 import { blue } from '@material-ui/core/colors';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import ListIcon from '@material-ui/icons/List';
 import ListItemText from '@material-ui/core/ListItemText';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import swal from 'sweetalert' ;
 import { connect } from 'react-redux';
 import ReactTooltip from 'react-tooltip';
 import { io } from 'socket.io-client';
@@ -45,6 +46,31 @@ function ChatHeader(props) {
   const [sendTo, setSendTo] = useState('');
   const [showP, setShowP] = useState(false);
   const classes = useStyles();
+  const toastId = React.useRef(null);
+
+  const notify = (msg) =>
+    (toastId.current = toast.warn(`${msg}`, {
+      position: 'top-right',
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      autoClose: false,
+    }));
+
+  const update = (msg, type) =>
+    toast.update(toastId.current, {
+      position: 'top-right',
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      type: `${type}`,
+      render: `${msg}`,
+      autoClose: 5000,
+    });
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -55,8 +81,9 @@ function ChatHeader(props) {
   };
 
   const handleLeaveRoom = () => {
+    notify('Leaving Room');
     socket.emit('leave-room', { roomIdSelected, userId });
-    swal('Room Left') ;
+    update('Room Left','success') ;
   };
 
   const handleClickP = () => {
@@ -84,11 +111,12 @@ function ChatHeader(props) {
     axios
       .post(`${process.env.REACT_APP_API_URL}/api/mail`, body, config)
       .then((response) => {
-        swal('Mail Sent');
+        update(response.data.msg, response.data.type);
       })
       .catch((err) => console.log(err));
 
     setShowInput(false);
+    notify(`Sending Mail`);
   };
 
   return (
@@ -174,6 +202,16 @@ function ChatHeader(props) {
         </StyledMenu>
       </div>
       <ReactTooltip />
+      <ToastContainer
+        position='top-right'
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 }

@@ -14,6 +14,8 @@ import { connect } from 'react-redux';
 import { login } from '../../actions/auth';
 import { GoogleLogin } from 'react-google-login';
 import GoogleButton from 'react-google-button';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const v =
   '323320658112-29fp0eku8ngohvu2ojn2bacv1lims8c0.apps.googleusercontent.com';
@@ -28,6 +30,17 @@ function Login(props) {
 
   const [formData, setFormData] = useState(initialState);
 
+  const notify = (m) =>
+    toast.error(`${m}`, {
+      position: 'top-right',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -35,7 +48,6 @@ function Login(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { email, password } = formData;
-    console.log('*****', formData);
     await props.dispatch(login(email, password));
   };
 
@@ -47,11 +59,16 @@ function Login(props) {
     try {
       await props.dispatch(login(email, password));
     } catch (error) {
+      notify('Unable to register !');
+
       console.log(error);
     }
   };
 
-  const googleFailure = (err) => {console.log('Google Sign in Unsuccessful',err)};
+  const googleFailure = (err) => {
+    notify('Unable to register !');
+    console.log('Google Sign in Unsuccessful', err);
+  };
 
   const { isAuthenticated } = props.auth;
   const { from } = props.location.state || { from: { pathname: '/dashboard' } };
@@ -63,71 +80,90 @@ function Login(props) {
   }
 
   return (
-    <Container component='main' maxWidth='xs'>
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component='h1' variant='h5'>
-          Sign in
-        </Typography>
-        <form onSubmit={handleSubmit} className={classes.form} noValidate>
-          <TextField
-            variant='outlined'
-            margin='normal'
-            required
-            fullWidth
-            id='email'
-            label='Email Address'
-            name='email'
-            autoComplete='email'
-            onChange={handleChange}
-            autoFocus
-          />
-          <TextField
-            variant='outlined'
-            margin='normal'
-            required
-            fullWidth
-            name='password'
-            label='Password'
-            type='password'
-            onChange={handleChange}
-            id='password'
-            autoComplete='current-password'
-          />
-          <Button
-            type='submit'
-            fullWidth
-            variant='contained'
-            color='primary'
-            onSubmit={handleSubmit}
-            className={classes.submit}
-          >
-            Sign In
-          </Button>
-          <Grid container>
-            <Grid item>
-              <Link to='/register' variant='body2'>
-                {"Don't have an account? Sign Up"}
-              </Link>
+    <>
+      <Link
+        to='/'
+        style={{ marginLeft: '8px', marginTop: '25px', fontSize: '1.2rem' }}
+      >
+        <b>Back To Home</b>
+      </Link>
+      <Container component='main' maxWidth='xs'>
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component='h1' variant='h5'>
+            Sign in
+          </Typography>
+          <form onSubmit={handleSubmit} className={classes.form} noValidate>
+            <TextField
+              variant='outlined'
+              margin='normal'
+              required
+              fullWidth
+              id='email'
+              label='Email Address'
+              name='email'
+              autoComplete='email'
+              onChange={handleChange}
+              autoFocus
+            />
+            <TextField
+              variant='outlined'
+              margin='normal'
+              required
+              fullWidth
+              name='password'
+              label='Password'
+              type='password'
+              onChange={handleChange}
+              id='password'
+              autoComplete='current-password'
+            />
+            <Button
+              type='submit'
+              fullWidth
+              variant='contained'
+              color='primary'
+              onSubmit={handleSubmit}
+              className={classes.submit}
+            >
+              Sign In
+            </Button>
+            <Grid container>
+              <Grid item>
+                <Link to='/register' variant='body2'>
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
             </Grid>
-          </Grid>
-        </form>
-        <p className={classes.para}>or</p>
-        <GoogleLogin
-          clientId={v}
-          render={(renderProps) => (
-            <GoogleButton onClick={renderProps.onClick} disabled={false} />
-          )}
-          onSuccess={googleSuccess}
-          onFailure={googleFailure}
-          cookiePolicy='single_host_origin'
-        />
-      </div>
-      <Box mt={8}></Box>
-    </Container>
+          </form>
+          <p className={classes.para}>or</p>
+          <GoogleLogin
+            clientId={v}
+            render={(renderProps) => (
+              <GoogleButton onClick={renderProps.onClick} disabled={false} />
+            )}
+            onSuccess={googleSuccess}
+            onFailure={googleFailure}
+            cookiePolicy='single_host_origin'
+          />
+        </div>
+        <Box mt={8}></Box>
+      </Container>
+      <ToastContainer
+        position='top-right'
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+    </>
   );
 }
 
