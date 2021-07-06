@@ -69,7 +69,7 @@ function ChatHeader(props) {
       progress: undefined,
       type: `${type}`,
       render: `${msg}`,
-      autoClose: 5000,
+      autoClose: 3000,
     });
 
   const handleClick = (event) => {
@@ -115,8 +115,8 @@ function ChatHeader(props) {
       })
       .catch((err) => console.log(err));
 
-    setShowInput(false);
     notify(`Sending Mail`);
+    setShowInput(false);
   };
 
   return (
@@ -202,16 +202,6 @@ function ChatHeader(props) {
         </StyledMenu>
       </div>
       <ReactTooltip />
-      <ToastContainer
-        position='top-right'
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
     </div>
   );
 }

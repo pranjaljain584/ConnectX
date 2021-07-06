@@ -19,31 +19,17 @@ export default function NewChatForm(props) {
   const [roomTitle, setRoomTitle] = useState('');
   const { userId } = props;
 
-  const toastId = React.useRef(null);
+ const notify = (m) =>
+   toast.success(`${m}`, {
+     position: 'top-right',
+     autoClose: 5000,
+     hideProgressBar: false,
+     closeOnClick: true,
+     pauseOnHover: true,
+     draggable: true,
+     progress: undefined,
+   });
 
-  const notify = (msg) =>
-    (toastId.current = toast.warn(`${msg}`, {
-      position: 'top-right',
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      autoClose: false,
-    }));
-
-  const update = (msg, type) =>
-    toast.update(toastId.current, {
-      position: 'top-right',
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      type: `${type}`,
-      render: `${msg}`,
-      autoClose: 5000,
-    });
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -57,9 +43,8 @@ export default function NewChatForm(props) {
   };
 
   const handleSubmit = () => {
-    notify('Entering Room');
     socket.emit('create-room', { userId: userId, roomTitle: roomTitle });
-    update('Room Created', 'success');
+    notify('Room Created')
     setOpen(false);
   };
 
@@ -96,6 +81,7 @@ export default function NewChatForm(props) {
       </Dialog>
       <ToastContainer
         position='top-right'
+        autoClose={3000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

@@ -5,6 +5,7 @@ import ChatFooter from './ChatFooter';
 import { io } from 'socket.io-client';
 import '../../assets/css/chatroom.css';
 import Message from './Message';
+import { ToastContainer } from 'react-toastify';
 
 const socket = io.connect(`${process.env.REACT_APP_API_URL}`, {
   transports: ['websocket'],
@@ -74,6 +75,7 @@ const messagesEndRef = useRef(null);
         <div ref={messagesEndRef} />
       </div>
       <ChatFooter roomIdSelected={roomIdSelected} />
+      
     </div>
   );
 }

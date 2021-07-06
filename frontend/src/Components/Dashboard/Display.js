@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import ChatRoom from '../Channel/ChatRoom' ;
 import FileDisplay from '../File/FileDisplay';
 import Calendar from '../Calendar/Calendar';
+import { ToastContainer, toast } from 'react-toastify';
+
 
 function Display(props) {
     const {roomIdSelected,fileSelected,sidebarSelectedItem} = props ;
@@ -26,6 +28,7 @@ function Display(props) {
             </Link>
           </div>
         )}
+        
       </div>
     );
 }
