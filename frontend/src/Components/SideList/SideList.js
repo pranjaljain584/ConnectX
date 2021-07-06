@@ -6,6 +6,7 @@ import ChatListItem from './ChatListItem';
 import { io } from 'socket.io-client';
 import { connect } from 'react-redux';
 import FileListItem from '../File/FileListItem';
+import { CircularProgress } from '@material-ui/core';
 
 const socket = io.connect(`${process.env.REACT_APP_API_URL}`, {
   transports: ['websocket'],
@@ -15,6 +16,7 @@ function SideList(props) {
   const { sidebarSelectedItem, setRoomIdSelected , roomIdSelected , setFileSelected } = props;
   const [chatList, setChatList] = useState([]);
   const [fileList, setFileList] = useState([]);
+  const [loading ,setloading] = useState(true) ;
 
   useEffect(() => {
     const config = {
@@ -29,6 +31,7 @@ function SideList(props) {
       axios
         .get(`${process.env.REACT_APP_API_URL}/api/chat/chat-list`, config)
         .then((response) => {
+          setloading(false) ;
           setChatList(response.data.roomsArray);
         })
         .catch((err) => console.log(err));
@@ -39,6 +42,7 @@ function SideList(props) {
         .get(`${process.env.REACT_APP_API_URL}/api/file`, config)
         .then((response) => {
           console.log(response);
+          setloading(false) ;
           setFileList(response.data.filesArray);
         })
         .catch((err) => console.log(err));
@@ -73,7 +77,10 @@ function SideList(props) {
     <div className='sidelist-div'>
       <SideListHeader sidebarSelectedItem={sidebarSelectedItem} />
       <div className='list' id='style'>
-        {(chatList.length && sidebarSelectedItem == 'Chat') > 0 ? (
+        {loading && sidebarSelectedItem !== 'Video Call' ? (
+          <CircularProgress color='primary' />
+        ) : null}
+        {(chatList.length && sidebarSelectedItem === 'Chat') > 0 ? (
           chatList.map((chat, key) => {
             return (
               <ChatListItem
@@ -99,7 +106,7 @@ function SideList(props) {
           })
         ) : (
           <div>
-            {fileList.length > 0 && sidebarSelectedItem == 'Files' ? (
+            {fileList.length > 0 && sidebarSelectedItem === 'Files' ? (
               <div>
                 {fileList.map((file, key) => {
                   return (
@@ -114,13 +121,13 @@ function SideList(props) {
               </div>
             ) : (
               <p>
-                {sidebarSelectedItem != 'Files' ? (
+                {sidebarSelectedItem !== 'Files' ? (
                   <span>Start a New </span>
                 ) : (
                   <span>No </span>
                 )}
                 {sidebarSelectedItem}
-                {sidebarSelectedItem == 'Files' && <span> to show</span>}
+                {sidebarSelectedItem === 'Files' && <span> to show</span>}
               </p>
             )}
           </div>

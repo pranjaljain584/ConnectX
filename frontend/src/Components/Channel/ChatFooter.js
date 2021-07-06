@@ -42,15 +42,17 @@ class ChatFooter extends Component {
     var currentdate = new Date();
     var time = currentdate.getHours() + ':' + currentdate.getMinutes();
 
-    socket.emit('send-msg', {
-      userId,
-      msgTime: time,
-      msg: this.state.msg,
-      userName,
-      roomIdSelected,
-      file,
-      userMail,
-    });
+    if(this.state.msg.trim() !== ''){
+      socket.emit('send-msg', {
+        userId,
+        msgTime: time,
+        msg: this.state.msg,
+        userName,
+        roomIdSelected,
+        file,
+        userMail,
+      });
+    }
 
     this.setState({ msg: '' , fileSelected:false,file:'' });
   };
@@ -99,7 +101,7 @@ class ChatFooter extends Component {
   componentDidUpdate = () => {};
 
   render() {
-    const { msg, error, fileSelected, file, interimText, listening } =
+    const { msg, file, interimText, listening } =
       this.state;
 
     const { roomIdSelected } = this.props;
@@ -139,6 +141,7 @@ class ChatFooter extends Component {
             <input
               type='text'
               placeholder='Type your message here...'
+              required
               value={this.state.fileSelected ? `${file.name}` : msg }
               onChange={(e) => this.handleChange(e)}
             ></input>

@@ -9,8 +9,8 @@ import RoomHeader from './RoomHeader';
 import RoomFooter from './RoomFooter';
 import '../../assets/css/room.css';
 import Messenger from './Messenger';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 
 if (localStorage.token) {
   const token = localStorage.token;
@@ -41,7 +41,7 @@ function Room(props) {
   const [grid, setGrid] = useState([]);
   const [msg, setMsg] = useState('');
   const url = `${window.location.origin}${window.location.pathname}`;
-  const [participants, setParticipants] = useState([]);
+  // const [participants, setParticipants] = useState([]);
   const userEmail = props.auth.user?.email;
   const [screenCastStream, setScreenCastStream] = useState();
   const [myStream, setMyStream] = useState();
@@ -51,23 +51,25 @@ function Room(props) {
   const [incomingMsg, setIncomingMsg] = useState();
   const [head, selectHead] = useState('Chat');
 
-  const notify = (p) =>
-    toast.info(`${p} joined`, {
-      position: 'top-right',
-      autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress:undefined
-    });
+  // const notify = (p) =>
+  //   toast.info(`${p} joined`, {
+  //     position: 'top-right',
+  //     autoClose: 1000,
+  //     hideProgressBar: false,
+  //     closeOnClick: true,
+  //     pauseOnHover: true,
+  //     draggable: true,
+  //     progress:undefined
+  //   });
 
   const handleSubmit = (e) => {
     // console.log('submittt');
     e.preventDefault();
     var currentdate = new Date();
     var time = currentdate.getHours() + ':' + currentdate.getMinutes();
-    socket.emit('video-msg', { msg, user: userName, roomId, time });
+    if(msg.trim()!==''){
+      socket.emit('video-msg', { msg, user: userName, roomId, time });
+    }
     setMsg('');
   };
 
@@ -374,7 +376,7 @@ function Room(props) {
         userName={userName}
         userEmail={userEmail}
       />
-      <ToastContainer
+      {/* <ToastContainer
         position='top-right'
         autoClose={1000}
         hideProgressBar={false}
@@ -384,7 +386,7 @@ function Room(props) {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-      />
+      /> */}
     </div>
   );
 }

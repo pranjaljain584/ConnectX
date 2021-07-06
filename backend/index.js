@@ -148,6 +148,7 @@ io.on('connection', (socket) => {
       ChatRoom.findOneAndUpdate(
         { _id: roomIdSelected },
         { $pull: { joinedUsers: userId } },
+        { new: true },
         (err, result) => {
           if (err) {
             console.log('error in leaving room: ', err);
@@ -164,8 +165,21 @@ io.on('connection', (socket) => {
           );
 
           io.emit(`leave-room-${userId}`, { room: result });
+
+          if(result.joinedUsers.length==0){
+            ChatRoom.findOneAndDelete({_id:roomIdSelected},(err)=>{
+              if (err) {
+                console.log('error in deleting room: ', err);
+              }
+              // console.log('success') ;
+            })
+          }
+
         }
       );
+
+      
+      
     });
   } catch (error) {
     console.log('Error socket', error.message);

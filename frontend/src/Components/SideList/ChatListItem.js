@@ -34,7 +34,7 @@ function ChatListItem(props) {
       </div>
       <div className='mid-item'>
         <span>{title}</span> <br />{' '}
-        <p style={{overflowX:'hidden'},{overflowY:'hidden'}} >{lastMessage ? <p>{lastMessage}</p> : <p></p>}</p>
+        <p style={{overflowX:'hidden',overflowY:'hidden'}} >{lastMessage ? <p>{lastMessage}</p> : <p></p>}</p>
       </div>
       <div className='right-item'>{lastTime}</div>
     </div>

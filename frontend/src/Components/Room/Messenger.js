@@ -29,7 +29,7 @@ function Messenger({
 
   return (
     <div className='messenger'>
-      {head == 'Chat' ? (
+      {head === 'Chat' ? (
         <>
           <div className='msg-list' id='style2'>
             {msgArray.length > 0 &&
@@ -54,6 +54,7 @@ function Messenger({
                 type='text'
                 placeholder='type a messgae...'
                 value={msg}
+                required
                 onChange={(e) => {
                   console.log(e.target.value);
                   setMsg(e.target.value);
@@ -76,7 +77,7 @@ function Messenger({
           {Object.keys(participants).map((key, index) => {
             let name = participants[key].displayName;
             return (
-              <div className='p'>
+              <div index={index} className='p'>
                 <p>{name}</p>
               </div>
             );
