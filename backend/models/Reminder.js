@@ -10,17 +10,21 @@ const ReminderSchema = new Schema(
       type: mongoose.Schema.Types.ObjectID,
       ref: 'User',
     },
-    subject: {
+    Subject: {
       type: String,
       required: true,
     },
-    startTime: {
-      type: Number,
-      required: true,
+    StartTime: {
+      type: Date,
     },
-    endTime : {
-      type: Number,
-      required: true,
+    EndTime: {
+      type: Date,
+    },
+    Description: {
+      type: String,
+    },
+    isAllDay: {
+      type: Boolean,
     },
   },
   {

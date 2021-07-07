@@ -10,21 +10,38 @@
     background-size: contain;
     height: 82vh;
     width: 65vw;
-    margin-top: 20px;
-    margin-left: 50px;
+    margin-top: 10px;
+    margin-left: 20px;
     display: flex;
     background-repeat: no-repeat;
-    justify-content: flex-end;
-    flex-direction: column;
+    justify-content: flex-start;
+    flex-direction: row;
     border-radius: 1rem;
+    /* align-self: baseline; */
 }
 
-.meet-button button {
+.meet-button div {
+    align-self: flex-end;
+    margin-left: 10%;
+
+}
+.meet-button .b {
     background-color: teal;
     color: white;
     border: 0px solid transparent;
     height: 40px;
     width: 250px;
-    align-self: flex-end;
-    margin-left: 30%;
+    display: inline-block;
+}
+
+#i{
+ width: 100%;
+  border: 0px solid transparent;
+  border-bottom: 1px solid grey;
+  font-size: 1rem;
+}
+
+#i:focus{
+    outline: none;
+  border-bottom: 2px solid rgb(68, 123, 194);
 }

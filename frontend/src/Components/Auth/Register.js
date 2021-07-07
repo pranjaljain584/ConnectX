@@ -14,7 +14,7 @@ import { connect } from 'react-redux';
 import { register } from '../../actions/auth';
 import { GoogleLogin } from 'react-google-login';
 import GoogleButton from 'react-google-button';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const initialState = {
@@ -69,7 +69,7 @@ function Register(props) {
   };
 
   const googleFailure = (error) => {
-    notify('Unable to register !');
+    notify('Google Auth Failed !');
     console.log(error);
   };
 
