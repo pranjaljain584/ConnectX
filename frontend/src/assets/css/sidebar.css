@@ -1,7 +1,6 @@
 .sidebar-div {
   background-color: #497174;
   height: 91vh;
-  width: 5vw;
   border-radius: 1rem;
   color: white;
   margin-left: 1.5%;
@@ -11,7 +10,6 @@
 .sidebar-div .icon {
   font-size: 1.9rem;
   color: #a7bdbe;
-  /* 9cb1b3 */
   margin-left: 30%;
   margin-bottom: 10%;
   cursor: pointer;

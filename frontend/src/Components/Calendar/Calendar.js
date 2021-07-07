@@ -1,5 +1,4 @@
-import React, { Component, useEffect, useState } from 'react';
-import { ButtonComponent } from '@syncfusion/ej2-react-buttons';
+import React, { useEffect, useState } from 'react';
 import {
   ScheduleComponent,
   ViewsDirective,
@@ -8,16 +7,11 @@ import {
   Week,
   WorkWeek,
   Month,
-  Agenda,
   Inject,
   Resize,
-  DragAndDrop,
 } from '@syncfusion/ej2-react-schedule';
 import '../../assets/css/calendar.css';
-import { DataManager } from '@syncfusion/ej2-data';
-import { extend } from '@syncfusion/ej2-base';
-import { ToastComponent } from '@syncfusion/ej2-react-notifications';
-import { SampleBase } from './SampleBase';
+// import { ToastComponent } from '@syncfusion/ej2-react-notifications';
 import jwtDecode from 'jwt-decode';
 import axios from 'axios';
 
@@ -51,9 +45,7 @@ function Calendar(props) {
         .post(`${process.env.REACT_APP_API_URL}/api/event`, body, config)
         .then((res) => {
           setData(res.data.events);
-          // setkey((Math.random()*10000))
-          console.log('DDDd', d);
-          // window.location.reload() ;
+          console.log('Data', d);
         })
         .catch((err) => console.log(err));
     }
@@ -111,26 +103,17 @@ function Calendar(props) {
             height='650px'
             id='schedule'
             eventSettings={{ dataSource: d }}
+            selectedDate={new Date()}
             actionBegin={handleSave}
+            currentView='Month'
           >
             <ViewsDirective>
               <ViewDirective option='Day' />
               <ViewDirective option='Week' />
               <ViewDirective option='WorkWeek' />
               <ViewDirective option='Month' />
-              <ViewDirective option='Agenda' />
             </ViewsDirective>
-            <Inject
-              services={[
-                Day,
-                Week,
-                WorkWeek,
-                Month,
-                Agenda,
-                Resize,
-                DragAndDrop,
-              ]}
-            />
+            <Inject services={[Day, Week, WorkWeek, Month, Resize]} />
           </ScheduleComponent>
         </div>
       </div>

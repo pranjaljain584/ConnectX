@@ -3,10 +3,11 @@ const http = require('http');
 const cors = require('cors');
 const path = require('path');
 const User = require('./models/User');
+const Reminder = require('./models/Reminder');
 const ChatRoom = require('./models/ChatRoom');
 const File = require('./models/File');
-// const WebSocket = require('ws') ;
-// const WebSocketServer = WebSocket.Server ;
+var cron = require('node-cron');
+const transporter = require('./config/nodemailer');
 
 // require connectDB function exported in db.js file
 const connectDB = require('./config/db');
@@ -44,23 +45,26 @@ app.use('/api/auth', require('./routes/api/auth'));
 app.use('/api/chat', require('./routes/api/chat'));
 app.use('/api/mail', require('./routes/api/mail'));
 app.use('/api/file', require('./routes/api/files'));
-app.use('/api/event',require('./routes/api/event')) ;
+app.use('/api/event', require('./routes/api/event'));
 
 app.get('*', function (req, res) {
-  res.sendFile(path.join(__dirname + "/../frontend/", 'build', 'index.html'));
+  res.sendFile(path.join(__dirname + '/../frontend/', 'build', 'index.html'));
 });
 
 io.on('connection', (socket) => {
   try {
-
     socket.on('message', function (message) {
       // Broadcast any received message to all clients
-      io.emit('message' ,message);
+      io.emit('message', message);
     });
 
-    socket.on('video-msg',function(data) {
-      io.emit(`${data.roomId}-video-msg` , {msg:data.msg,user:data.user,time:data.time}) ;
-    })
+    socket.on('video-msg', function (data) {
+      io.emit(`${data.roomId}-video-msg`, {
+        msg: data.msg,
+        user: data.user,
+        time: data.time,
+      });
+    });
     // create room
     socket.on('create-room', async function (room) {
       console.log('Socket create-room called!');
@@ -102,7 +106,8 @@ io.on('connection', (socket) => {
 
     socket.on('send-msg', async function (data) {
       // console.log('sending room post', data);
-      const { userId, msgTime, msg, userName, roomIdSelected, file,userMail } = data;
+      const { userId, msgTime, msg, userName, roomIdSelected, file, userMail } =
+        data;
 
       if (file !== '') {
         let newfile = new File({
@@ -126,7 +131,7 @@ io.on('connection', (socket) => {
         chatTime: msgTime,
         fileName: file.name,
         base64String: file.base64,
-        userMail
+        userMail,
       };
 
       ChatRoom.findOneAndUpdate(
@@ -167,28 +172,63 @@ io.on('connection', (socket) => {
 
           io.emit(`leave-room-${userId}`, { room: result });
 
-          if(result.joinedUsers.length==0){
-            ChatRoom.findOneAndDelete({_id:roomIdSelected},(err)=>{
+          if (result.joinedUsers.length == 0) {
+            ChatRoom.findOneAndDelete({ _id: roomIdSelected }, (err) => {
               if (err) {
                 console.log('error in deleting room: ', err);
               }
               // console.log('success') ;
-            })
+            });
           }
-
         }
       );
-
-      
-      
     });
   } catch (error) {
     console.log('Error socket', error.message);
   }
 });
 
-const dotenv = require('dotenv') ;
-dotenv.config() ;
+cron.schedule('*/5 * * * *', async () => {
+  let currentTime = new Date();
+  let upperBound = new Date(currentTime.getTime() + 15 * 60000);
+  console.log(currentTime);
+
+  // filter out the events whose start time is within 15 minutes from now and then send a mail
+  const events = await Reminder.find({
+    StartTime: { $gte: currentTime, $lte: upperBound },
+    mailSent: false,
+  });
+
+  let smtpTransport = transporter;
+
+  events.forEach(async (event) => {
+    let user = await User.findById(event.userId);
+    let userEmail = user.email;
+    let eventid = event._id ;
+
+    let mailOptions = {
+      from: 'microsoftteamsclonemailer@gmail.com',
+      to: `${userEmail}`,
+      subject: 'Reminder Mail',
+      html: `
+            <h1> Your Event <u> ${event.Subject} </u> is starting in 15 mins </h1>
+            <br />
+        `,
+    };
+
+    smtpTransport.sendMail(mailOptions, async (err, response) => {
+      if (err) {
+        console.log('Mail Not Sent', err);
+      } else {
+        await Reminder.findByIdAndUpdate(eventid,{mailSent:true}) ;
+        console.log('Mail Sent');
+      }
+    });
+  });
+});
+
+const dotenv = require('dotenv');
+dotenv.config();
 
 const port = process.env.PORT || 5000;
 

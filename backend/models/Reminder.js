@@ -26,6 +26,10 @@ const ReminderSchema = new Schema(
     isAllDay: {
       type: Boolean,
     },
+    mailSent : {
+      type:Boolean ,
+      default: false ,
+    }
   },
   {
     timestamps: true, //so that we have createdAt and updatedAt fields

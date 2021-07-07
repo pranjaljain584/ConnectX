@@ -40,10 +40,10 @@ function Display(props) {
 
   };
 
-  const myStyle = { marginLeft: '10%', width: '85vw', height: '70vh' };
+  const myStyle = { marginLeft: '3.5%', width: '88vw', height: '70vh' };
   useEffect(() => {}, [roomIdSelected]);
   return (
-    <div className='display-div'>
+    <div className='display-div' >
       {sidebarSelectedItem == 'Calendar' && (
         <div style={myStyle}>
           <Calendar userId={props.auth?.user.id} />
@@ -77,7 +77,7 @@ function Display(props) {
                   multiple
                   width='100%'
                   type='email'
-                  name="email"
+                  name='email'
                   onChange={handleChange}
                   placeholder='Enter multiple emails(upto 9) separated by comma'
                 ></input>

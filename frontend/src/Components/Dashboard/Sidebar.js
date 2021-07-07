@@ -19,7 +19,10 @@ function Sidebar({
   const [selectedCall, setSelectedCall] = useState(true);
 
   return (
-    <div className='sidebar-div'>
+    <div
+      className='sidebar-div'
+      style={selectedCal ? { width: '4.799vw' } : { width: '4.95vw' }}
+    >
       <div
         value='Video Call'
         onClick={() => {
@@ -29,7 +32,7 @@ function Sidebar({
           setSelectedCal(false);
           setSelectedFiles(false);
           setSelectedChat(false);
-          setSelectedCall(true) ;
+          setSelectedCall(true);
         }}
       >
         <FontAwesomeIcon

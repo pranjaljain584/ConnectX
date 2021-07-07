@@ -19,6 +19,7 @@
     "http": "0.0.1-security",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.13",
+    "node-cron": "^3.0.0",
     "nodemailer": "^6.6.2",
     "path": "^0.12.7",
     "redis": "^3.1.2",
