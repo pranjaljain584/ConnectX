@@ -66,7 +66,7 @@ function Login(props) {
   };
 
   const googleFailure = (err) => {
-    notify('Unable to register !');
+    // notify('Unable to register !');
     console.log('Google Sign in Unsuccessful', err);
   };
 

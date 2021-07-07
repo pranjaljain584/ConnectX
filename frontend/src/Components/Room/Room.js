@@ -12,13 +12,13 @@ import Messenger from './Messenger';
 // import { ToastContainer, toast } from 'react-toastify';
 // import 'react-toastify/dist/ReactToastify.css';
 
-if (localStorage.token) {
-  const token = localStorage.token;
-  const decoded = jwt_decode(token);
-  console.log('DECODED', decoded);
-  var localId = decoded.user.id;
-  var userName = decoded.user.name;
-}
+// if (localStorage.token) {
+  // const token = localStorage.token;
+  // const decoded = jwt_decode(token);
+  // console.log('DECODED****', decoded);
+  var localId ;
+  var userName;
+// }
 
 const socket = io.connect(`${process.env.REACT_APP_API_URL}`, {
   transports: ['websocket'],
@@ -327,6 +327,12 @@ function Room(props) {
   };
 
   useEffect(() => {
+
+    // localId =
+    const obj = JSON.parse(localStorage.userDet);
+    console.log(obj) ;
+    localId = obj.user.id ;
+    userName = obj.user.name;
     start();
     // console.log(peerConnections, 'PEEEERRRR');
   }, []);

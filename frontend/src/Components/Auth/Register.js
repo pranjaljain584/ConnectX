@@ -69,7 +69,7 @@ function Register(props) {
   };
 
   const googleFailure = (error) => {
-    notify('Google Auth Failed !');
+    // notify('Google Auth Failed !');
     console.log(error);
   };
 

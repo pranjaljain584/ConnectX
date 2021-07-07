@@ -5,6 +5,7 @@ import ChatRoom from '../Channel/ChatRoom';
 import FileDisplay from '../File/FileDisplay';
 import Calendar from '../Calendar/Calendar';
 import { connect } from 'react-redux';
+import { makeStyles } from '@material-ui/core/styles';
 import '../../assets/css/pageFooter.css';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -12,20 +13,23 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import uuid from 'react-uuid';
 
 function Display(props) {
-  const { roomIdSelected, fileSelected, sidebarSelectedItem } = props;
+  const { roomIdSelected, fileSelected, sidebarSelectedItem , userId } = props;
   const [clicked, setClicked] = useState(false);
   const [form, setForm] = useState({
+    Date:'' ,
+    email:'',
+    StartTime : '' ,
     roomTitle:'' ,
-    email:''
   });
+
   const handleClose = () => {
     setClicked(false);
   };
   const handleChange = (e) => {
     setForm( { ...form ,[e.target.name]:e.target.value } );
-    console.log(form) ;
   };
 
   const handleSubmit = (e) => {
@@ -37,23 +41,45 @@ function Display(props) {
       },
     };
 
+    const emailArr = form.email.split(',') ;
+    const dateArr = form.Date.split('-') ;
+    const timeArr = form.StartTime.split(':') ;
+    const roomLink = `${process.env.REACT_APP_API_URL}/room/${uuid()}#init`;
+    let year = dateArr[0] ;
+    let month = dateArr[1] ;
+    let day = dateArr[2] ;
+    let hours = timeArr[0] ;
+    let minutes = timeArr[1] ;
+    const finalTime = new Date(year,month,day,hours,minutes) ;
+
+    const body = {
+      roomLink,
+      emailArr,
+      roomName:form.roomTitle,
+      isMeet:true,
+      joinedUsers:[userId],
+      StartTime:finalTime 
+    }
+
+    console.log('form' , body) ;
 
   };
 
-  const myStyle = { marginLeft: '3.5%', width: '88vw', height: '70vh' };
+  const myStyle = { marginLeft: '3.5%', width: '88vw', height: '72vh' };
   useEffect(() => {}, [roomIdSelected]);
+  const classes = useStyles() ;
   return (
-    <div className='display-div' >
+    <div className='display-div'>
       {sidebarSelectedItem == 'Calendar' && (
         <div style={myStyle}>
-          <Calendar userId={props.auth?.user.id} />
+          <Calendar userId={userId} />
         </div>
       )}
       {roomIdSelected !== '' && <ChatRoom roomIdSelected={roomIdSelected} />}
       {fileSelected !== '' && <FileDisplay fileSelected={fileSelected} />}
-      {sidebarSelectedItem == 'Video Call' && (
+      {sidebarSelectedItem === 'Video Call' && (
         <>
-          {clicked ? (
+          {/* {clicked ? (
             <Dialog
               open={clicked}
               fullWidth
@@ -82,6 +108,35 @@ function Display(props) {
                   placeholder='Enter multiple emails(upto 9) separated by comma'
                 ></input>
               </DialogContent>
+              <DialogContent>
+                <TextField
+                  id='date'
+                  label='Date'
+                  name='Date'
+                  onChange={handleChange}
+                  type='date'
+                  defaultValue={Date.now()}
+                  className={classes.textField}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+                <TextField
+                  id='time'
+                  label='Start Time'
+                  onChange={handleChange}
+                  type='time'
+                  name="StartTime"
+                  defaultValue={(new Date).getTime()}
+                  className={classes.textField}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  inputProps={{
+                    step: 300, // 5 min
+                  }}
+                />
+              </DialogContent>
               <DialogActions>
                 <Button onClick={handleClose} color='primary'>
                   Cancel
@@ -91,7 +146,7 @@ function Display(props) {
                 </Button>
               </DialogActions>
             </Dialog>
-          ) : null}
+          ) : null} */}
           <div className='meet-button'>
             <div>
               <Link to='/loading' target='_blank'>
@@ -107,6 +162,16 @@ function Display(props) {
     </div>
   );
 }
+
+const useStyles = makeStyles((theme) => ({
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 200,
+  },
+}));
+
+
 
 function mapStateToProps(state) {
   return {

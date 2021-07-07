@@ -70,10 +70,11 @@ export const register = ({ name, email, password }) => {
         type: REGISTER_SUCCESS,
         payload: res.data,
       });
+      
       toast.success('Registered Successfully !', settings);
       dispatch(loadUser());
     } catch (err) {
-      toast.error('Unable to Register !', settings);
+      // toast.error('Unable to Register !', settings);
 
       dispatch({
         type: REGISTER_FAIL,
@@ -119,6 +120,7 @@ export const login = (email, password) => {
 
       toast.success('Logged In Successfully !', settings);
 
+      console.log(res.data) ;
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data,

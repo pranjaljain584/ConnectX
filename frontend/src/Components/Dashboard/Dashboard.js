@@ -4,11 +4,13 @@ import Sidebar from './Sidebar';
 import TopBar from './TopBar';
 import SideList from '../SideList/SideList';
 import '../../assets/css/dashboard.css';
+import { connect } from 'react-redux';
 
 function Dashboard(props) {
   const [sidebarSelectedItem, setSidebarSelectedItem] = useState('Video Call');
   const [roomIdSelected, setRoomIdSelected] = useState('');
   const [fileSelected, setFileSelected] = useState('');
+  const userId = props.auth.user?._id;  ;
 
   return (
     <div>
@@ -34,10 +36,15 @@ function Dashboard(props) {
           fileSelected={fileSelected}
           roomIdSelected={roomIdSelected}
           sidebarSelectedItem={sidebarSelectedItem}
+          userId={userId}
         />
       </div>
     </div>
   );
 }
-
-export default Dashboard;
+function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+  };
+}
+export default connect(mapStateToProps)(Dashboard);

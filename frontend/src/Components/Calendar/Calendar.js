@@ -15,15 +15,17 @@ import '../../assets/css/calendar.css';
 import jwtDecode from 'jwt-decode';
 import axios from 'axios';
 
-if (localStorage.token) {
-  const token = localStorage.token;
-  const decoded = jwtDecode(token);
-  var userId = decoded.user.id;
-}
+// if (localStorage.token) {
+//   const token = localStorage.token;
+//   const decoded = jwtDecode(token);
+//   console.log("DECODED",decoded) ;
+//   var userId = decoded.user.id;
+// }
 
 function Calendar(props) {
   const [d, setData] = useState([]);
   const [tempkey,setkey] = useState(1) ;
+  const {userId} = props ;
 
   const handleSave = (e) => {
     console.log('Beginnnnn', e);
