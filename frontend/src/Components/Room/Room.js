@@ -3,22 +3,14 @@ import { connect } from 'react-redux';
 import { useParams } from 'react-router';
 import { io } from 'socket.io-client';
 import PropTypes from 'prop-types';
-import jwt_decode from 'jwt-decode';
 import Media from './Media';
 import RoomHeader from './RoomHeader';
 import RoomFooter from './RoomFooter';
 import '../../assets/css/room.css';
 import Messenger from './Messenger';
-// import { ToastContainer, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
-
-// if (localStorage.token) {
-  // const token = localStorage.token;
-  // const decoded = jwt_decode(token);
-  // console.log('DECODED****', decoded);
-  var localId ;
-  var userName;
-// }
+var localId;
+var userName;
+var userMail;
 
 const socket = io.connect(`${process.env.REACT_APP_API_URL}`, {
   transports: ['websocket'],
@@ -35,13 +27,12 @@ var peerConnectionConfig = {
 var userTracksbyId = {};
 var localStream;
 
-
 function Room(props) {
   const { roomId } = useParams(); // act like my room name
   const [grid, setGrid] = useState([]);
   const [msg, setMsg] = useState('');
   const url = `${window.location.origin}${window.location.pathname}`;
-  // const [participants, setParticipants] = useState([]);
+  const [ChatRoomId, setChatRoomId] = useState('');
   const userEmail = props.auth.user?.email;
   const [screenCastStream, setScreenCastStream] = useState();
   const [myStream, setMyStream] = useState();
@@ -51,24 +42,24 @@ function Room(props) {
   const [incomingMsg, setIncomingMsg] = useState();
   const [head, selectHead] = useState('Chat');
 
-  // const notify = (p) =>
-  //   toast.info(`${p} joined`, {
-  //     position: 'top-right',
-  //     autoClose: 1000,
-  //     hideProgressBar: false,
-  //     closeOnClick: true,
-  //     pauseOnHover: true,
-  //     draggable: true,
-  //     progress:undefined
-  //   });
-
   const handleSubmit = (e) => {
-    // console.log('submittt');
     e.preventDefault();
     var currentdate = new Date();
     var time = currentdate.getHours() + ':' + currentdate.getMinutes();
-    if(msg.trim()!==''){
+    if (msg.trim() !== '') {
       socket.emit('video-msg', { msg, user: userName, roomId, time });
+    }
+    if (ChatRoomId != '' && msg.trim() !== '') {
+      console.log('here');
+      socket.emit('send-msg', {
+        userId: localId,
+        msgTime: time,
+        msg,
+        file: '',
+        userName,
+        roomIdSelected: ChatRoomId,
+        userMail,
+      });
     }
     setMsg('');
   };
@@ -182,7 +173,6 @@ function Room(props) {
     peerConnections[peerId].pc.addStream(localStream);
 
     if (initCall) {
-      console.log('INITTTT');
       peerConnections[peerId].pc
         .createOffer()
         .then((description) => createdDescription(description, peerId))
@@ -257,9 +247,11 @@ function Room(props) {
     console.log(`connection with peer ${peerId} ${state}`);
     if (state === 'failed' || state === 'closed' || state === 'disconnected') {
       delete peerConnections[peerId];
-      document
-        .getElementById('peers')
-        .removeChild(document.getElementById('remoteVideo_' + peerId));
+      let node = document.getElementById('remoteVideo_' + peerId);
+      let parent = document.getElementById('video-container');
+      if (parent) {
+        parent.removeChild(node);
+      }
       updateLayout();
     }
   };
@@ -327,14 +319,16 @@ function Room(props) {
   };
 
   useEffect(() => {
-
-    // localId =
     const obj = JSON.parse(localStorage.userDet);
-    console.log(obj) ;
-    localId = obj.user.id ;
+    console.log(obj);
+    localId = obj.user.id;
     userName = obj.user.name;
+    userMail = obj.user.email;
     start();
-    // console.log(peerConnections, 'PEEEERRRR');
+    if (!roomId.includes('-')) {
+      setChatRoomId(roomId);
+    }
+    updateLayout();
   }, []);
 
   useEffect(() => {
@@ -350,10 +344,11 @@ function Room(props) {
       <div id='videos' className='video-grid'>
         <div className='video-container'>
           {' '}
-          <video id='own-video' muted autoPlay></video>{' '}
+          <video id='own-video' controls muted autoPlay></video>{' '}
           <p className='label'>You</p>
         </div>
 
+        
         {grid.map((g, key) => {
           return g.element;
         })}

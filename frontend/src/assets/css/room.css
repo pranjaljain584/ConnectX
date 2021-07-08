@@ -54,3 +54,7 @@ video {
   position: absolute;
   top: 0;
 }
+
+video::-webkit-media-controls-volume-slider::-webkit-media-slider-container, video::-webkit-media-controls-timeline::-webkit-media-slider-container {
+  display: none;
+}

@@ -7,7 +7,6 @@ import { Provider } from 'react-redux';
 import store from './store';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
-import jwt_decode from 'jwt-decode';
 import { loadUser } from './actions/auth';
 
 if (localStorage.token) {

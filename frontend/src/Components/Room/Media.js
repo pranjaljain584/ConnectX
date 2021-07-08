@@ -6,7 +6,7 @@ const Media = (props) => {
   return (
     <>
       {' '}
-      <video id={id} autoPlay></video> <p className="label" >{vidLabel}</p>{' '}
+      <video controls id={id} autoPlay></video> <p className="label" >{vidLabel}</p>{' '}
     </>
   );
 };

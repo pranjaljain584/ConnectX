@@ -20,7 +20,6 @@ function Messenger({
       return [...prevState, incomingMsg];
     });
 
-    console.log(incomingMsg);
   }, [incomingMsg]);
 
   useEffect(() => {

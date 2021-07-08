@@ -15,7 +15,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import uuid from 'react-uuid';
 import axios from 'axios';
 
 function Display(props) {
@@ -47,13 +46,12 @@ function Display(props) {
     const emailArr = form.email.split(',');
     const dateArr = form.Date.split('-');
     const timeArr = form.StartTime.split(':');
-    const roomLink = `/room/${uuid()}#init`;
+    const roomLink = `/room/`;
     let year = parseInt(dateArr[0]);
     let month = parseInt(dateArr[1]);
     let day = parseInt(dateArr[2]);
     let hours = parseInt(timeArr[0]);
     let minutes = parseInt(timeArr[1]);
-    // console.log(dateArr) ;
     const finalTime = new Date(year, month - 1, day, hours, minutes);
     const EndTime = new Date(year, month - 1, day, hours + 1, minutes);
 
@@ -203,7 +201,7 @@ function Display(props) {
           <div className='meet-button'>
             <div>
               <Link to='/loading' target='_blank'>
-                <button className='b'>Start A New Meeting</button>
+                <button className='b'>Start An Instant Meeting</button>
               </Link>
             </div>
             <div onClick={() => setClicked(!clicked)}>

@@ -7,11 +7,13 @@ module.exports.getChatList = async (req, res) => {
   try {
     const userId = req.user.id;
 
-    const roomsArray = await User.findOne({ _id: userId })
-      .sort({ createdAt: 1 })
-      .populate('joinedRooms');
+    const user = await User.findOne({ _id: userId }).populate({
+      path: 'joinedRooms',
+      options: {sort:{'updatedAt':-1}}
+    });
+    const roomsArray = user.joinedRooms ;
 
-    return res.status(200).json({ roomsArray: roomsArray.joinedRooms });
+    return res.status(200).json({ roomsArray });
   } catch (error) {
     console.error(err.message);
     res.status(500).send('Server error');
@@ -58,6 +60,7 @@ module.exports.createChatMeetRoom = async (req, res) => {
         return;
       }
 
+      let meetId = result._id ;
       try {
         let meetRoom = new ChatRoom({
           title: roomName,
@@ -79,9 +82,14 @@ module.exports.createChatMeetRoom = async (req, res) => {
               { $push: { joinedRooms: roomid } }
             );
 
+            let finalRoomLink = `/room/${roomid}` 
+            await Reminder.updateOne({_id:meetId},{
+              Description : finalRoomLink
+            })
+
             let user = await User.findById(joinedUsers[0]) ;
-            emailArr.forEach(async (email) => {
-              await mailFunction(email,roomName,StartTime,user.name,user.email,roomid);
+            emailArr.forEach((email) => {
+              mailFunction(email,roomName,StartTime,user.name,user.email,roomid);
             });
 
             return res
