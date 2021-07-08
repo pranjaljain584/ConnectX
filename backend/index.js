@@ -38,7 +38,6 @@ const io = require('socket.io')(server, {
 // connect database
 connectDB();
 
-app.use(express.static(path.join(__dirname, '../frontend/build')));
 // define routes
 app.use('/api/users', require('./routes/api/user'));
 app.use('/api/auth', require('./routes/api/auth'));
@@ -46,10 +45,6 @@ app.use('/api/chat', require('./routes/api/chat'));
 app.use('/api/mail', require('./routes/api/mail'));
 app.use('/api/file', require('./routes/api/files'));
 app.use('/api/event', require('./routes/api/event'));
-
-app.get('*', function (req, res) {
-  res.sendFile(path.join(__dirname + '/../frontend/', 'build', 'index.html'));
-});
 
 io.on('connection', (socket) => {
   try {
