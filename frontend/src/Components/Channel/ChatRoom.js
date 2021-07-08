@@ -1,30 +1,28 @@
 import axios from 'axios';
-import React, { useEffect, useState , useRef} from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import ChatHeader from './ChatHeader';
 import ChatFooter from './ChatFooter';
 import { io } from 'socket.io-client';
 import '../../assets/css/chatroom.css';
 import Message from './Message';
-import { ToastContainer } from 'react-toastify';
 
 const socket = io.connect(`${process.env.REACT_APP_API_URL}`, {
   transports: ['websocket'],
 });
 
-
 function ChatRoom(props) {
   const { roomIdSelected } = props;
-const messagesEndRef = useRef(null); 
+  const messagesEndRef = useRef(null);
   const [roomName, setRoomName] = useState('');
   const [msgArray, setMsgArray] = useState([]);
   const [participants, setParticipants] = useState([]);
+  const [meet, setMeet] = useState();
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }
+  };
 
   useEffect(() => {
-
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -41,24 +39,24 @@ const messagesEndRef = useRef(null);
         setRoomName(response.data.room.title);
         setMsgArray(response.data.room.msgArray);
         setParticipants(response.data.participants);
+        setMeet(response.data.Meet);
+        // console.log(meet) ; 
       })
       .catch((err) => console.log(err));
-
   }, [roomIdSelected]);
 
   useEffect(() => {
-
     socket.removeAllListeners(`${roomIdSelected}`);
     socket.on(`${roomIdSelected}`, function (data) {
       setMsgArray((prevState) => {
         return [...prevState, data.finalMsg];
       });
-
     });
-
   }, [roomIdSelected]);
 
-  useEffect(()=>{scrollToBottom()},[msgArray])
+  useEffect(() => {
+    scrollToBottom();
+  }, [msgArray]);
 
   return (
     <div className='chat-room'>
@@ -66,6 +64,7 @@ const messagesEndRef = useRef(null);
         participants={participants}
         roomIdSelected={roomIdSelected}
         roomName={roomName}
+        meet={meet}
       />
       <div className='list' id='style'>
         {msgArray.length > 0 &&
@@ -75,7 +74,6 @@ const messagesEndRef = useRef(null);
         <div ref={messagesEndRef} />
       </div>
       <ChatFooter roomIdSelected={roomIdSelected} />
-      
     </div>
   );
 }

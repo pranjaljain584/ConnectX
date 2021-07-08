@@ -191,7 +191,6 @@ io.on('connection', (socket) => {
 cron.schedule('*/5 * * * *', async () => {
   let currentTime = new Date();
   let upperBound = new Date(currentTime.getTime() + 15 * 60000);
-  console.log(currentTime);
 
   // filter out the events whose start time is within 15 minutes from now and then send a mail
   const events = await Reminder.find({

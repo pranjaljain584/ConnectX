@@ -1,6 +1,11 @@
-import { faEllipsisV, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import {
+  faEllipsisV,
+  faUserPlus,
+  faVideo,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../../assets/css/chatroom.css';
 import { withStyles } from '@material-ui/core/styles';
 import Menu from '@material-ui/core/Menu';
@@ -15,7 +20,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import PersonIcon from '@material-ui/icons/Person';
 import { blue } from '@material-ui/core/colors';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ListIcon from '@material-ui/icons/List';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -37,7 +42,7 @@ const useStyles = makeStyles({
 });
 
 function ChatHeader(props) {
-  const { roomName, roomIdSelected, participants } = props;
+  const { roomName, roomIdSelected, participants, meet } = props;
   const [showInput, setShowInput] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const userId = props.auth.user?._id;
@@ -83,7 +88,24 @@ function ChatHeader(props) {
   const handleLeaveRoom = () => {
     notify('Leaving Room');
     socket.emit('leave-room', { roomIdSelected, userId });
-    update('Room Left','success') ;
+    update('Room Left', 'success');
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        'x-auth-token': localStorage.token,
+      },
+    };
+
+    if(meet){
+      axios
+        .get(
+          `${process.env.REACT_APP_API_URL}/api/event/${meet._id}`,
+          config
+        )
+        .then((res) => {
+
+        });
+    }
   };
 
   const handleClickP = () => {
@@ -139,16 +161,31 @@ function ChatHeader(props) {
             />
           </form>
         )}
-        <FontAwesomeIcon
-          onClick={() => {
-            setShowInput((prevState) => {
-              return !prevState;
-            });
-          }}
-          className='icon'
-          data-tip='Add Participant'
-          icon={faUserPlus}
-        />
+        {meet ? (
+          <>
+            {' '}
+            {new Date(meet.StartTime).getTime() < new Date().getTime() ? (
+              <Link to={meet.Description} target='_blank'>
+                <FontAwesomeIcon
+                  style={{ color: '#55868a', marginTop: '10px', fontSize:'1.7rem' }}
+                  data-tip='Join Meet'
+                  icon={faVideo}
+                />
+              </Link>
+            ) : null}{' '}
+          </>
+        ) : (
+          <FontAwesomeIcon
+            onClick={() => {
+              setShowInput((prevState) => {
+                return !prevState;
+              });
+            }}
+            className='icon'
+            data-tip='Add Participant'
+            icon={faUserPlus}
+          />
+        )}
       </div>
 
       <Dialog

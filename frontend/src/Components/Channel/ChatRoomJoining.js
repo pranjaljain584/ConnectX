@@ -29,7 +29,6 @@ function ChatRoomJoining(props) {
         config
       )
       .then((response) => {
-        // console.log(response.data);
         if (response.data.success) {
           props.history.push(`/dashboard`);
         } else {

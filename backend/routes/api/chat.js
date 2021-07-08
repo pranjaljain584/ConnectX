@@ -7,7 +7,7 @@ router.get('/chat-list',auth,chatController.getChatList) ;
 
 router.get('/chat-room/:roomid', auth, chatController.getChatRoom);
 
-// router.post('create-chat-room',auth,chatController.createChatRoom) ;
+router.post('/create-chat-meet-room',auth,chatController.createChatMeetRoom) ;
 
 // update chat room 
 

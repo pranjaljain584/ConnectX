@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 import '../../assets/css/chatlistitem.css';
-import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faPhoneSquareAlt, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const socket = io.connect(`${process.env.REACT_APP_API_URL}`, {
@@ -9,7 +9,7 @@ const socket = io.connect(`${process.env.REACT_APP_API_URL}`, {
 });
 
 function ChatListItem(props) {
-  const { title, id,time, lastMsg, setRoomIdSelected,setFileSelected } = props;
+  const { title, id,time, lastMsg, setRoomIdSelected,setFileSelected,isMeet } = props;
   const [lastMessage, setLastMessage] = useState(lastMsg);
   const [lastTime,setLastTime] = useState(time) ;
   useEffect(() => {
@@ -25,16 +25,22 @@ function ChatListItem(props) {
     <div
       onClick={() => {
         setRoomIdSelected(id);
-        setFileSelected('') ;
+        setFileSelected('');
       }}
       className='chat-list-item'
     >
       <div className='left-item'>
-        <FontAwesomeIcon icon={faUserCircle} />
+        {isMeet ? (
+          <FontAwesomeIcon icon={faPhoneSquareAlt} />
+        ) : (
+          <FontAwesomeIcon icon={faUserCircle} />
+        )}
       </div>
       <div className='mid-item'>
         <span>{title}</span> <br />{' '}
-        <p style={{overflowX:'hidden',overflowY:'hidden'}} >{lastMessage ? <p>{lastMessage}</p> : <p></p>}</p>
+        <p style={{ overflowX: 'hidden', overflowY: 'hidden' }}>
+          {lastMessage ? <p>{lastMessage}</p> : <p></p>}
+        </p>
       </div>
       <div className='right-item'>{lastTime}</div>
     </div>

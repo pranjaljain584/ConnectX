@@ -13,10 +13,15 @@ const socket = io.connect(`${process.env.REACT_APP_API_URL}`, {
 });
 
 function SideList(props) {
-  const { sidebarSelectedItem, setRoomIdSelected , roomIdSelected , setFileSelected } = props;
+  const {
+    sidebarSelectedItem,
+    setRoomIdSelected,
+    roomIdSelected,
+    setFileSelected,
+  } = props;
   const [chatList, setChatList] = useState([]);
   const [fileList, setFileList] = useState([]);
-  const [loading ,setloading] = useState(true) ;
+  const [loading, setloading] = useState(true);
 
   useEffect(() => {
     const config = {
@@ -31,7 +36,7 @@ function SideList(props) {
       axios
         .get(`${process.env.REACT_APP_API_URL}/api/chat/chat-list`, config)
         .then((response) => {
-          setloading(false) ;
+          setloading(false);
           setChatList(response.data.roomsArray);
         })
         .catch((err) => console.log(err));
@@ -42,7 +47,7 @@ function SideList(props) {
         .get(`${process.env.REACT_APP_API_URL}/api/file`, config)
         .then((response) => {
           console.log(response);
-          setloading(false) ;
+          setloading(false);
           setFileList(response.data.filesArray);
         })
         .catch((err) => console.log(err));
@@ -67,7 +72,7 @@ function SideList(props) {
           return r._id !== data.room._id;
         });
       });
-      setRoomIdSelected("") ;
+      setRoomIdSelected('');
     });
   }, []);
 
@@ -90,8 +95,6 @@ function SideList(props) {
                 lastMsg={
                   chat.msgArray.length > 0
                     ? chat.msgArray[chat.msgArray.length - 1].chatMessage
-                      ? chat.msgArray[chat.msgArray.length - 1].chatMessage
-                      : chat.msgArray[chat.msgArray.length - 1].fileName
                     : null
                 }
                 time={
@@ -99,6 +102,7 @@ function SideList(props) {
                     ? chat.msgArray[chat.msgArray.length - 1].chatTime
                     : null
                 }
+                isMeet={chat.Meet ? true : false}
                 setRoomIdSelected={setRoomIdSelected}
                 setFileSelected={setFileSelected}
               />

@@ -31,9 +31,9 @@ const ChatRoomSchema = new Schema(
     lastmsg: {
       type: String,
     },
-    isMeet: {
-      type: Boolean,
-      default: false,
+    Meet: {
+      type: mongoose.Schema.Types.ObjectID,
+      ref:'Reminder',
     },
   },
   {

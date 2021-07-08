@@ -14,8 +14,6 @@ if (localStorage.token) {
   const token = localStorage.token;
   
   if (token) {
-    // const decoded = jwt_decode(token);
-    // localStorage.setItem('userDet',decoded) ;
     axios.defaults.headers.common['x-auth-token'] = token;
     store.dispatch(loadUser()) ;
   } else {

@@ -15,17 +15,11 @@ import '../../assets/css/calendar.css';
 import jwtDecode from 'jwt-decode';
 import axios from 'axios';
 
-// if (localStorage.token) {
-//   const token = localStorage.token;
-//   const decoded = jwtDecode(token);
-//   console.log("DECODED",decoded) ;
-//   var userId = decoded.user.id;
-// }
-
 function Calendar(props) {
   const [d, setData] = useState([]);
   const [tempkey,setkey] = useState(1) ;
   const {userId} = props ;
+  console.log(userId) ;
 
   const handleSave = (e) => {
     console.log('Beginnnnn', e);
@@ -92,6 +86,7 @@ function Calendar(props) {
     axios
       .get(`${process.env.REACT_APP_API_URL}/api/event`, config)
       .then((res) => {
+        console.log(res.data.events) ;
         setData(res.data.events);
         console.log('cdm------', d);
       });
@@ -124,55 +119,3 @@ function Calendar(props) {
 }
 
 export default Calendar;
-
-// templatedata() {
-//   return (
-//     <div className='e-toast-template e-toast-info'>
-//       <div className='e-toast-message'>
-//         <div className='e-toast-title'>{this.data[0].Subject}</div>
-//       </div>
-//     </div>
-//   );
-// }
-
-//             {/* <ToastComponent
-//               ref={(toast) => {
-//                 this.toastObj = toast;
-//               }}
-//               id='toast_default'
-//               newestOnTop={true}
-//               showCloseButton={true}
-//               timeOut={5000}
-//               target='#schedule'
-//               position={this.position}
-//               template={this.templatedata.bind(this)}
-//             /> */}
-
-//   onCreated() {
-//     console.log('Caleed');
-//     window.setInterval(function () {
-//       var scheduleObj = document.querySelector('.e-schedule').ej2_instances[0];
-//       var eventCollection = scheduleObj.getCurrentViewEvents();
-//       eventCollection.forEach((event, i) => {
-//         var dateFormat = (date) =>
-//           new Date(
-//             date.getFullYear(),
-//             date.getMonth(),
-//             date.getDate(),
-//             date.getHours(),
-//             date.getMinutes()
-//           );
-//         var alertBeforeMinutes = 5;
-//         var startTime = dateFormat(event[scheduleObj.eventFields.startTime]);
-//         var currentTime = dateFormat(new Date());
-//         if (
-//           currentTime.getTime() ===
-//           startTime.getTime() - 1000 * 60 * alertBeforeMinutes
-//         ) {
-//           var toastObjReminder =
-//             document.querySelector('.e-toast').ej2_instances[0];
-//           toastObjReminder.show();
-//         }
-//       });
-//     }, 60000);
-//   }

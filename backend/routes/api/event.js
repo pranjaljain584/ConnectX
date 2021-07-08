@@ -26,7 +26,6 @@ router.post('/', auth, async (req, res) => {
       Description,
       StartTime,
       EndTime,
-      isAllDay,
       Subject,
       userId,
     });
@@ -55,7 +54,7 @@ router.post('/', auth, async (req, res) => {
 
 router.get('/:id', auth, async (req, res) => {
   try {
-    await Reminder.findByIdAndDelete(req.params.id);
+    await Reminder.findOneAndDelete({_id:req.params.id,userId:req.user.id});
     // const events = await Reminder.find({ userId: req.user.id });
     return res.status(200).send('Deleted');
   } catch (error) {
@@ -69,13 +68,16 @@ router.post('/update/:id2', auth, async (req, res) => {
     const { Description, StartTime, EndTime, isAllDay, Subject } =
       req.body.data;
 
-    await Reminder.findByIdAndUpdate(req.params.id2, {
-      Description,
-      StartTime,
-      EndTime,
-      isAllDay,
-      Subject,
-    });
+    await Reminder.findOneAndUpdate(
+      { _id: req.params.id2, userId: req.user.id },
+      {
+        Description,
+        StartTime,
+        EndTime,
+        isAllDay,
+        Subject,
+      }
+    );
 
     console.log('UPDATES');
     return res.status(200).send('Updated');
