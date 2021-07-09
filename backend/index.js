@@ -65,6 +65,7 @@ io.on('connection', (socket) => {
         msg: data.msg,
         user: data.user,
         time: data.time,
+        whiteboard: data.whiteboard,
       });
     });
     // create room

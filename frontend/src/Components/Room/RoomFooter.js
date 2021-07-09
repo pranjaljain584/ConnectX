@@ -21,6 +21,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import axios from 'axios';
+import ReactTooltip from 'react-tooltip'
 
 const RoomFooter = ({
   isPresenting,
@@ -34,6 +35,7 @@ const RoomFooter = ({
   url,
   userName,
   userEmail,
+  handleSubmit,
   roomId,
 }) => {
   const [clicked, setClicked] = useState(false);
@@ -42,14 +44,14 @@ const RoomFooter = ({
   const [whiteboard, setWhiteboard] = useState(false);
   const handleClose = () => {
     setClicked(false);
-    setInfo(false) ;
+    setInfo(false);
   };
   const handleChange = (e) => {
     setEmail(e.target.value);
     // setRoomTitle(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit2 = (e) => {
     e.preventDefault();
     const config = {
       headers: {
@@ -96,13 +98,19 @@ const RoomFooter = ({
               <Button onClick={handleClose} color='primary'>
                 Cancel
               </Button>
-              <Button onClick={handleSubmit} color='primary'>
+              <Button onClick={handleSubmit2} color='primary'>
                 Done
               </Button>
             </DialogActions>
           </Dialog>
         ) : null}
-        <div className='icon-block' onClick={() => setInfo(!info)}>
+        <div
+          data-tip='Info'
+          className='icon-block'
+          onClick={(e) => {
+            setInfo(true);
+          }}
+        >
           <FontAwesomeIcon
             className='icon'
             style={{ color: '#339AF0' }}
@@ -130,7 +138,11 @@ const RoomFooter = ({
             </DialogActions>
           </Dialog>
         ) : null}
-        <div className='icon-block' onClick={() => setClicked(!clicked)}>
+        <div
+          data-tip='Invite Others'
+          className='icon-block'
+          onClick={() => setClicked(!clicked)}
+        >
           <FontAwesomeIcon
             className='icon'
             style={{ color: '#10B664' }}
@@ -138,6 +150,7 @@ const RoomFooter = ({
           />
         </div>
         <div
+          data-tip='Toggle Audio'
           className={`icon-block ${!isAudio ? 'red-bg' : null}`}
           onClick={() => toggleAudio(!isAudio)}
         >
@@ -150,6 +163,7 @@ const RoomFooter = ({
           <div className='end-call'>End Call</div>
         </div>
         <div
+          data-tip='Toggle Video'
           className={`icon-block ${!isVideo ? 'red-bg' : null}`}
           onClick={() => toggleVideo(!isVideo)}
         >
@@ -159,27 +173,41 @@ const RoomFooter = ({
           />
         </div>
         {isPresenting ? (
-          <div className='icon-block' onClick={stopScreenShare}>
+          <div
+            className='icon-block'
+            onClick={stopScreenShare}
+            data-tip='Stop ScreenShare'
+          >
             <FontAwesomeIcon className='icon blue' icon={faDesktop} />
           </div>
         ) : (
-          <div className='icon-block' onClick={screenShare}>
+          <div
+            className='icon-block'
+            onClick={screenShare}
+            data-tip='Start Screenshare'
+          >
             <FontAwesomeIcon className='icon' icon={faDesktop} />
           </div>
         )}
         <Link
-          onClick={() => setWhiteboard(!whiteboard)}
+          onClick={(e) => {
+            setWhiteboard(!whiteboard);
+            console.log('submitt');
+            handleSubmit(e, true);
+          }}
           to={`/board/${roomId}`}
           target='_blank'
         >
-          <div className={`icon-block`}>
+          <div className={`icon-block`} data-tip='Join WhiteBoard'>
             <FontAwesomeIcon
-              className={`icon ${whiteboard ? 'blue' : null}`}
+              className={`icon`}
+              //  ${whiteboard ? 'blue' : null}
               icon={faChalkboardTeacher}
             />
           </div>
         </Link>
       </div>
+      <ReactTooltip />
     </div>
   );
 };

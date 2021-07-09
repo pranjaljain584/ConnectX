@@ -26,8 +26,9 @@
 }
 
 .msg-bubble{
-    width: 230px;
+    width: 280px;
     height: auto;
+    margin-left: 40px;
     background-color:#1A1B20;
     border-radius: 1rem;
     color: #757679;
@@ -35,6 +36,12 @@
     flex-direction: column;
     margin-bottom: 15px;
 }
+/* 
+.admin{
+  /* background-color: rgb(116, 114, 114) ; */
+  /* border: 0.5px solid #8b8a8a; */
+  /* border-radius: 0 !important; */
+
 
 .msg-top2 {
   font-size: 1rem;

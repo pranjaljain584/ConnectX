@@ -19,7 +19,6 @@ function Messenger({
     setMsgArray((prevState) => {
       return [...prevState, incomingMsg];
     });
-
   }, [incomingMsg]);
 
   useEffect(() => {
@@ -38,17 +37,26 @@ function Messenger({
                 })
                 .map((m, key) => {
                   return (
-                    <div key={key} className='msg-bubble'>
-                      <p className='msg-top2'>{m?.user}</p>
+                    <div
+                      key={key}
+                      className={`msg-bubble ${m.whiteboard ? 'admin' : null}`}
+                    >
+                      {m.whiteboard ? (
+                        <span>&nbsp;</span>
+                      ) : (
+                        <p className='msg-top2'>{m?.user}</p>
+                      )}
                       <p className='msg-mid2'>{m?.msg}</p>
-                      <p className='msg-bottom2'> {m?.time}</p>
+                      {m.whiteboard ? null : (
+                        <p className='msg-bottom2'> {m?.time}</p>
+                      )}
                     </div>
                   );
                 })}
             <div ref={messagesEndRef} />
           </div>
-            <div className='footer'>
-              <form>
+          <div className='footer'>
+            <form>
               <input
                 type='text'
                 placeholder='type a messgae...'
@@ -63,13 +71,13 @@ function Messenger({
                 type='submit'
                 onClick={(e) => {
                   // console.log('here');
-                  handleSubmit(e);
+                  handleSubmit(e, false);
                 }}
               >
                 Send
               </button>
-              </form>
-            </div>
+            </form>
+          </div>
         </>
       ) : (
         <div className='participants-list'>

@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 import '../../assets/css/chatlistitem.css';
-import { faPhoneSquareAlt, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import {
+  faPhoneSquareAlt,
+  faUserCircle,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const socket = io.connect(`${process.env.REACT_APP_API_URL}`, {
@@ -9,16 +12,22 @@ const socket = io.connect(`${process.env.REACT_APP_API_URL}`, {
 });
 
 function ChatListItem(props) {
-  const { title, id,time, lastMsg, setRoomIdSelected,setFileSelected,isMeet } = props;
+  const {
+    title,
+    id,
+    time,
+    lastMsg,
+    setRoomIdSelected,
+    setFileSelected,
+    isMeet,
+  } = props;
   const [lastMessage, setLastMessage] = useState(lastMsg);
-  const [lastTime,setLastTime] = useState(time) ;
+  const [lastTime, setLastTime] = useState(time);
   useEffect(() => {
-    // console.log('Room Socket listening on: ', id);
     socket.removeAllListeners(`${id}-lastMessage`);
     socket.on(`${id}-lastMessage`, (data) => {
-      // console.log(data) ;
-      setLastMessage(data.finalMsg.chatMessage);
-      setLastTime(data.finalMsg.chatTime) ;
+      setLastMessage(data.finalMsg);
+      setLastTime(data.finalMsg.chatTime);
     });
   }, [id]);
   return (
@@ -39,7 +48,16 @@ function ChatListItem(props) {
       <div className='mid-item'>
         <span>{title}</span> <br />{' '}
         <p style={{ overflowX: 'hidden', overflowY: 'hidden' }}>
-          {lastMessage ? <p>{lastMessage}</p> : <p></p>}
+          {lastMessage ? (
+            <p>
+              {lastMessage.chatMessage !== null &&
+              lastMessage.chatMessage !== ''
+                ? lastMessage.chatMessage
+                : lastMessage.fileName}
+            </p>
+          ) : (
+            <p></p>
+          )}
         </p>
       </div>
       <div className='right-item'>{lastTime}</div>

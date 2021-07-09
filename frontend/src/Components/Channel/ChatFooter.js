@@ -41,8 +41,8 @@ class ChatFooter extends Component {
     e.preventDefault();
     var currentdate = new Date();
     var time = currentdate.getHours() + ':' + currentdate.getMinutes();
-
-    if(this.state.msg.trim() !== ''){
+    console.log(file) ;
+    if(this.state.msg.trim() !== '' || file!==''){
       socket.emit('send-msg', {
         userId,
         msgTime: time,

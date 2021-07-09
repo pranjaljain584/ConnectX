@@ -41,14 +41,25 @@ function Room(props) {
   const [isVideo, setIsVideo] = useState(true);
   const [incomingMsg, setIncomingMsg] = useState();
   const [head, selectHead] = useState('Chat');
-  const [whiteboard,setWhiteboard] = useState(true) ;
+  // const [whiteboard,setWhiteboard] = useState(true) ;
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = (e,board) => {
     var currentdate = new Date();
     var time = currentdate.getHours() + ':' + currentdate.getMinutes();
+    if(board===true){
+      console.log('here') ;
+      socket.emit('video-msg', {
+        msg: `Whiteboard started by ${userName}`,
+        user: userName,
+        roomId,
+        time,
+        whiteboard:true ,
+      });
+    }else{
+      e.preventDefault() ;
+    }
     if (msg.trim() !== '') {
-      socket.emit('video-msg', { msg, user: userName, roomId, time });
+      socket.emit('video-msg', { msg, user: userName, roomId, time, whiteboard:false });
     }
     if (ChatRoomId != '' && msg.trim() !== '') {
       console.log('here');
@@ -378,6 +389,7 @@ function Room(props) {
         roomId={roomId}
         userName={userName}
         userEmail={userEmail}
+        handleSubmit={handleSubmit}
       />
     </div>
   );

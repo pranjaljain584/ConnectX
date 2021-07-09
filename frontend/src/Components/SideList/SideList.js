@@ -60,7 +60,7 @@ function SideList(props) {
 
     socket.on(`create-room-${userId}`, function (data) {
       setChatList((prevState) => {
-        return [ data.room, ...prevState];
+        return [data.room, ...prevState];
       });
     });
 
@@ -94,7 +94,7 @@ function SideList(props) {
                 id={chat._id}
                 lastMsg={
                   chat.msgArray.length > 0
-                    ? chat.msgArray[chat.msgArray.length - 1].chatMessage
+                    ? chat.msgArray[chat.msgArray.length-1]
                     : null
                 }
                 time={

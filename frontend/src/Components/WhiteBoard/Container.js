@@ -8,6 +8,7 @@ class Container extends React.Component {
 
     this.state = {
       color: '#000000',
+      eraser :'#FFFFFF',
       size: '5',
     };
   }
@@ -24,6 +25,13 @@ class Container extends React.Component {
     });
   }
 
+  setEraser(){
+    this.setState({
+      color:'#FFFFFF',
+      size:'10'
+    })
+  }
+
   render() {
     return (
       <div className='container'>
@@ -32,10 +40,16 @@ class Container extends React.Component {
             Select Color : &nbsp;
             <input
               type='color'
-              style={{marginTop:'5px'}}
+              style={{ marginTop: '5px' }}
               value={this.state.color}
               onChange={this.changeColor.bind(this)}
             />
+            <div
+              style={{ marginTop: '5px', marginLeft:'10px' , display: 'inline', cursor: 'pointer' , backgroundColor:'black' ,color:'white' }}
+              onClick={this.setEraser.bind(this)}
+            >
+              Eraser
+              </div>
           </div>
 
           <div className='brushsize-container'>

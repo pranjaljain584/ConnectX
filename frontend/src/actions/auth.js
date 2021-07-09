@@ -74,8 +74,12 @@ export const register = ({ name, email, password }) => {
       toast.success('Registered Successfully !', settings);
       dispatch(loadUser());
     } catch (err) {
-      // toast.error('Unable to Register !', settings);
-
+      if(err.response.status === 400){
+        console.log('here');
+        toast.error('User already exists !', settings);
+      }else{
+        toast.error('Unable to Register !', settings);
+      }
       dispatch({
         type: REGISTER_FAIL,
       });
