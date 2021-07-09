@@ -4,10 +4,12 @@ import { useParams } from 'react-router';
 import { io } from 'socket.io-client';
 import PropTypes from 'prop-types';
 import Media from './Media';
+import {Link} from 'react-router-dom'
 import RoomHeader from './RoomHeader';
 import RoomFooter from './RoomFooter';
 import '../../assets/css/room.css';
 import Messenger from './Messenger';
+import Container from '../WhiteBoard/Container' ;
 var localId;
 var userName;
 var userMail;
@@ -41,6 +43,7 @@ function Room(props) {
   const [isVideo, setIsVideo] = useState(true);
   const [incomingMsg, setIncomingMsg] = useState();
   const [head, selectHead] = useState('Chat');
+  const [whiteboard,setWhiteboard] = useState(true) ;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -300,6 +303,7 @@ function Room(props) {
         document.getElementById('own-video').srcObject = stream;
 
         serverConnection = socket;
+        // serverConnection.removeAllListeners('') ;
         serverConnection.removeAllListeners('message');
         serverConnection.on('message', gotMessageFromServer);
         serverConnection.emit('message', {
@@ -348,11 +352,13 @@ function Room(props) {
           <p className='label'>You</p>
         </div>
 
-        
         {grid.map((g, key) => {
           return g.element;
         })}
       </div>
+      <Link to={`/board/${roomId}`} >
+        <button>WhiteBoard</button>
+      </Link>
 
       <RoomHeader selectHead={selectHead} />
       <Messenger
@@ -377,17 +383,6 @@ function Room(props) {
         userName={userName}
         userEmail={userEmail}
       />
-      {/* <ToastContainer
-        position='top-right'
-        autoClose={1000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      /> */}
     </div>
   );
 }

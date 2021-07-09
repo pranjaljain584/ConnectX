@@ -53,6 +53,13 @@ io.on('connection', (socket) => {
       io.emit('message', message);
     });
 
+    socket.on('canvas-data', (data) => {
+      console.log("Listening " , data.roomId) ;
+      io.emit(`canvas-data-${data.roomId}`, {
+        base64ImageData: data.base64ImageData
+      });
+    });
+
     socket.on('video-msg', function (data) {
       io.emit(`${data.roomId}-video-msg`, {
         msg: data.msg,
@@ -198,7 +205,7 @@ cron.schedule('*/5 * * * *', async () => {
   events.forEach(async (event) => {
     let user = await User.findById(event.userId);
     let userEmail = user.email;
-    let eventid = event._id ;
+    let eventid = event._id;
 
     let mailOptions = {
       from: 'microsoftteamsclonemailer@gmail.com',
@@ -214,7 +221,7 @@ cron.schedule('*/5 * * * *', async () => {
       if (err) {
         console.log('Mail Not Sent', err);
       } else {
-        await Reminder.findByIdAndUpdate(eventid,{mailSent:true}) ;
+        await Reminder.findByIdAndUpdate(eventid, { mailSent: true });
         console.log('Mail Sent');
       }
     });

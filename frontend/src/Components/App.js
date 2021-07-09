@@ -22,6 +22,7 @@ import ErrorPage from './ErrorPage.js';
 import Calendar from './Calendar/Calendar.js';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Container from './WhiteBoard/Container.js';
 
 const PrivateRoute = (privateRouteProps) => {
   const { isAuthenticated, component: Component, path } = privateRouteProps;
@@ -72,6 +73,11 @@ function App(props) {
           <PrivateRoute
             path='/room/:roomId'
             component={Room}
+            isAuthenticated={props.auth.isAuthenticated}
+          />
+          <PrivateRoute
+            path='/board/:roomId'
+            component={Container}
             isAuthenticated={props.auth.isAuthenticated}
           />
           <Route path='/loading' component={Loading} />
