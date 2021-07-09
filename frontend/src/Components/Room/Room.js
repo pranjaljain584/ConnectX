@@ -4,12 +4,10 @@ import { useParams } from 'react-router';
 import { io } from 'socket.io-client';
 import PropTypes from 'prop-types';
 import Media from './Media';
-import {Link} from 'react-router-dom'
 import RoomHeader from './RoomHeader';
 import RoomFooter from './RoomFooter';
 import '../../assets/css/room.css';
 import Messenger from './Messenger';
-import Container from '../WhiteBoard/Container' ;
 var localId;
 var userName;
 var userMail;
@@ -356,9 +354,6 @@ function Room(props) {
           return g.element;
         })}
       </div>
-      <Link to={`/board/${roomId}`} >
-        <button>WhiteBoard</button>
-      </Link>
 
       <RoomHeader selectHead={selectHead} />
       <Messenger
@@ -380,6 +375,7 @@ function Room(props) {
         toggleVideo={toggleVideo}
         disconnectCall={disconnectCall}
         url={url}
+        roomId={roomId}
         userName={userName}
         userEmail={userEmail}
       />

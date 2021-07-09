@@ -45,7 +45,7 @@
 }
 
 .footer-item .center-item .icon-block .icon.blue {
-  color: #3088FB;
+  color: #3088fb;
 }
 .footer-item .center-item .icon-block:hover {
   cursor: pointer;
@@ -62,11 +62,35 @@
   background-color: #ef5a5c;
   color: white;
   font-size: 1rem;
-  margin: 0 12px ;
+  margin: 0 12px;
 }
 
 .end-call:hover {
-	cursor: pointer;
+  cursor: pointer;
+}
+
+.meet-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f1f3f5;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.meet-link span {
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  outline: none;
+  background: none;
+  flex: 1;
+  color: #555;
+}
+.meet-link .icon {
+  cursor: pointer;
+  color: #555;
+  font-size: 1.2rem;
 }
 
 /* .footer-item {

@@ -1,6 +1,5 @@
 import React from 'react';
 import Board from './Board';
-
 import '../../assets/css/container.css';
 
 class Container extends React.Component {
@@ -30,9 +29,10 @@ class Container extends React.Component {
       <div className='container'>
         <div class='tools-section'>
           <div className='color-picker-container'>
-            Select Brush Color : &nbsp;
+            Select Color : &nbsp;
             <input
               type='color'
+              style={{marginTop:'5px'}}
               value={this.state.color}
               onChange={this.changeColor.bind(this)}
             />

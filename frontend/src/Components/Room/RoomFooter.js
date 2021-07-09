@@ -6,9 +6,13 @@ import {
   faDesktop,
   faMicrophoneSlash,
   faVideoSlash,
-  faPlus
+  faPlus,
+  faChalkboardTeacher,
+  faInfo,
+  faCopy,
 } from '@fortawesome/free-solid-svg-icons';
 import '../../assets/css/pageFooter.css';
+import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -16,7 +20,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import axios from 'axios' ;
+import axios from 'axios';
 
 const RoomFooter = ({
   isPresenting,
@@ -29,20 +33,24 @@ const RoomFooter = ({
   disconnectCall,
   url,
   userName,
-  userEmail
+  userEmail,
+  roomId,
 }) => {
-  const [clicked,setClicked] = useState(false) ; 
-  const [mail,setEmail] = useState('') ;
+  const [clicked, setClicked] = useState(false);
+  const [info, setInfo] = useState(false);
+  const [mail, setEmail] = useState('');
+  const [whiteboard, setWhiteboard] = useState(false);
   const handleClose = () => {
-    setClicked(false) ;
+    setClicked(false);
+    setInfo(false) ;
   };
   const handleChange = (e) => {
-    setEmail(e.target.value) ;
+    setEmail(e.target.value);
     // setRoomTitle(e.target.value);
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault() ;
+    e.preventDefault();
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -51,7 +59,7 @@ const RoomFooter = ({
     };
 
     const body = {
-      sendTo:mail,
+      sendTo: mail,
       userEmail,
       userName,
       inviteLink: `${url}`,
@@ -63,23 +71,17 @@ const RoomFooter = ({
         // console.log(response) ;
       })
       .catch((err) => console.log(err));
-    setClicked(false) ;
-    setEmail('') ;
-  }
+    setClicked(false);
+    setEmail('');
+  };
   return (
     <div className='footer-item'>
       <div className='center-item'>
         {clicked ? (
-          <Dialog
-            open={clicked}
-            fullWidth
-            aria-labelledby='form-dialog-title'
-          >
+          <Dialog open={clicked} fullWidth aria-labelledby='form-dialog-title'>
             <DialogTitle id='form-dialog-title'>Invite others</DialogTitle>
             <DialogContent>
-              <DialogContentText>
-                Enter Email id
-              </DialogContentText>
+              <DialogContentText>Enter Email id</DialogContentText>
               <TextField
                 autoFocus
                 margin='dense'
@@ -100,13 +102,40 @@ const RoomFooter = ({
             </DialogActions>
           </Dialog>
         ) : null}
+        <div className='icon-block' onClick={() => setInfo(!info)}>
+          <FontAwesomeIcon
+            className='icon'
+            style={{ color: '#339AF0' }}
+            icon={faInfo}
+          />
+        </div>
+        {info ? (
+          <Dialog open={info} fullWidth aria-labelledby='form-dialog-title'>
+            <DialogTitle id='form-dialog-title'>Meeting Link</DialogTitle>
+            <DialogContent>
+              <div className='meet-link'>
+                <span>{url}</span>
+                &nbsp;
+                <FontAwesomeIcon
+                  className='icon'
+                  icon={faCopy}
+                  onClick={() => navigator.clipboard.writeText(url)}
+                />
+              </div>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} color='primary'>
+                Cancel
+              </Button>
+            </DialogActions>
+          </Dialog>
+        ) : null}
         <div className='icon-block' onClick={() => setClicked(!clicked)}>
           <FontAwesomeIcon
             className='icon'
             style={{ color: '#10B664' }}
             icon={faPlus}
           />
-  
         </div>
         <div
           className={`icon-block ${!isAudio ? 'red-bg' : null}`}
@@ -138,6 +167,18 @@ const RoomFooter = ({
             <FontAwesomeIcon className='icon' icon={faDesktop} />
           </div>
         )}
+        <Link
+          onClick={() => setWhiteboard(!whiteboard)}
+          to={`/board/${roomId}`}
+          target='_blank'
+        >
+          <div className={`icon-block`}>
+            <FontAwesomeIcon
+              className={`icon ${whiteboard ? 'blue' : null}`}
+              icon={faChalkboardTeacher}
+            />
+          </div>
+        </Link>
       </div>
     </div>
   );
