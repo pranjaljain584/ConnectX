@@ -199,7 +199,7 @@ const mailFunction = (sendTo,roomName,StartTime,userName,userEmail,roomid) => {
     html: `
             <h1> Invitation to meeting: <u>${roomName}</u> on ${date} by ${userName} with email : ${userEmail}  </h1>
             <br />
-            <h5> <a href="https://connectx.acsonnet.com/invite/${roomid}"> Accept Invite and Add To Calendar </a> </h5>
+            <h5> <a href="https://connect-x.vercel.app/invite/${roomid}"> Accept Invite and Add To Calendar </a> </h5>
         `,
   };
 
