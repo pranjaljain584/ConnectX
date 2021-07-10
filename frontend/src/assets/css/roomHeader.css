@@ -3,7 +3,7 @@
   top: 3%;
   right: 8%;
   height: auto;
-  width: auto;
+  width:auto ;
   margin-bottom: 3px;
 }
 
@@ -15,7 +15,7 @@
 }
 
 .chat-head {
-  width: 140px;
+  width: 10vw;
   height: 50px;
   border-top-left-radius: 0.5rem;
   border-bottom-left-radius: 0.5rem;
@@ -24,7 +24,7 @@
 
 .participants-head {
   height: 50px;
-  width: 150px;
+  width: 10vw;
   font-size: 16px;
   border-top-right-radius: 0.5rem;
   border-bottom-right-radius: 0.5rem;

@@ -143,10 +143,10 @@ function ChatHeader(props) {
 
   return (
     <div className='chat-header'>
-      <div style={{ width: '50%' }}>{roomName}</div>
+      <div style={{ maxWidth: '60%' , overflow:'hidden' }}>{roomName}</div>
 
       <div
-        style={{ marginLeft: showInput ? '4.7%' : '32%' }}
+        style={{ marginLeft: showInput ? '4.5%' : '29.7%' }}
         className='add-user'
       >
         {showInput && (

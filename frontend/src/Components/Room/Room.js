@@ -188,7 +188,7 @@ function Room(props) {
       peerConnections[peerId].pc
         .createOffer()
         .then((description) => createdDescription(description, peerId))
-        .catch((err) => console.log('***&&&&', err));
+        .catch((err) => console.log('***&&&', err));
     }
   };
 
@@ -368,32 +368,33 @@ function Room(props) {
           return g.element;
         })}
       </div>
-
-      <RoomHeader head={head} selectHead={selectHead} />
-      <Messenger
-        head={head}
-        msg={msg}
-        setMsg={setMsg}
-        participants={peerConnections}
-        handleSubmit={handleSubmit}
-        incomingMsg={incomingMsg}
-        roomId={roomId}
-      />
-      <RoomFooter
-        isPresenting={isPresenting}
-        stopScreenShare={stopScreenShare}
-        screenShare={screenShare}
-        isAudio={isAudio}
-        toggleAudio={toggleAudio}
-        isVideo={isVideo}
-        toggleVideo={toggleVideo}
-        disconnectCall={disconnectCall}
-        url={url}
-        roomId={roomId}
-        userName={userName}
-        userEmail={userEmail}
-        handleSubmit={handleSubmit}
-      />
+      <div className='side-right'>
+        <RoomHeader head={head} selectHead={selectHead} />
+        <Messenger
+          head={head}
+          msg={msg}
+          setMsg={setMsg}
+          participants={peerConnections}
+          handleSubmit={handleSubmit}
+          incomingMsg={incomingMsg}
+          roomId={roomId}
+        />
+        <RoomFooter
+          isPresenting={isPresenting}
+          stopScreenShare={stopScreenShare}
+          screenShare={screenShare}
+          isAudio={isAudio}
+          toggleAudio={toggleAudio}
+          isVideo={isVideo}
+          toggleVideo={toggleVideo}
+          disconnectCall={disconnectCall}
+          url={url}
+          roomId={roomId}
+          userName={userName}
+          userEmail={userEmail}
+          handleSubmit={handleSubmit}
+        />
+      </div>
     </div>
   );
 }

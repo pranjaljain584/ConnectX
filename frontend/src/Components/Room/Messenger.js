@@ -28,7 +28,7 @@ function Messenger({
   return (
     <div className='messenger'>
       {head === 'Chat' ? (
-        <>
+        <div className="m">
           <div className='msg-list' id='style2'>
             {msgArray.length > 0 &&
               msgArray
@@ -77,7 +77,7 @@ function Messenger({
               </button>
             </form>
           </div>
-        </>
+        </div>
       ) : (
         <div className='participants-list'>
           <div className='p'>

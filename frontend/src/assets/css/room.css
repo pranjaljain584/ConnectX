@@ -8,6 +8,9 @@
   height: 100vh;
   padding: 1%;
   margin: 0;
+  display: flex ;
+  flex-direction: column;
+  justify-content: space-around;
 }
 .video-grid {
   height: 70vh;

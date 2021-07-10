@@ -97,7 +97,7 @@ function Calendar(props) {
       <div className='control-section'>
         <div className='control-wrapper'>
           <ScheduleComponent
-            height='650px'
+            height='90vh'
             id='schedule'
             eventSettings={{ dataSource: d }}
             selectedDate={new Date()}
