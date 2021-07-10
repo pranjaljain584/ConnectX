@@ -259,11 +259,12 @@ function Room(props) {
     console.log(`connection with peer ${peerId} ${state}`);
     if (state === 'failed' || state === 'closed' || state === 'disconnected') {
       delete peerConnections[peerId];
-      let node = document.getElementById('remoteVideo_' + peerId);
-      let parent = document.getElementById('video-container');
-      if (parent) {
-        parent.removeChild(node);
-      }
+      setGrid((prevState)=>{
+        return [
+        ...prevState.filter((e) => {
+          return e.id != peerId;
+        })]
+      });
       updateLayout();
     }
   };
@@ -353,6 +354,8 @@ function Room(props) {
         setWhiteboard(true) ;
       }
     });
+
+    
   }, [msg]);
 
   return (
