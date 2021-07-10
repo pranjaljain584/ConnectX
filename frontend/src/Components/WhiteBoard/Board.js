@@ -19,7 +19,6 @@ class Board extends React.Component {
     this.state = {
       roomId: props.match.params.roomId,
     };
-    console.log('%%%%', this.state.roomId);
 
     this.socket.on(`canvas-data-${this.state.roomId}`, function (data) {
       var root = this;
@@ -41,14 +40,16 @@ class Board extends React.Component {
   }
 
   componentDidMount() {
-    // console.log("&&&7",roomId) ;
-    // this.setState({roomId}) ;
     this.drawOnCanvas();
   }
 
   componentWillReceiveProps(newProps) {
     this.ctx.strokeStyle = newProps.color;
     this.ctx.lineWidth = newProps.size;
+  }
+
+  componentWillUnmount(){
+    this.socket.removeAllListeners(`canvas-data-${this.state.roomId}`);
   }
 
   drawOnCanvas() {

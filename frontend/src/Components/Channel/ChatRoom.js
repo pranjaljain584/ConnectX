@@ -52,6 +52,10 @@ function ChatRoom(props) {
         return [...prevState, data.finalMsg];
       });
     });
+
+    return (()=>{
+    socket.removeAllListeners(`${roomIdSelected}`);
+    })
   }, [roomIdSelected]);
 
   useEffect(() => {

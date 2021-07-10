@@ -29,6 +29,10 @@ function ChatListItem(props) {
       setLastMessage(data.finalMsg);
       setLastTime(data.finalMsg.chatTime);
     });
+
+    return () => {
+      socket.removeAllListeners(`${id}-lastMessage`);
+    };
   }, [id]);
   return (
     <div

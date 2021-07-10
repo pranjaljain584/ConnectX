@@ -74,6 +74,11 @@ function SideList(props) {
       });
       setRoomIdSelected('');
     });
+
+    return () => {
+      socket.removeAllListeners(`create-room-${userId}`);
+      socket.removeAllListeners(`leave-room-${userId}`);
+    };
   }, []);
 
   useEffect(() => {}, [roomIdSelected]);
@@ -94,7 +99,7 @@ function SideList(props) {
                 id={chat._id}
                 lastMsg={
                   chat.msgArray.length > 0
-                    ? chat.msgArray[chat.msgArray.length-1]
+                    ? chat.msgArray[chat.msgArray.length - 1]
                     : null
                 }
                 time={

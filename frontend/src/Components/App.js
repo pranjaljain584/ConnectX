@@ -7,8 +7,6 @@ import {
 } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Home from './HomePage/Home.js';
-// import setAuthToken from '../utils/setAuthToken';
-// import { loadUser } from '../actions/auth';
 import { connect } from 'react-redux';
 import '../assets/css/App.css';
 import Login from './Auth/Login.js';
@@ -26,8 +24,6 @@ import Container from './WhiteBoard/Container.js';
 
 const PrivateRoute = (privateRouteProps) => {
   const { isAuthenticated, component: Component, path } = privateRouteProps;
-
-  // const [isLoggedIn, setLogIn] = useState(false);
 
   return (
     <Route

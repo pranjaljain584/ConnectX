@@ -355,7 +355,10 @@ function Room(props) {
       }
     });
 
-    
+    return (()=>{
+      socket.removeAllListeners(`${roomId}-video-msg`);
+    })
+
   }, [msg]);
 
   return (
