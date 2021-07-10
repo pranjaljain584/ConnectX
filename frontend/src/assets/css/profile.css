@@ -22,6 +22,7 @@
 
 .home__popoverContainer {
   display: flex;
+  min-width: 250px;
   flex-direction: column;
   align-items: center;
   padding: 20px;
@@ -53,7 +54,6 @@
     0px 1px 3px 1px rgba(65, 69, 73, 0.15);
   border-radius: 50%;
   padding: 5px;
-  cursor: pointer;
 }
 
 .home__camera:hover {

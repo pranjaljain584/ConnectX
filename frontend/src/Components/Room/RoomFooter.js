@@ -192,7 +192,6 @@ const RoomFooter = ({
         <Link
           onClick={(e) => {
             setWhiteboard(!whiteboard);
-            console.log('submitt');
             handleSubmit(e, true);
           }}
           to={`/board/${roomId}`}

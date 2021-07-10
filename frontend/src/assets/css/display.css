@@ -6,9 +6,11 @@
 }
 
 .meet-button {
-    background-image: url('../images/meetImage.webp');
-    background-size: contain;
-    height: 82vh;
+    background-image: url('../images/meetImage.jpg');
+    background-size: 80%;
+    background-color: white;
+    background-position: center;
+    height: 87vh;
     width: 65vw;
     margin-top: 10px;
     margin-left: 20px;
@@ -21,17 +23,18 @@
 }
 
 .meet-button div {
-    align-self: flex-end;
-    margin-left: 10%;
-
+    align-self: flex-start;
+    margin-left: 15%;
 }
 .meet-button .b {
-    background-color: teal;
+    background-color: #294a53;
     color: white;
     border: 0px solid transparent;
     height: 40px;
     width: 250px;
+    margin-top: 9%;
     display: inline-block;
+    border-radius: 0.3rem;
 }
 
 #i{

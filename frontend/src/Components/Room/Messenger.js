@@ -59,7 +59,7 @@ function Messenger({
             <form>
               <input
                 type='text'
-                placeholder='type a messgae...'
+                placeholder='Type a messgae...'
                 value={msg}
                 required
                 onChange={(e) => {
@@ -70,7 +70,6 @@ function Messenger({
               <button
                 type='submit'
                 onClick={(e) => {
-                  // console.log('here');
                   handleSubmit(e, false);
                 }}
               >
@@ -81,6 +80,9 @@ function Messenger({
         </>
       ) : (
         <div className='participants-list'>
+          <div className='p'>
+            <p>You</p>
+          </div>
           {Object.keys(participants).map((key, index) => {
             let name = participants[key].displayName;
             return (

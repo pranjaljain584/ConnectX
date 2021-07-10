@@ -4,7 +4,7 @@
   right: 8%;
   height: auto;
   width: auto;
-  /* background-color: tomato; */
+  margin-bottom: 3px;
 }
 
 .toggle-bar {
@@ -15,20 +15,16 @@
 }
 
 .chat-head {
-  background-color: #10b664;
   width: 140px;
   height: 50px;
-  border-radius: 0.5rem;
+  border-top-left-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
   font-size: 15px;
-  color: white;
 }
 
 .participants-head {
-  /* border-radius: 0.5rem; */
-  background-color: #1a1b20;
   height: 50px;
   width: 150px;
-  color: #616065;
   font-size: 16px;
   border-top-right-radius: 0.5rem;
   border-bottom-right-radius: 0.5rem;

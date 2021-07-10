@@ -20,6 +20,32 @@ import axios from 'axios';
 function Display(props) {
   const { roomIdSelected, fileSelected, sidebarSelectedItem, userId } = props;
   const [clicked, setClicked] = useState(false);
+  
+  const toastId = React.useRef(null);
+
+  const notify = (msg) =>
+    (toastId.current = toast.warn(`${msg}`, {
+      position: 'top-right',
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      autoClose: false,
+    }));
+
+  const update = (msg, type) =>
+    toast.update(toastId.current, {
+      position: 'top-right',
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      type: `${type}`,
+      render: `${msg}`,
+      autoClose: 3000,
+    });
   const [form, setForm] = useState({
     Date: '',
     email: '',
@@ -67,6 +93,8 @@ function Display(props) {
 
     console.log('form', body);
 
+    notify(`Creating Meet`);
+
     axios
       .post(
         `${process.env.REACT_APP_API_URL}/api/chat/create-chat-meet-room`,
@@ -87,34 +115,8 @@ function Display(props) {
 
     setClicked(false);
 
-    notify(`Creating Meet`);
   };
 
-  const toastId = React.useRef(null);
-
-  const notify = (msg) =>
-    (toastId.current = toast.warn(`${msg}`, {
-      position: 'top-right',
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      autoClose: false,
-    }));
-
-  const update = (msg, type) =>
-    toast.update(toastId.current, {
-      position: 'top-right',
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      type: `${type}`,
-      render: `${msg}`,
-      autoClose: 3000,
-    });
 
   const myStyle = { marginLeft: '3.5%', width: '88vw', height: '72vh' };
   useEffect(() => {}, [roomIdSelected]);
@@ -201,7 +203,9 @@ function Display(props) {
           <div className='meet-button'>
             <div>
               <Link to='/loading' target='_blank'>
-                <button className='b'>Start An Instant Meeting</button>
+                <button style={{ marginLeft: '33%' }} className='b'>
+                  Start An Instant Meeting
+                </button>
               </Link>
             </div>
             <div onClick={() => setClicked(!clicked)}>

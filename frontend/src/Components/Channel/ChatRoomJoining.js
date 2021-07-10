@@ -4,8 +4,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import '../../assets/css/loading.css';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { Redirect } from 'react-router-dom';
-
 
 function ChatRoomJoining(props) {
   const { chatRoomId } = useParams();

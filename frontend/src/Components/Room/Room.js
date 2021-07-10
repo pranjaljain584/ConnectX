@@ -41,7 +41,7 @@ function Room(props) {
   const [isVideo, setIsVideo] = useState(true);
   const [incomingMsg, setIncomingMsg] = useState();
   const [head, selectHead] = useState('Chat');
-  // const [whiteboard,setWhiteboard] = useState(true) ;
+  const [whiteboard,setWhiteboard] = useState(false) ;
 
   const handleSubmit = (e,board) => {
     var currentdate = new Date();
@@ -49,7 +49,7 @@ function Room(props) {
     if(board===true){
       console.log('here') ;
       socket.emit('video-msg', {
-        msg: `Whiteboard started by ${userName}`,
+        msg: `Whiteboard ${whiteboard ? 'joined' : 'started'} by ${userName}`,
         user: userName,
         roomId,
         time,
@@ -349,6 +349,9 @@ function Room(props) {
     socket.on(`${roomId}-video-msg`, (data) => {
       console.log('Data', data);
       setIncomingMsg(data);
+      if(data.whiteboard){
+        setWhiteboard(true) ;
+      }
     });
   }, [msg]);
 
@@ -357,7 +360,7 @@ function Room(props) {
       <div id='videos' className='video-grid'>
         <div className='video-container'>
           {' '}
-          <video id='own-video' controls muted autoPlay></video>{' '}
+          <video id='own-video' muted autoPlay></video>{' '}
           <p className='label'>You</p>
         </div>
 
@@ -366,7 +369,7 @@ function Room(props) {
         })}
       </div>
 
-      <RoomHeader selectHead={selectHead} />
+      <RoomHeader head={head} selectHead={selectHead} />
       <Messenger
         head={head}
         msg={msg}

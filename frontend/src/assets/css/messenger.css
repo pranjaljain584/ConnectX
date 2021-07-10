@@ -13,11 +13,11 @@
 .p{
   background-color: #1A1B20 ;
   height: 60px;
-  width: 300px;
+  width: 60%;
   border-radius: 1rem;
   padding-top: 15px;
   padding-left: 10px;
-  margin-left: 15%;
+  margin-left: 22%;
   margin-top: 3%;
 }
 
@@ -28,7 +28,7 @@
 .msg-bubble{
     width: 280px;
     height: auto;
-    margin-left: 40px;
+    margin-left: 24%;
     background-color:#1A1B20;
     border-radius: 1rem;
     color: #757679;
@@ -36,23 +36,17 @@
     flex-direction: column;
     margin-bottom: 15px;
 }
-/* 
-.admin{
-  /* background-color: rgb(116, 114, 114) ; */
-  /* border: 0.5px solid #8b8a8a; */
-  /* border-radius: 0 !important; */
-
 
 .msg-top2 {
   font-size: 1rem;
   font-weight: 500;
   margin-left: 5%;
-  margin-top: 2%;
+  margin-top: 1.5%;
 }
 
 .msg-mid2 {
   margin-left: 5%;
-  margin-top: -1%;
+  margin-top: -3%;
   margin-right: 2%;
   color: #c4c4c4;
   overflow: hidden;
@@ -63,8 +57,8 @@
 .msg-bottom2 {
   align-self: flex-end;
   margin-right: 5%;
-  margin-bottom: 1%;
-  margin-top:-3% ;
+  margin-bottom: 1.5%;
+  margin-top:-4% ;
   color: grey;
 }
 
@@ -92,13 +86,13 @@
 
 .footer {
   align-self: center;
-  /* margin-left: 10%; */
+  margin-left: 7%;
 }
 .footer input {
   background: transparent;
   color: grey;
   border: 0px solid transparent;
-  width: 200px;
+  width: 60%;
   height: 50px;
   font-size: 1.1rem;
 }
