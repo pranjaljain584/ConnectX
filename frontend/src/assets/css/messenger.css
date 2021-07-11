@@ -6,7 +6,7 @@
   flex-direction: column;
   justify-content: flex-start;
   position: absolute;
-  margin-top: -63vh;
+  margin-top: -31% ;
   margin-left: 65%;
 }
 
@@ -117,7 +117,7 @@
   color: white;
   height: 35px;
 }
-/* 
+
 @media screen and (max-width:1920px) {
   .messenger {
     margin-top: -25%;
@@ -140,4 +140,4 @@
   .messenger {
     margin-top: -28%;
   }
-} */
+}
