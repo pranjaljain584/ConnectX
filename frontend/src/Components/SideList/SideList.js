@@ -62,7 +62,7 @@ function SideList(props) {
     socket.removeAllListeners(`create-room-${userId}`);
     socket.on(`create-room-${userId}`, function (data) {
       setChatList((prevState) => {
-        return [data.room, ...prevState];
+        return [...prevState, data.room];
       });
     });
 
@@ -93,8 +93,13 @@ function SideList(props) {
         {loading && sidebarSelectedItem !== 'Video Call' ? (
           <CircularProgress color='primary' />
         ) : null}
-        {(chatList.length && sidebarSelectedItem === 'Chat') > 0 ? (
+        {chatList.length > 0 && sidebarSelectedItem === 'Chat' ? (
           chatList.map((chat, key) => {
+            console.log(
+              `Title: ${chat.title}, blank msg array: ${
+                chat.msgArray.length === 0
+              }`
+            );
             return (
               <ChatListItem
                 key={key}

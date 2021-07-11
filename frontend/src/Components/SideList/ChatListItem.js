@@ -26,7 +26,6 @@ function ChatListItem(props) {
   const [lastTime, setLastTime] = useState(time);
 
   useEffect(() => {
-
     // socket for dynamic update of last message
     socket.removeAllListeners(`${id}-lastMessage`);
     socket.on(`${id}-lastMessage`, (data) => {
@@ -39,7 +38,9 @@ function ChatListItem(props) {
       socket.removeAllListeners(`${id}-lastMessage`);
     };
   }, [id]);
-  
+
+  console.log(`Title: ${title}, lastMessage: ${lastMsg}`);
+
   return (
     <div
       onClick={() => {
@@ -60,13 +61,14 @@ function ChatListItem(props) {
         <p style={{ overflowX: 'hidden', overflowY: 'hidden' }}>
           {lastMessage ? (
             <p>
-              {lastMessage.chatMessage !== null &&
-              lastMessage.chatMessage !== ''
-                ? lastMessage.chatMessage
-                : lastMessage.fileName}
+              {lastMessage.chatMessage !== null
+                ? lastMessage.chatMessage !== ''
+                  ? lastMessage.chatMessage
+                  : lastMessage.fileName
+                : ''}
             </p>
           ) : (
-            <p></p>
+            ''
           )}
         </p>
       </div>
