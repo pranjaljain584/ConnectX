@@ -74,7 +74,7 @@ function ChatHeader(props) {
       progress: undefined,
       type: `${type}`,
       render: `${msg}`,
-      autoClose: 3000,
+      autoClose: 2000,
     });
 
   const handleClick = (event) => {
@@ -87,6 +87,7 @@ function ChatHeader(props) {
 
   const handleLeaveRoom = () => {
     notify('Leaving Room');
+    // emit socket to leave room
     socket.emit('leave-room', { roomIdSelected, userId });
     update('Room Left', 'success');
     const config = {
@@ -103,16 +104,16 @@ function ChatHeader(props) {
           config
         )
         .then((res) => {
-
+          console.log(res) ;
         });
     }
   };
 
   const handleClickP = () => {
-    console.log('Clicked');
     setShowP(true);
   };
 
+  // send invite mail
   const handleSubmit = (e) => {
     e.preventDefault();
     const config = {

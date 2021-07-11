@@ -8,7 +8,6 @@ import IconButton from '@material-ui/core/IconButton';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
-// import MenuIcon from '@material-ui/icons/Menu';
 
 const useStyles = makeStyles((theme) => ({
   root: {

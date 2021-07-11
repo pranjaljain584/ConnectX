@@ -32,7 +32,7 @@ function SideList(props) {
     };
 
     if (sidebarSelectedItem === 'Chat') {
-      console.log('here');
+      // fetch user chats
       axios
         .get(`${process.env.REACT_APP_API_URL}/api/chat/chat-list`, config)
         .then((response) => {
@@ -43,6 +43,7 @@ function SideList(props) {
     }
 
     if (sidebarSelectedItem === 'Files') {
+      // fetch user files
       axios
         .get(`${process.env.REACT_APP_API_URL}/api/file`, config)
         .then((response) => {
@@ -56,16 +57,17 @@ function SideList(props) {
 
   useEffect(() => {
     const userId = props.auth.user?._id;
-    socket.removeAllListeners(`create-room-${userId}`);
 
+    // listen socket for creation of room for this user
+    socket.removeAllListeners(`create-room-${userId}`);
     socket.on(`create-room-${userId}`, function (data) {
       setChatList((prevState) => {
         return [data.room, ...prevState];
       });
     });
 
+    // listen socket for leaving room for this user
     socket.removeAllListeners(`leave-room-${userId}`);
-
     socket.on(`leave-room-${userId}`, function (data) {
       setChatList((prevState) => {
         return prevState.filter(function (r) {
@@ -75,6 +77,7 @@ function SideList(props) {
       setRoomIdSelected('');
     });
 
+    // cleanup
     return () => {
       socket.removeAllListeners(`create-room-${userId}`);
       socket.removeAllListeners(`leave-room-${userId}`);

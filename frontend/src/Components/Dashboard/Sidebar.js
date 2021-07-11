@@ -66,7 +66,6 @@ function Sidebar({
           setFileSelected('');
           setSelectedFiles(false);
           setSelectedCall(false);
-
           setSelectedCal(true);
         }}
       >
@@ -85,7 +84,6 @@ function Sidebar({
           setFileSelected('');
           setSelectedCal(false);
           setSelectedCall(false);
-
           setSelectedFiles(true);
         }}
       >

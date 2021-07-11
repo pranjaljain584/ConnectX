@@ -3,6 +3,7 @@ const ChatRoom = require('../models/ChatRoom');
 const Reminder = require('../models/Reminder');
 const transporter = require('../config/nodemailer');
 
+// get chat list route
 module.exports.getChatList = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -20,6 +21,7 @@ module.exports.getChatList = async (req, res) => {
   }
 };
 
+// get chat room in case of meet route
 module.exports.getChatRoom = async (req, res) => {
   try {
     const roomId = req.params.roomid;
@@ -39,12 +41,13 @@ module.exports.getChatRoom = async (req, res) => {
   }
 };
 
+// create chat(meet) room, add that event to calendar, send mail to participants route
 module.exports.createChatMeetRoom = async (req, res) => {
   try {
-    // console.log(req.body);
     const { roomLink, emailArr, roomName, joinedUsers, StartTime, EndTime } =
       req.body;
 
+    // new reminder  
     let event = new Reminder({
       Description: roomLink,
       StartTime,
@@ -54,6 +57,7 @@ module.exports.createChatMeetRoom = async (req, res) => {
       userId: joinedUsers[0],
     });
 
+    // save event 
     await event.save(async function (err, result) {
       if (err) {
         console.log('Event save error: **', err);
@@ -62,12 +66,14 @@ module.exports.createChatMeetRoom = async (req, res) => {
 
       let meetId = result._id ;
       try {
+        // if successful create chat room
         let meetRoom = new ChatRoom({
           title: roomName,
           joinedUsers,
           Meet: result._id,
         });
 
+        // save chat room
         await meetRoom.save(async function (err, result) {
           if (err) {
             console.log('Chat room save error: **', err);
@@ -75,19 +81,21 @@ module.exports.createChatMeetRoom = async (req, res) => {
           }
 
           try {
-            console.log('Updating user with room ids!');
+            // if successful add this room to user's joined rooms
             const roomid = result._id;
             await User.updateOne(
               { _id: joinedUsers[0] },
               { $push: { joinedRooms: roomid } }
             );
 
-            let finalRoomLink = `/room/${roomid}` 
+            let finalRoomLink = `/room/${roomid}` ;
+            // update event with room link
             await Reminder.updateOne({_id:meetId},{
               Description : finalRoomLink
             })
 
             let user = await User.findById(joinedUsers[0]) ;
+            // send emails to all participants
             emailArr.forEach((email) => {
               mailFunction(email,roomName,StartTime,user.name,user.email,roomid);
             });
@@ -117,6 +125,7 @@ module.exports.updateChatRoom = async (req, res) => {
   }
 };
 
+// join chat room via mail invite
 module.exports.joinChatRoom = async (req, res) => {
   try {
     const chatRoomId = req.params.chatRoomId;
@@ -197,9 +206,9 @@ const mailFunction = (sendTo,roomName,StartTime,userName,userEmail,roomid) => {
     to: `${sendTo}`,
     subject: 'Invite Mail',
     html: `
-            <h1> Invitation to meeting: <u>${roomName}</u> on ${date} by ${userName} with email : ${userEmail}  </h1>
+            <h4> Invitation to meeting: <u>${roomName}</u> on ${date} by ${userName} with email : ${userEmail}  </h4>
             <br />
-            <h5> <a href="https://connect-x.vercel.app/invite/${roomid}"> Accept Invite and Add To Calendar </a> </h5>
+            <h3> <a href="https://connect-x.vercel.app/invite/${roomid}"> Accept Invite and Add To Calendar </a> </h3>
         `,
   };
 

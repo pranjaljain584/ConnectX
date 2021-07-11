@@ -12,16 +12,20 @@ function Messenger({
   const [msgArray, setMsgArray] = useState([]);
   const messagesEndRef = useRef(null);
 
+  // automatic scroll to bottom of msges
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
+
   useEffect(() => {
+    // updating message array for incoming message
     setMsgArray((prevState) => {
       return [...prevState, incomingMsg];
     });
   }, [incomingMsg]);
 
   useEffect(() => {
+    // scroll to bottom whenever msg array updates
     scrollToBottom();
   }, [msgArray]);
 
@@ -63,7 +67,6 @@ function Messenger({
                 value={msg}
                 required
                 onChange={(e) => {
-                  console.log(e.target.value);
                   setMsg(e.target.value);
                 }}
               ></input>

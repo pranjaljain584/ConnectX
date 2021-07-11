@@ -60,6 +60,7 @@ router.post(
           .json({ errors: [{ msg: "Invalid credentials" }] });
       }
 
+      // data in token
       const payload = {
         user: {
           id: user.id,
@@ -68,6 +69,7 @@ router.post(
         },
       };
 
+      // create token
       jwt.sign(
         payload,
         "mySecretToken",

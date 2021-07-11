@@ -21,19 +21,25 @@ function ChatListItem(props) {
     setFileSelected,
     isMeet,
   } = props;
+
   const [lastMessage, setLastMessage] = useState(lastMsg);
   const [lastTime, setLastTime] = useState(time);
+
   useEffect(() => {
+
+    // socket for dynamic update of last message
     socket.removeAllListeners(`${id}-lastMessage`);
     socket.on(`${id}-lastMessage`, (data) => {
       setLastMessage(data.finalMsg);
       setLastTime(data.finalMsg.chatTime);
     });
 
+    // cleanup
     return () => {
       socket.removeAllListeners(`${id}-lastMessage`);
     };
   }, [id]);
+  
   return (
     <div
       onClick={() => {

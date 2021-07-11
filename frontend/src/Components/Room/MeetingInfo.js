@@ -1,12 +1,9 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faUser,
-} from '@fortawesome/free-solid-svg-icons';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 import '../../assets/css/meetinginfo.css';
 
-function MeetingInfo(props) {
-  const { url } = props;
+function MeetingInfo() {
   return (
     <div className='meeting-info-block'>
       <div className='meeting-header'>
@@ -17,8 +14,8 @@ function MeetingInfo(props) {
         Add Others
       </button>
 
-<br/>
-      <input type="email" placeholder="Email"></input>
+      <br />
+      <input type='email' placeholder='Email'></input>
     </div>
   );
 }

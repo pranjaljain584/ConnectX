@@ -9,6 +9,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import { loadUser } from './actions/auth';
 
+// checking token from local storage 
+// and then setting in headers and loading user data
 if (localStorage.token) {
   const token = localStorage.token;
   

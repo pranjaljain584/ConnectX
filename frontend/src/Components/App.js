@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -18,10 +18,11 @@ import Loading from './Room/Loading.js';
 import ChatRoomJoining from './Channel/ChatRoomJoining.js';
 import ErrorPage from './ErrorPage.js';
 import Calendar from './Calendar/Calendar.js';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Container from './WhiteBoard/Container.js';
 
+// private route definition
 const PrivateRoute = (privateRouteProps) => {
   const { isAuthenticated, component: Component, path } = privateRouteProps;
 
@@ -48,6 +49,7 @@ const PrivateRoute = (privateRouteProps) => {
 
 function App(props) {
 
+  // routing
   return (
     <Router>
       <div>
@@ -83,7 +85,7 @@ function App(props) {
       </div>
       <ToastContainer
         position='top-right'
-        autoClose={3000}
+        autoClose={2000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

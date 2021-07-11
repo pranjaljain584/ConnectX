@@ -14,7 +14,7 @@ import { connect } from 'react-redux';
 import { login } from '../../actions/auth';
 import { GoogleLogin } from 'react-google-login';
 import GoogleButton from 'react-google-button';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const v =
@@ -66,7 +66,6 @@ function Login(props) {
   };
 
   const googleFailure = (err) => {
-    // notify('Unable to register !');
     console.log('Google Sign in Unsuccessful', err);
   };
 

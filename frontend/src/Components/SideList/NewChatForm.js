@@ -43,6 +43,7 @@ export default function NewChatForm(props) {
   };
 
   const handleSubmit = () => {
+    // emit create room action to backend with reqd data
     socket.emit('create-room', { userId: userId, roomTitle: roomTitle });
     notify('Room Created')
     setOpen(false);

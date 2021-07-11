@@ -7,6 +7,7 @@ import Profile from './Profile';
 
 function TopBar(props) {
   const handleClick = () => {
+    // dispatch logout action
     props.dispatch(logout());
   };
 

@@ -1,4 +1,3 @@
-import { RoomServiceRounded } from '@material-ui/icons';
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { io } from 'socket.io-client';
@@ -108,7 +107,7 @@ class Board extends React.Component {
       ctx.closePath();
       ctx.stroke();
 
-      if (root.timeout != undefined) clearTimeout(root.timeout);
+      if (root.timeout !== undefined) clearTimeout(root.timeout);
       root.timeout = setTimeout(function () {
         var base64ImageData = canvas.toDataURL('image/png');
         console.log('emitting', root.state.roomId);

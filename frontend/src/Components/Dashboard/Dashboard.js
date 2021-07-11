@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Display from './Display';
 import Sidebar from './Sidebar';
 import TopBar from './TopBar';
@@ -22,7 +22,7 @@ function Dashboard(props) {
           setFileSelected={setFileSelected}
           setSidebarSelectedItem={setSidebarSelectedItem}
         />
-        {sidebarSelectedItem != 'Calendar' && (
+        {sidebarSelectedItem !== 'Calendar' && (
           <SideList
             className='sidelist'
             sidebarSelectedItem={sidebarSelectedItem}

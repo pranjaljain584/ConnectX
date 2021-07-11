@@ -44,7 +44,7 @@ function Display(props) {
       progress: undefined,
       type: `${type}`,
       render: `${msg}`,
-      autoClose: 3000,
+      autoClose: 2000,
     });
   const [form, setForm] = useState({
     Date: '',
@@ -60,6 +60,7 @@ function Display(props) {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  // submit schedule meet for later data
   const handleSubmit = (e) => {
     e.preventDefault();
     const config = {
@@ -91,8 +92,6 @@ function Display(props) {
       EndTime,
     };
 
-    console.log('form', body);
-
     notify(`Creating Meet`);
 
     axios
@@ -123,7 +122,7 @@ function Display(props) {
   const classes = useStyles();
   return (
     <div className='display-div'>
-      {sidebarSelectedItem == 'Calendar' && (
+      {sidebarSelectedItem === 'Calendar' && (
         <div style={myStyle}>
           <Calendar userId={userId} />
         </div>
@@ -168,7 +167,6 @@ function Display(props) {
                   name='Date'
                   onChange={handleChange}
                   type='date'
-                  // defaultValue={Date.now()}
                   className={classes.textField}
                   InputLabelProps={{
                     shrink: true,

@@ -14,12 +14,13 @@ router.post('/', auth, (req, res) => {
     to: data.sendTo,
     subject: 'Invite Mail',
     html: `
-            <h1>${data.userName} with email : ${data.userEmail} is inviting you
-            to join chat room : ${data.roomName}</h1>
+            <h4>${data.userName} with email : ${data.userEmail} is inviting you
+            to join chat room : ${data.roomName}</h4>
             <br />
             Click on the link below to join :
             <br/>
-            <a href=${data.inviteLink}> Chat Room Link </a>
+            <h3> <a href=${data.inviteLink}> Chat Room Link </a> </h3>
+            
         `,
   };
 
@@ -46,12 +47,13 @@ router.post('/meet', auth, (req, res) => {
     to: data.sendTo,
     subject: 'Invite Mail',
     html: `
-            <h1>${data.userName} with email : ${data.userEmail} is inviting you
-            to join video meet </h1>
+            <h4>${data.userName} with email : ${data.userEmail} is inviting you
+            to join video meet </h4>
             <br />
             Click on the link below to join :
             <br/>
-            <a href=${data.inviteLink}> Invite Meet Link </a>
+            <h3> <a href=${data.inviteLink}> Invite Meet Link </a> </h3>
+            
         `,
   };
 

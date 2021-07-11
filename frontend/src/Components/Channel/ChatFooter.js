@@ -28,7 +28,6 @@ class ChatFooter extends Component {
   };
 
   getFile(file) {
-    // console.log(file) ;
     this.setState({ fileSelected: true });
     this.setState({ file });
   }
@@ -41,7 +40,6 @@ class ChatFooter extends Component {
     e.preventDefault();
     var currentdate = new Date();
     var time = currentdate.getHours() + ':' + currentdate.getMinutes();
-    console.log(file) ;
     if(this.state.msg.trim() !== '' || file!==''){
       socket.emit('send-msg', {
         userId,
@@ -73,7 +71,6 @@ class ChatFooter extends Component {
       interimText: '',
     });
     var t = this.state.finalisedText[0];
-
     this.setState({ msg: t , fileSelected: false });
   };
 
@@ -88,7 +85,6 @@ class ChatFooter extends Component {
       this.listener.startListening();
       this.setState({ listening: true });
     } catch (err) {
-      console.log('yoyoy');
       console.log(err);
     }
   };
@@ -103,18 +99,15 @@ class ChatFooter extends Component {
   render() {
     const { msg, file, interimText, listening } =
       this.state;
-
     const { roomIdSelected } = this.props;
     const userId = this.props.auth.user?._id;
     const userName = this.props.auth.user?.name;
     const userMail = this.props.auth.user?.email;
     return (
       <div className='chat-footer'>
-        {/* {error && error} */}
         <form>
           <div className='left'>
             <FileBase64 onDone={this.getFile.bind(this)} />
-            {/* {this.state.file} */}
             {listening ? (
               <FontAwesomeIcon
                 onClick={() => this.stopListening()}

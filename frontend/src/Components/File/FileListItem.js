@@ -12,7 +12,7 @@ function FileListItem(props) {
   const { file } = props;
   const fileType = file.name.split('.')[1];
   const iconName =
-    fileType == 'pdf' ? faFilePdf : fileType == 'cpp' ? faFileCode : faFile;
+    fileType === 'pdf' ? faFilePdf : fileType === 'cpp' ? faFileCode : faFile;
   return (
     <div
       className='file-list-item'

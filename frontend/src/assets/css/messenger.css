@@ -37,13 +37,13 @@
   overflow-x: hidden;
   height: 75vh;
   width: 32vw;
+  /* margin-top: 5.5vh; */
 }
 
 .msg-bubble {
   width: 280px;
   height: auto;
   align-self: center;
-  /* margin-left: 19%; */
   background-color: #1a1b20;
   border-radius: 1rem;
   color: #757679;
@@ -116,4 +116,16 @@
   width: 100px;
   color: white;
   height: 35px;
+}
+
+@media screen and (max-width:1480px) {
+  .messenger {
+    margin-top: -34%;
+  }
+}
+
+@media screen and (max-height:640px) {
+  .messenger {
+    margin-top: -28%;
+  }
 }

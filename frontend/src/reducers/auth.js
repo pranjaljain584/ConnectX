@@ -17,6 +17,7 @@ const initialAuthState = {
   user: null,
 };
 
+// switch case block and then returning data acc to the action type
 export default function (state = initialAuthState, action) {
   switch (action.type) {
     case REGISTER_SUCCESS:
@@ -24,7 +25,6 @@ export default function (state = initialAuthState, action) {
       const decoded = jwt_decode(action.payload.token);
       localStorage.setItem('userDet', JSON.stringify(decoded) );
       localStorage.setItem('token', action.payload.token);
-      // console.log(action.payload);
       return {
         ...state,
         ...action.payload,
@@ -32,7 +32,6 @@ export default function (state = initialAuthState, action) {
         loading: false,
       };
     case GOOGLEAUTH : 
-      // console.log("GOOGLE--->>>>",action?.data)
       return state ;
 
     case REGISTER_FAIL:

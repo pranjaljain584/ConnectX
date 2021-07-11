@@ -34,6 +34,7 @@ function ChatRoomJoining(props) {
         }
       })
       .catch((err) => console.log(err));
+      
   }, []);
 
   return (

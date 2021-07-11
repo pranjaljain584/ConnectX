@@ -11,6 +11,7 @@ function Loading(props) {
         setRoomId(uuid()) ;
     },[]) ;
 
+    // redirecting user to room with room id created while loading phase
     if(roomId !== "") props.history.push(`/room/${roomId}`);
 
     return (

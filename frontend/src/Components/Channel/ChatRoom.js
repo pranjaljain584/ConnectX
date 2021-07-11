@@ -18,11 +18,13 @@ function ChatRoom(props) {
   const [participants, setParticipants] = useState([]);
   const [meet, setMeet] = useState();
 
+  // scroll to bottom function
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   useEffect(() => {
+    // fetch room details
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -40,12 +42,12 @@ function ChatRoom(props) {
         setMsgArray(response.data.room.msgArray);
         setParticipants(response.data.participants);
         setMeet(response.data.Meet);
-        // console.log(meet) ; 
       })
       .catch((err) => console.log(err));
   }, [roomIdSelected]);
 
   useEffect(() => {
+    // listener for latest message on selected room
     socket.removeAllListeners(`${roomIdSelected}`);
     socket.on(`${roomIdSelected}`, function (data) {
       setMsgArray((prevState) => {

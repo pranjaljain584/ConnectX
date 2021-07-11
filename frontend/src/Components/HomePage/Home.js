@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import About from './About';
 import Intro from './Intro';
 import ButtonAppBar from './Navbar';
 

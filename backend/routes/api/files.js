@@ -6,6 +6,7 @@ const ChatRoom = require('../../models/ChatRoom');
 const File = require('../../models/File') ;
 const User = require('../../models/User');
 
+// get all files
 router.get('/',auth,async (req,res)=>{
     try {
         const userId = req.user.id;

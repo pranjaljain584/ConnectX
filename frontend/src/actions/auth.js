@@ -29,6 +29,7 @@ export const loadUser = () => {
     }
 
     try {
+      // get user data
       const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/auth`);
 
       dispatch({

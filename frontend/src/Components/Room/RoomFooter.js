@@ -48,7 +48,6 @@ const RoomFooter = ({
   };
   const handleChange = (e) => {
     setEmail(e.target.value);
-    // setRoomTitle(e.target.value);
   };
 
   const handleSubmit2 = (e) => {
@@ -67,10 +66,10 @@ const RoomFooter = ({
       inviteLink: `${url}`,
     };
 
+    // send invite mail
     axios
       .post(`${process.env.REACT_APP_API_URL}/api/mail/meet`, body, config)
       .then((response) => {
-        // console.log(response) ;
       })
       .catch((err) => console.log(err));
     setClicked(false);
@@ -200,7 +199,6 @@ const RoomFooter = ({
           <div className={`icon-block`} data-tip='Join WhiteBoard'>
             <FontAwesomeIcon
               className={`icon`}
-              //  ${whiteboard ? 'blue' : null}
               icon={faChalkboardTeacher}
             />
           </div>

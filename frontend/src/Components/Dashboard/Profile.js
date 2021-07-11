@@ -1,11 +1,6 @@
 import { Avatar, Badge, Button, makeStyles, Popover } from '@material-ui/core';
 import {
-  Apps,
   CameraAltOutlined,
-  FeedbackOutlined,
-  HelpOutline,
-  PersonAddOutlined,
-  Settings,
 } from '@material-ui/icons';
 import React from 'react';
 import '../../assets/css/profile.css';

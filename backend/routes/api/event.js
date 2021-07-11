@@ -1,10 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../../middleware/auth');
-const ChatRoom = require('../../models/ChatRoom');
 const Reminder = require('../../models/Reminder');
-const User = require('../../models/User');
 
+// get all events
 router.get('/', auth, async (req, res) => {
   try {
     const events = await Reminder.find({ userId: req.user.id });
@@ -16,6 +15,7 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
+// add an event
 router.post('/', auth, async (req, res) => {
   try {
     const { Description, StartTime, EndTime, isAllDay, Subject } =
@@ -45,17 +45,16 @@ router.post('/', auth, async (req, res) => {
       }
     });
 
-    // return res.status(200).send('Added');
   } catch (error) {
     console.error(error.message);
     res.status(500).send('Server error');
   }
 });
 
+// delete an event
 router.get('/:id', auth, async (req, res) => {
   try {
     await Reminder.findOneAndDelete({_id:req.params.id,userId:req.user.id});
-    // const events = await Reminder.find({ userId: req.user.id });
     return res.status(200).send('Deleted');
   } catch (error) {
     console.error(error.message);
@@ -63,6 +62,7 @@ router.get('/:id', auth, async (req, res) => {
   }
 });
 
+// update an event
 router.post('/update/:id2', auth, async (req, res) => {
   try {
     const { Description, StartTime, EndTime, isAllDay, Subject } =
