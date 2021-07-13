@@ -52,7 +52,7 @@
   ##### install dependencies #####
   `npm i`
   ##### run server (running at 5000) #####
-  `npm run index.js`
+  `nodemon index.js`
 
 #### 2. Frontend ####
 
