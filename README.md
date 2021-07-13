@@ -28,6 +28,7 @@
 12. As an added bonus use Calendar as personalized To Do List .
     - Add/Update/Delete any task
     - ConnectX will make sure you don't forget the task by sending a reminder mail 15 mins prior to the event
+13. Manual and Google Authentication
 
 ## Tech Stack Used ## 
 
