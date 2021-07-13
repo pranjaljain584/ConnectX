@@ -1,6 +1,10 @@
 # ConnectX
 
-## Features ## 
+### Hosted At - https://connect-x.vercel.app/
+
+### Vide Demo - https://www.youtube.com/watch?v=nlL0cPCNIdM&t=12s
+
+## Features - ## 
 
 1. Video Conferencing with upto 9 people at a time.
 2. Chat with them in the video meet.
