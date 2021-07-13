@@ -1,4 +1,6 @@
 const express = require('express');
+const dotenv = require('dotenv');
+dotenv.config();
 const http = require('http');
 const cors = require('cors');
 const path = require('path');
@@ -226,7 +228,7 @@ cron.schedule('*/5 * * * *', async () => {
     let eventid = event._id;
 
     let mailOptions = {
-      from: 'microsoftteamsclonemailer@gmail.com',
+      from: `${process.env.MAIL_SERVICE_ID}`,
       to: `${userEmail}`,
       subject: 'Reminder Mail',
       html: `
@@ -246,8 +248,7 @@ cron.schedule('*/5 * * * *', async () => {
   });
 });
 
-const dotenv = require('dotenv');
-dotenv.config();
+
 
 const port = process.env.PORT || 5000;
 

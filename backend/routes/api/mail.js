@@ -10,7 +10,7 @@ router.post('/', auth, (req, res) => {
   let smtpTransport = transporter;
 
   let mailOptions = {
-    from: 'microsoftteamsclonemailer@gmail.com',
+    from: `${process.env.MAIL_SERVICE_ID}`,
     to: data.sendTo,
     subject: 'Invite Mail',
     html: `
@@ -43,7 +43,7 @@ router.post('/meet', auth, (req, res) => {
   let smtpTransport = transporter;
 
   let mailOptions = {
-    from: 'microsoftteamsclonemailer@gmail.com',
+    from: `${process.env.MAIL_SERVICE_ID}`,
     to: data.sendTo,
     subject: 'Invite Mail',
     html: `

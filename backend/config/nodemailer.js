@@ -7,9 +7,9 @@ let transporter = nodemailer.createTransport({
   port: 587,
   secure: false,
   auth: {
-    user: 'microsoftteamsclonemailer@gmail.com',
-    pass: 'omnipc123',
-  }
+    user: `${process.env.MAIL_SERVICE_ID}`,
+    pass: `${process.env.MAIL_SERVICE_PASSWORD}`,
+  },
 });
 
 module.exports = transporter ;

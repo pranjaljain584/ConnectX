@@ -171,7 +171,7 @@ function Register(props) {
           </form>
           <p>or</p>
           <GoogleLogin
-            clientId='323320658112-29fp0eku8ngohvu2ojn2bacv1lims8c0.apps.googleusercontent.com'
+            clientId={process.env.GOOGLE_CLIENT_ID}
             render={(renderProps) => (
               <GoogleButton onClick={renderProps.onClick} disabled={false} />
             )}

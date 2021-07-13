@@ -202,7 +202,7 @@ const mailFunction = (sendTo,roomName,StartTime,userName,userEmail,roomid) => {
   let date = new Date(StartTime) ;
 
   let mailOptions = {
-    from: 'microsoftteamsclonemailer@gmail.com',
+    from: `${process.env.MAIL_SERVICE_ID}`,
     to: `${sendTo}`,
     subject: 'Invite Mail',
     html: `

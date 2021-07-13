@@ -16,9 +16,6 @@ import { GoogleLogin } from 'react-google-login';
 import GoogleButton from 'react-google-button';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-const v =
-  '323320658112-29fp0eku8ngohvu2ojn2bacv1lims8c0.apps.googleusercontent.com';
   
 const initialState = {
   email: '',
@@ -140,7 +137,7 @@ function Login(props) {
           </form>
           <p className={classes.para}>or</p>
           <GoogleLogin
-            clientId={v}
+            clientId={process.env.GOOGLE_CLIENT_ID}
             render={(renderProps) => (
               <GoogleButton onClick={renderProps.onClick} disabled={false} />
             )}

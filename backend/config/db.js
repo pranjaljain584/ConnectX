@@ -7,7 +7,7 @@ require('dotenv').config();
 // stored mongoURI in 'db' variable
 //const db = config.get('mongoURI');
 
-const db = "mongodb+srv://pranjaljain584:YdJ0uQNCOwq3g3Z0@teams-clone-cluster.mhlfe.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+const db =  `${process.env.MONGO_URI}` ;
 
 const connectDB = async () => {
   try {  // try catch block to catch error
