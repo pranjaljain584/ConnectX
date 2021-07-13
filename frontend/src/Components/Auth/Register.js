@@ -170,8 +170,9 @@ function Register(props) {
             </Grid>
           </form>
           <p>or</p>
+          
           <GoogleLogin
-            clientId={process.env.GOOGLE_CLIENT_ID}
+            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
             render={(renderProps) => (
               <GoogleButton onClick={renderProps.onClick} disabled={false} />
             )}

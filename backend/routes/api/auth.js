@@ -69,6 +69,7 @@ router.post(
         },
       };
 
+      console.log(`${process.env.JWT_SECRET}`, "**");
       // create token
       jwt.sign(
         payload,
