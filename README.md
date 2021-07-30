@@ -2,7 +2,7 @@
 
 ### Hosted At - https://connect-x.vercel.app/
 
-### Vide Demo - https://www.youtube.com/watch?v=nlL0cPCNIdM&t=12s
+### Vide Demo - https://www.youtube.com/watch?v=nlL0cPCNIdM
 
 ## Features - ## 
 
