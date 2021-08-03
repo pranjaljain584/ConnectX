@@ -1,5 +1,0 @@
-{
-  "mongoURI": "mongodb+srv://pranjaljain584:YdJ0uQNCOwq3g3Z0@teams-clone-cluster.mhlfe.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-  "jwtSecret": "mySecretToken"
-}
-
